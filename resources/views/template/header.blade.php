@@ -210,7 +210,7 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="https://avatars2.githubusercontent.com/u/12239594?v=3&s=460" class="img-circle" alt="User Image" />
+                    <img src="{{ asset('images/daenerys.png') }}" class="img-circle" alt="User Image" />
                     <p>
                       {{ Auth::user()->name }}
                       <small>Miembro desde {{ Auth::user()->created_at }}</small>

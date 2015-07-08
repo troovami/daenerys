@@ -46,13 +46,21 @@ Route::group(['middleware' => 'auth'], function()
 
 	// Routes Administrador
 	Route::group(array('prefix' => 'admin'), function() {
-		Route::get('/', ['uses' => 'AdminController@index','as' => 'admin.index']);
-	    Route::get('perfil', ['uses' => 'AdminController@profile','as' => 'admin.profile']);
-	 	// Agregar Admin
+		// All Admins
+		Route::get('/', ['uses' => 'AdminController@all','as' => 'admin.index']);
+		// Ver Perfil Propio
+	    Route::get('perfil', ['uses' => 'AdminController@profile','as' => 'admin.profile']);    
+	    // Agregar Admin
+		Route::get('add/', ['uses' => 'AdminController@index','as' => 'admin.create']);
+	    Route::post('add', 'AdminController@create');
+	 	// Editar Admin
+	 	Route::get('edit/{id}', ['uses' => 'AdminController@edit','as' => 'admin.edit']);
+	 	Route::put('edit/{id}', ['uses' => 'AdminController@update','as' => 'admin.update']);
+	 	//Route::post('edit', 'AdminController@update');
 	    //Route::get('add', ['uses' => 'AdminController@create']);
 	    //Route::get('add', ['uses' => 'AdminController@create']);
 
-	});
+	});	
 	// Fin (Routes Administrador)
 
 });

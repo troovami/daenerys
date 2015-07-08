@@ -5,7 +5,7 @@
 <section class="content col-md-6 col-md-push-3">
           <div class="row">
           	<div class="col-md-4">
-  			<p class="text-center"><img class="img-circle img-responsive" src="https://avatars2.githubusercontent.com/u/12239594?v=3&s=460" alt="..."></p>
+  			<p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/daenerys.png') }}" alt="..."></p>
   			<h2 class="text-center">&laquo; {{Auth::user()->name}} &raquo;</h2>
   			</div>
             <div class="col-md-8">

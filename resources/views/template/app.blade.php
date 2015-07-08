@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Admin - Troovami')</title>
+    <title>@yield('title', 'Admin - Troovami')</title>    
+    <link rel="icon" href="{{ asset('images/daenerys.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.4 -->

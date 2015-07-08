@@ -5,7 +5,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="https://avatars2.githubusercontent.com/u/12239594?v=3&s=460" class="img-circle" alt="User Image" />
+              <img src="{{ asset('images/daenerys.png') }}" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p> &laquo; {{ Auth::user()->name }} &raquo;</p>              
@@ -35,10 +35,12 @@
                 <i class="fa fa-user-secret"></i> <span>Administradores</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>
+                <li><a href="{{route('admin.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>
                 <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Admin</a></li>
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Admin</a></li>
                 <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Admin</a></li>
+                <li><a href="{{route('admin.index')}}"><i class="fa fa-users text-light-blue"></i> All Admins</a></li>
+                <li><a href="{{route('admin.profile')}}"><i class="fa fa-user-secret"></i> Mi Perfil</a></li>
               </ul>
             </li>           
             <!-- /fin -->
