@@ -36,9 +36,9 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{route('admin.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>
-                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Admin</a></li>
+                <!--<li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Admin</a></li>
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Admin</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Admin</a></li>
+                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Admin</a></li>-->
                 <li><a href="{{route('admin.index')}}"><i class="fa fa-users text-light-blue"></i> All Admins</a></li>
                 <li><a href="{{route('admin.profile')}}"><i class="fa fa-user-secret"></i> Mi Perfil</a></li>
               </ul>

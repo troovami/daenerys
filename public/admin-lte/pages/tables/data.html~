@@ -1525,7 +1525,7 @@
     <!-- page script -->
     <script type="text/javascript">
       $(function () {
-        
+        $("#example1").DataTable();
         $('#example2').DataTable({
           "paging": true,
           "lengthChange": false,
@@ -1534,7 +1534,6 @@
           "info": true,
           "autoWidth": false
         });
-$("#example1").DataTable();
       });
     </script>
   </body>
