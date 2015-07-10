@@ -9,9 +9,9 @@
   			<h2 class="text-center">&laquo; {{$user->name}} &raquo;</h2>
   			</div>
             <div class="col-md-8">
-              <div class="box">
+              <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title"><i class="fa fa-user-secret"></i> {{$page_title}} del Administrador </h3>
+                  <h3 class="box-title"><i class="fa fa-search text-aqua"></i> {{$page_title}} del Administrador </h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
@@ -48,7 +48,9 @@
 		  					<div class="btn-group">
 			                    <a class="btn btn-warning btn-flat" href="{{route('admin.edit',$user->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>	
 			                    <a class="btn bg-purple btn-flat" href="{{route('admin.status',$user->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>
-			                    <a class="btn btn-danger btn-flat" href="#" title="Desactivar"><i class="fa fa-user-times"></i></a>
+			                    <a class="btn btn-danger btn-flat" href="{{route('admin.delete',$user->id)}}" title="Eliminar"><i class="fa fa-user-times"></i></a>
+			                    <a class="btn btn-default btn-flat" href="{{route('admin.reset',$user->id)}}" title="Resetar Password"><i class="fa fa-eraser"></i></a>
+			                    <a class="btn btn-primary btn-flat" href="{{route('admin.generate',$user->id)}}" title="Generar Password"><i class="fa fa-shield"></i></a>
 			                </div>
 		  				</td>
 		  			</tr>

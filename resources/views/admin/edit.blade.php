@@ -76,7 +76,7 @@
                         </div>  
         			<div class="form-group col-md-4 col-md-push-4">
                     <br>
-        			{!! Form::submit('Editar',['class'=>'btn btn-warning btn-block']) !!}                  
+                    {!! Form::button('<i class="fa fa-pencil"></i> Editar', array('class'=>'btn btn-warning btn-block', 'type'=>'submit')) !!}
         			</div>
         		{!! Form::close() !!} 
         		              

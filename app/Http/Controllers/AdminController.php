@@ -68,7 +68,7 @@ class AdminController extends Controller
     		'message'   => 'Usuario Registrado Exitosamente'    		
 		);
 		*/
-		Session::flash('message', 'Administrador Registrado Exitosamente');        
+		Session::flash('message', 'Administrador(a) &laquo;'. $request['name'] .'&raquo; ('. $request['str_nombre'].', '. $request['str_apellido'] .'), ha sido Registrado Exitosamente');        
         return Redirect::route('admin.create');
         
 
@@ -82,6 +82,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
+        
     	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
         $user = User::findOrFail($id);
         //return view('admin.edit',['user'=>$user]);
@@ -160,6 +161,56 @@ class AdminController extends Controller
         Session::flash('message', 'El Administrador ha cambiado de Estado');
         return Redirect::route('admin.status',$id);       
     }
+
+    public function reset($id){                   
+        $user = User::findOrFail($id);   
+        $rol = DB::table('cat_roles')->where('id', $user['lng_idrol'])->value('str_rol');
+        return view('admin.reset',['user'=>$user, 'rol'=>$rol])->with('page_title', 'Reset Password');                    
+    }
+
+    public function resetChange($id, Request $request)
+    {
+        
+        $this->validate($request, [
+            'bol_eliminado' => 'required|boolean',            
+            'password'      => 'required',
+        ]); 
+
+        $request['bol_eliminado'] = 1;
+        $request['password'] = '';        
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+        Session::flash('message', 'Password Reseteado de manera Exitosa');
+        return Redirect::route('admin.reset',$id);
+               
+    }
+
+    public function generate($id){                   
+        $user = User::findOrFail($id);   
+        $rol = DB::table('cat_roles')->where('id', $user['lng_idrol'])->value('str_rol');
+        return view('admin.generate',['user'=>$user, 'rol'=>$rol])->with('page_title', 'Generar Password');                    
+    }
+
+    public function generatePassword($id, Request $request)
+    {
+        
+        $this->validate($request, [
+            'bol_eliminado' => 'required|boolean',            
+            'password'      => 'required|confirmed|min:6',
+        ]); 
+
+        $request['bol_eliminado'] = 0;
+        $request['password'] = bcrypt($request['password']);        
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+        Session::flash('message', 'Password Generado de manera Exitosa');
+        return Redirect::route('admin.generate',$id);
+               
+    }
+
+
 
 
 }

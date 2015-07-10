@@ -3,7 +3,7 @@
 @section('padre', 'Administracion')
 @section('content')
 <section class="content col-md-6 col-md-push-3">
-          @if (count($errors) > 0)
+			@if (count($errors) > 0)
     		    <div class="alert alert-danger">
     		        <ul>
     		            @foreach ($errors->all() as $error)
@@ -12,29 +12,26 @@
     		        </ul>
     		    </div>
     		@endif		    
-          
-
-		  @if(Session::has('message'))
+            @if(Session::has('message'))
 
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               {{Session::get('message')}}
             </div>        
-    	  @endif
+    		@endif      
           <div class="row">
           	<div class="col-md-4">
-          	@if ($user->bol_eliminado == 0)
+  			@if ($user->bol_eliminado == 0)
 		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/lena-headey.png') }}" alt="..."></p>
 		  	   @else
 		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/ned-stark.png') }}" alt="..."></p>
 		  	   @endif
-  			
   			<h2 class="text-center">&laquo; {{$user->name}} &raquo;</h2>
   			</div>
             <div class="col-md-8">
-              <div class="box box-purple">
+              <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title"><i class="fa fa-ban"></i> {{$page_title}} del Administrador </h3>
+                  <h3 class="box-title"><i class="fa fa-shield text-primary"></i> {{$page_title}} Administrador </h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
@@ -52,11 +49,20 @@
 		  			<tr>
 		  				<th class="text-right">Correo:</th>
 		  				<td>{{$user->email}}</td>
-		  			</tr>		  			
+		  			</tr>
+		  			<tr>
+		  				<th class="text-right">Teléfono:</th>
+		  				<td>{{$user->str_telefono}}</td>
+		  			</tr>
 		  			<tr>
 		  				<th class="text-right">Fecha de Creación:</th>
 		  				<td>{{$user->created_at}}</td>
-		  			</tr>		  					  			
+		  			</tr>
+		  			<tr>
+		  				<th class="text-right">Rol:</th>
+		  				<td>{{$rol}}</td>
+		  			</tr>
+		  			</tr>
 		  				<th class="text-right">Estado:</th>
 		  				@if ($user->bol_eliminado == 0)
 		  					<td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
@@ -64,41 +70,39 @@
 		  					<td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
 		  				@endif
 		  			<tr>
-		  			</tr>
 		  			<tr>
-              @if ($user->password == '')
-              <th class="text-right">Estado Inactivo:</th>
-              <td><span class="label label-default"><i class="fa fa-eraser"></i> Password Resetado, Imposible cambiar el Estado</span></td>
-              @else
-              <th class="text-right">Cambiar Estado:</th>
-              <td>
-                {!! Form::model($user,['route'=>['admin.status',$user->id],'method'=>'PUT']) !!}
-                    <div class="input-group col-md-12">
-                            {!! Form::select('bol_eliminado',
-                                      ([
-                                        'Seleccione' => 'Seleccione',
-                                        '0'=>'Activar',
-                                        '1'=>'Desactivar'
-                                      ]), 
-                                                    null, 
-                                                    [
-                                                      'class' => 'form-control'
-                                                    ]
-                                                )!!} 
-                          <span class="input-group-btn">
-                            {!! Form::button('<i class="fa fa-ban"></i> Cambiar Estado', array('class'=>'btn bg-purple btn-flat', 'type'=>'submit')) !!}                                                  
-                          </span>
-                          </div><!-- /input-group -->             
-                 {!! Form::close() !!} 
-           
-                </td>
-                @endif
+		  				@if ($user->password == '')
+		  				<td colspan="2">		  		    		
+        				{!! Form::model($user,['route'=>['admin.generate',$user->id],'method'=>'PUT']) !!}
+        					{!! Form::hidden('bol_eliminado', '1') !!}
+        					<div class="form-group col-md-5">
+        					{!! Form::password('password', ['class'=> 'form-control','placeholder'=>'Contraseña']) !!}
+        					</div>
+		                    <div class="input-group col-md-7">		                    
+                            
+
+                        	{!! Form::password('password_confirmation', ['class'=> 'form-control','placeholder'=>'Confirmar Contraseña']) !!}                        
+		                            
+		                          <span class="input-group-btn">
+		                          	{!! Form::button('<i class="fa fa-shield"></i> Generar', array('class'=>'btn btn-primary btn-flat', 'type'=>'submit')) !!}
+		                                                  
+		                          </span>
+		                    </div><!-- /input-group -->             
+                 		{!! Form::close() !!}
+		  	   
+		  		    	</td>
+		  				@else	  				
 		  				
+		  		    	<th class="text-right">No se puede Generar:</th>
 		  				<td>
-		  					 
+		  					<span class="label label-success"><i class="fa fa-shield"></i> ESTA CUENTA POSEE PASSWORD</span>
+		  					<span class="label label-warning"><i class="fa fa-exclamation-triangle"></i> DEBE RESETEAR EL PASSWORD PARA PODER GENERARLO</span>
+
 		  				</td>
-		  			</tr>
-		  			   		  			
+		  	   			@endif
+		  					
+					</tr>
+		  			
 		  			</tbody>			  		
                   </table>                  
                 </div>

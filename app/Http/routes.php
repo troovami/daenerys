@@ -64,6 +64,15 @@ Route::group(['middleware' => 'auth'], function()
 	 	// Desactivar Usuario
 	 	Route::get('status/{id}',array('uses' => 'AdminController@status', 'as' => 'admin.status'));
 	 	Route::put('status/{id}', 'AdminController@statusChange');
+	 	// Resetar Password de Administrador
+	 	Route::get('reset/{id}',array('uses' => 'AdminController@reset', 'as' => 'admin.reset'));
+	 	Route::put('reset/{id}', 'AdminController@resetChange');
+	 	// Generar Password	 	
+	 		// Un Administrador genera el Password	
+	 		Route::get('generate/{id}',array('uses' => 'AdminController@generate', 'as' => 'admin.generate'));
+	 		Route::put('generate/{id}', 'AdminController@generatePassword');
+	 		// El Usuario Admin (Dueño de la Cuenta) genera su propio Password
+	 		
 	 	//Route::post('edit', 'AdminController@update');
 	    //Route::get('add', ['uses' => 'AdminController@create']);
 	    //Route::get('add', ['uses' => 'AdminController@create']);	    

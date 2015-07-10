@@ -61,7 +61,7 @@
 		
         <section class="content">
           <div class="row">
-            <div class="col-xs-12 col-md-10 col-md-offset-1">             
+            <div class="col-xs-12 col-md-12">             
 
             @if(Session::has('message'))
 
@@ -87,7 +87,7 @@
 			            <th class="text-center"><i class="fa fa-envelope-o"></i> Correo</th>
 			            <th class="text-center"><i class="fa fa-phone"></i> Teléfono</th>
 			            <th class="text-center"><i class="fa fa-clock-o"></i> Fecha de Creación</th>
-			            <th class="text-center"><i class="fa fa-cog"></i> Operación</th>
+			            <th class="text-center"><i class="fa fa-cog"></i> Operacines</th>
                       </tr>
                     </thead>
                     <tbody>                    
@@ -105,6 +105,8 @@
 			                          <a class="btn btn-info btn-flat" href="{{route('admin.show',$user->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
 			                          <a class="btn bg-purple btn-flat" href="{{route('admin.status',$user->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>
 			                          <a class="btn btn-danger btn-flat" href="{{route('admin.delete',$user->id)}}" title="Eliminar"><i class="fa fa-user-times"></i></a>
+			                          <a class="btn btn-default btn-flat" href="{{route('admin.reset',$user->id)}}" title="Resetar Password"><i class="fa fa-eraser"></i></a>
+			                          <a class="btn btn-primary btn-flat" href="{{route('admin.generate',$user->id)}}" title="Generar Password"><i class="fa fa-shield"></i></a>
 
 			                    </div>
 			                </td>			            	

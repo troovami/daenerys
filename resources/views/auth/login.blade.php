@@ -18,7 +18,8 @@
                 @endforeach
         </ul>
       </div>						
-			@endif
+			@endif  
+               
       <div class="login-box-body">
         <p class="login-box-msg">Inicio de Sesión</p>        
         {!! Form::open(['route' => 'login', 'class' => 'form']) !!}
