@@ -81,7 +81,9 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th class="text-center"><i class="fa fa-certificate"></i></th>
+                        <!--<th class="text-center"><i class="fa fa-certificate"></i></th>-->
+                        <th class="text-center"><i class="fa fa-ban"></i> Estado</th>
+                        <th class="text-center"><i class="fa fa-ban"></i> Password</th>
 			            <th class="text-center"><i class="fa fa-user-secret"></i> Usuario</th>
 			            <th class="text-center"><i class="fa fa-file-text-o"></i> Nombre Completo</th>
 			            <th class="text-center"><i class="fa fa-envelope-o"></i> Correo</th>
@@ -91,9 +93,20 @@
                       </tr>
                     </thead>
                     <tbody>                    
-                      @foreach($users as $user)
+                      @foreach($users as $user)                      
 			            <tr class="text-center">
-			            	<td>{{$user->id}}</td>
+			            	<!--<td> {{$user->id}}</td>-->
+			            	@if ($user->bol_eliminado == FALSE)
+			            	<td><span class="label label-success" >ENABLED</span></td>
+			            	@else
+			            	<td><span class="label label-default">DISABLED</span></td>
+			            	@endif
+			            	@if ($user->password == '')
+			            	<td><i class="fa fa-close text-center text-danger"></i></td>
+			            	@else
+			            	<td><i class="fa fa-check text-center text-success"></i></td>
+			            	@endif
+			            	
 			                <td>{{$user->name}}</td>
 			                <td>{{$user->str_nombre}}, {{$user->str_apellido}}</td>
 			                <td>{{$user->email}}</td>

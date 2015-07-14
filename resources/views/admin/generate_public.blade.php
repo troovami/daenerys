@@ -4,9 +4,13 @@
 
 <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>Admin</b> Troovami</a>
-		  			
-      </div><!-- /.login-logo -->
+      	@if ($user->bol_eliminado == FALSE)
+        <a href="#"><b>Generar </b> Password</a>
+		@else
+		<a href="#"><b>Admin</b> Troovami</a>
+		@endif  			
+      </div><!-- /.login-logo -->      
+      
       @if (count($errors) > 0)
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -17,19 +21,43 @@
                   <li>{{ $error }}</li>
                 @endforeach
         </ul>
-      </div>						
-			@endif
-      @if(Session::has('message'))
+      </div>
+	  @endif  
+	  @if(Session::has('message'))
 
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <i class="fa fa-shield"></i>  {{Session::get('message')}}
             </div> 
-                  
-      @endif  
-               
+
+    @endif 
+             
       <div class="login-box-body">
-        <p class="login-box-msg">Inicio de Sesión</p>        
+      	 @if ($user->bol_eliminado == FALSE)
+         <p class="login-box-msg">&laquo;{{$user->name}}&raquo; {{$user->str_nombre}}, {{$user->str_apellido}}</p>  
+        {!! Form::model($user,['route'=>['pass.generate',$user->id],'method'=>'PUT', 'class' => 'form']) !!}          
+        
+                            
+                            <div class="form-group has-feedback">  
+                            	<label class="">{{ trans('validation.attributes.password') }}</label>
+
+                                {!! Form::password('password', ['class'=> 'form-control','placeholder' => "Contraseña"]) !!}
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">  
+                            	<label class="">Confirmar Password</label>
+                            	                             
+                                {!! Form::password('password_confirmation', ['class'=> 'form-control','placeholder'=>'Confirmar Contraseña']) !!}
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-xs-4">                                  
+                                  {!! Form::button('<i class="fa fa-shield"></i> Generar Password', array('class'=>'btn btn-primary btn-flat', 'type'=>'submit')) !!}                                 
+                                </div><!-- /.col -->
+                              </div>                           
+         {!! Form::close() !!}
+         @else
+         <p class="login-box-msg">Inicio de Sesión</p>        
         {!! Form::open(['route' => 'login', 'class' => 'form']) !!}
                             <div class="form-group has-feedback">  
                             	<label class="">{{ trans('validation.attributes.email') }}</label>                              
@@ -57,8 +85,8 @@
         
 
         <a href="{{route('pass.lost')}}">Olvidé mi Contraseña</a><br>
-        
-
-      </div><!-- /.login-box-body -->
+		 @endif
+       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 @endsection
+

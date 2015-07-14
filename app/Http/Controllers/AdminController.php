@@ -209,8 +209,67 @@ class AdminController extends Controller
         return Redirect::route('admin.generate',$id);
                
     }
+    
+    public function generatePublic($id){  
+        //OTg3NjU0MzIxMDEyMzU2   
+        // suma el id + 987654321012345 y lo encripta
+        //$id= base64_encode($id+987654321012345); 
+        //return $id;
+        // Desencripta el id
+        $id = base64_decode($id);
+        // resta el id desencriptado - 987654321012345 para dejar el valor del id original
+        //return $id;
+        $id = $id - 987654321012345;         
+        $user = User::findOrFail($id);         
+        return view('admin.generate_public',['user'=>$user])->with('mensaje','');                    
+    }
 
+    public function generatePasswordPublic($id, Request $request)
+    {
+        $this->validate($request, [
+            'password'      => 'required|confirmed|min:6',
+        ]);                 
+        $request['password'] = bcrypt($request['password']);        
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+        Session::flash('message', 'Password Generado de manera Exitosa');
+        // suma el id + 987654321012345 y lo encripta
+        $id = base64_encode($id+987654321012345);        
+        //return Redirect::route('pass.generate',$id);
+        return Redirect::route('login');
+               
+    }
 
+    public function lostPublic(){   
+        $data = array(
+                    'msn' => '',
+                    );               
+        return view('admin.lost')->with('mensaje',$data);                    
+    }
 
+    public function lostPasswordPublic(Request $request){ 
 
+        $this->validate($request, [
+            'email' => 'required|email|max:255|exists:tbl_admins',
+        ]);        
+        $datos = DB::table('tbl_admins')->select('bol_eliminado','id')->where('email', $request['email'])->get();
+        //$datos = DB::table('tbl_admins')->select('bol_eliminado','id')->get();
+        /*
+        foreach ($datos as $key) {
+           $id[] = $key->id;
+           $bol_eliminado[] = $key->bol_eliminado;
+
+        }
+        */  
+        $id = base64_encode($datos[0]->id+987654321012345);
+        $data = array(
+            'msn' => 'generado',
+            'email' => $request['email'],
+            'id' => $id,
+            'bol_eliminado' => $datos[0]->bol_eliminado,
+            );        
+        return view('admin.lost')->with('mensaje',$data);  
+
+    }
 }

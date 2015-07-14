@@ -71,20 +71,18 @@ Route::group(['middleware' => 'auth'], function()
 	 		// Un Administrador genera el Password	
 	 		Route::get('generate/{id}',array('uses' => 'AdminController@generate', 'as' => 'admin.generate'));
 	 		Route::put('generate/{id}', 'AdminController@generatePassword');
-	 		// El Usuario Admin (Dueño de la Cuenta) genera su propio Password
-	 		
-	 	//Route::post('edit', 'AdminController@update');
-	    //Route::get('add', ['uses' => 'AdminController@create']);
-	    //Route::get('add', ['uses' => 'AdminController@create']);	    
-
 	});	
 	// Fin (Routes Administrador)
 
 });
 // Fin Middleware
 /*  --------------------------------------------------- */
-
-
+	// Olvido de Password
+	Route::get('pass-lost',array('uses' => 'AdminController@lostPublic', 'as' => 'pass.lost'));
+	Route::post('pass-lost', 'AdminController@lostPasswordPublic');
+	// Recuperacion de Password - El Usuario Admin (Dueño de la Cuenta) genera su propio Password
+	Route::get('pass-generate/{id}',array('uses' => 'AdminController@generatePublic', 'as' => 'pass.generate'));
+	Route::put('pass-generate/{id}', 'AdminController@generatePasswordPublic');	
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
