@@ -74,6 +74,13 @@ Route::group(['middleware' => 'auth'], function()
 	});	
 	// Fin (Routes Administrador)
 
+	// Routes Pais
+	Route::group(array('prefix' => 'pais'), function() {
+		// All Paises
+		Route::get('/', ['uses' => 'PaisController@index','as' => 'pais.index']);
+	});
+	// Fin (Routes Pais)
+
 });
 // Fin Middleware
 /*  --------------------------------------------------- */

@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function all(){
     	$users = User::All();
-        return view('admin.admin',compact('users'))->with('page_title', 'Principal');
+        return view('admin.pais',compact('users'))->with('page_title', 'Principal');
     	
     }
 
