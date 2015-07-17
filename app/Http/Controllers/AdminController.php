@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function all(){
     	$users = User::All();
-        return view('admin.pais',compact('users'))->with('page_title', 'Principal');
+        return view('admin.admin',compact('users'))->with('page_title', 'Principal');
     	
     }
 
@@ -44,7 +44,6 @@ class AdminController extends Controller
     	]);
         $request['password'] = bcrypt($request['password']);
         $request['name'] = strtolower($request['name']);
-        
         //$user = $request->all();
         //$user['password'] = bcrypt($user['password']);
         //return $user .'<br><hr>';
@@ -99,6 +98,9 @@ class AdminController extends Controller
      */
     public function update($id, Request $request)
     {
+        // "         uu";
+        $request['name']  = trim($request['name']);
+        return $request['name'];
     	$this->validate($request, [
 	        'name'         => 'required|max:255|unique:tbl_admins,name,'.$id,
             'str_cedula'   => 'required|max:255|unique:tbl_admins,str_cedula,'.$id,   

@@ -4,13 +4,14 @@
 	@section('head')
 	<!-- DATA TABLES -->
 	{!! Html::style('admin-lte/plugins/datatables/dataTables.bootstrap.css') !!} 
+
 	@endsection
 @section('content')
 <!-- Main content -->
 		
         <section class="content">
           <div class="row">
-            <div class="col-xs-12 col-md-12">             
+            <div class="col-xs-10 col-md-8 col-md-offset-2">             
 
             @if(Session::has('message'))
 
@@ -29,30 +30,37 @@
                 <p><i class="fa fa-users"></i> Total de Paises: <b>{{count($paises)}}</b></p>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
-                      <tr>
-                        <!--<th class="text-center"><i class="fa fa-certificate"></i></th>-->
-                        <th class="text-center"><i class="fa fa-ban"></i> Bandera</th>
-                        <th class="text-center"><i class="fa fa-ban"></i> Paises</th>
-                        <th class="text-center"><i class="fa fa-ban"></i> Estado</th>
-                        <th class="text-center"><i class="fa fa-ban"></i> Operaciones</th>
-                        
+                      <tr>                        
+                        <th class="text-center"><i class="fa fa-flag"></i> Bandera</th>
+                        <th class="text-center"><i class="fa fa-file-text-o"></i> Paises</th>
+                        <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
+                        <th class="text-center"><i class="fa fa-cog"></i> Estado</th>
                       </tr>
                     </thead>
                     <tbody>                    
                       @foreach($paises as $pais)                      
-			            <tr class="text-center">
+			              <tr class="text-center">                   
+                    <td>
+                      @if($pais->blb_img==NULL)
+                        <i class="fa fa-flag text-red"></i>
+                      @else
+                        <img class="img-rounded" style="width:100px;" src="data:{{$pais->format}};base64,{{$pais->blb_img}}" />
+                      @endif                        
+                    </td>
 
-			            	<td><img src="@include('pais.flag', ['blob' => $pais->blb_img])" alt="{{$pais->str_paises}}"></td>
-			            	<td>{{$pais->str_paises}}</td>
-			                <td>{{$pais->blb_img}}</td>			                
+			            	<td>{{$pais->str_paises}}</td>			                			                
 			                <td>
 			                	<div class="btn-group">
-			                          <a class="btn btn-warning btn-flat" href="" title="Editar"><i class="fa fa-pencil"></i></a>
-			                          <a class="btn btn-info btn-flat" href="#" title="Consultar"><i class="fa fa-search"></i></a>
-			                          <a class="btn bg-purple btn-flat" href="#" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>			                          
+			                          <a class="btn btn-warning btn-flat" href="{{route('pais.edit',$pais->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>
+			                          <a class="btn btn-info btn-flat" href="{{route('pais.show',$pais->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
+			                          <a class="btn bg-purple btn-flat" href="{{route('pais.status',$pais->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>			                          
 			                    </div>
-			                </td>			            	
-			                
+			                </td>	
+                      @if ($pais->bol_eliminado == 0)
+                      <td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
+                      @else
+                        <td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
+                      @endif	            	
 			            </tr>
 			            @endforeach
                     </tbody>                    

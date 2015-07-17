@@ -78,10 +78,8 @@
                 <i class="fa fa-flag"></i> <span>Paises</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Pais</a></li>
-                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Pais</a></li>
-                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Pais</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Pais</a></li>
+                <li><a href="{{route('pais.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Pais</a></li>
+                <li><a href="{{route('pais.index')}}"><i class="fa fa-flag text-light-blue"></i> All Paises</a></li>
               </ul>
             </li>           
             <!-- /fin -->            

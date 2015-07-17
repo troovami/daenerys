@@ -78,6 +78,17 @@ Route::group(['middleware' => 'auth'], function()
 	Route::group(array('prefix' => 'pais'), function() {
 		// All Paises
 		Route::get('/', ['uses' => 'PaisController@index','as' => 'pais.index']);
+		// Agregar Pais
+		Route::get('add/', ['uses' => 'PaisController@create','as' => 'pais.create']);
+	    Route::post('add', 'PaisController@store');
+	    // Editar Pais
+	 	Route::get('edit/{id}', ['uses' => 'PaisController@edit','as' => 'pais.edit']);
+	 	Route::put('edit/{id}', ['uses' => 'PaisController@update','as' => 'pais.update']);	
+	 	// Ver Pais
+	    Route::get('show/{id}', ['uses' => 'PaisController@show','as' => 'pais.show']); 
+	    // Desactivar Pais
+	 	Route::get('status/{id}',array('uses' => 'PaisController@status', 'as' => 'pais.status'));
+	 	Route::put('status/{id}', 'PaisController@statusChange');	 	
 	});
 	// Fin (Routes Pais)
 
