@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Troovami\Http\Requests;
 
-use App\Http\Requests\Request;
+use Troovami\Http\Requests\Request;
 
 class AdminCreateRequest extends Request
 {

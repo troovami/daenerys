@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Troovami\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Troovami\Http\Requests;
+use Troovami\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {

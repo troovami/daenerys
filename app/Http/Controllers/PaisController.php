@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Troovami\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Pais;
+use Troovami\Http\Requests;
+use Troovami\Http\Controllers\Controller;
+use Troovami\Pais;
 use Session;
 use Redirect;
 use DB;
@@ -53,11 +53,12 @@ class PaisController extends Controller
     {
         $this->validate($request, [
 	        'str_paises'         => 'required|unique:cat_paises',            
-	        'blb_img'         => 'required|image',
-    	]);        
+	        'blb_img'         => 'required|mimes:jpeg,png',
+    	]);   
+             
         Pais::create([
             'str_paises'         => ucfirst(strtolower($request['str_paises'])),
-            'blb_img'         => addslashes(file_get_contents($request['blb_img'])),
+            'blb_img'         => base64_encode(file_get_contents($request['blb_img'])),
         ]);     
 		Session::flash('message', 'El Pais(a) &laquo;'. $request['str_paises'] .'&raquo;, ha sido Registrado Exitosamente');        
         return Redirect::route('pais.create');
@@ -130,5 +131,23 @@ class PaisController extends Controller
         $user->save();
         Session::flash('message', 'El Pais ha cambiado de Estado');
         return Redirect::route('pais.status',$id);       
+    }
+
+    public function delete($id){                   
+        $pais = Pais::findOrFail($id);           
+        return view('pais.delete',['pais'=>$pais])->with('page_title', 'Eliminar');                    
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        Pais::destroy($id);
+        Session::flash('message', 'Pais Eliminado Exitosamente');
+        return Redirect::route('pais.index');
     }
 }

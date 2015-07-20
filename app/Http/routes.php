@@ -88,9 +88,33 @@ Route::group(['middleware' => 'auth'], function()
 	    Route::get('show/{id}', ['uses' => 'PaisController@show','as' => 'pais.show']); 
 	    // Desactivar Pais
 	 	Route::get('status/{id}',array('uses' => 'PaisController@status', 'as' => 'pais.status'));
-	 	Route::put('status/{id}', 'PaisController@statusChange');	 	
+	 	Route::put('status/{id}', 'PaisController@statusChange');	
+	 	// Delete Pais 
+	 	Route::get('delete/{id}',array('uses' => 'PaisController@delete', 'as' => 'pais.delete'));
+	 	Route::delete('delete/{id}',array('uses' => 'PaisController@destroy', 'as' => 'pais.destroy')); 	
 	});
 	// Fin (Routes Pais)
+
+	// Routes Marca
+	Route::group(array('prefix' => 'marca'), function() {
+		// All Marcas
+		Route::get('/', ['uses' => 'MarcaController@index','as' => 'marca.index']);
+		// Agregar Marca
+		Route::get('add/', ['uses' => 'MarcaController@create','as' => 'marca.create']);
+	    Route::post('add', 'MarcaController@store');
+	    // Editar Marca
+	 	Route::get('edit/{id}', ['uses' => 'MarcaController@edit','as' => 'marca.edit']);
+	 	Route::put('edit/{id}', ['uses' => 'MarcaController@update','as' => 'marca.update']);	
+	 	// Ver Marca
+	    Route::get('show/{id}', ['uses' => 'MarcaController@show','as' => 'marca.show']); 
+	    // Desactivar Marca
+	 	Route::get('status/{id}',array('uses' => 'MarcaController@status', 'as' => 'marca.status'));
+	 	Route::put('status/{id}', 'MarcaController@statusChange');	
+	 	// Delete Marca 
+	 	Route::get('delete/{id}',array('uses' => 'MarcaController@delete', 'as' => 'marca.delete'));
+	 	Route::delete('delete/{id}',array('uses' => 'MarcaController@destroy', 'as' => 'marca.destroy')); 	
+	});
+	// Fin (Routes Marca)
 
 });
 // Fin Middleware

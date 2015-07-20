@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Troovami\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\User;
+use Troovami\Http\Requests;
+use Troovami\Http\Controllers\Controller;
+use Troovami\User;
 use Session;
 use Redirect;
 use DB;

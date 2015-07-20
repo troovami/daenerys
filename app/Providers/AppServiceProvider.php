@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Troovami\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

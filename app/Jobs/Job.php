@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace Troovami\Jobs;
 
 use Illuminate\Bus\Queueable;
 

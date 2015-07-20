@@ -35,10 +35,7 @@
                 <i class="fa fa-user-secret"></i> <span>Administradores</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{route('admin.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>
-                <!--<li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Admin</a></li>
-                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Admin</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Admin</a></li>-->
+                <li><a href="{{route('admin.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>                
                 <li><a href="{{route('admin.index')}}"><i class="fa fa-users text-light-blue"></i> All Admins</a></li>
                 <li><a href="{{route('admin.profile')}}"><i class="fa fa-user-secret"></i> Mi Perfil</a></li>
               </ul>
@@ -131,7 +128,8 @@
                 <i class="fa fa-bullseye"></i> <span>Marcas</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
+                <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
+                <li><a href="{{route('marca.index')}}"><i class="fa fa-flag text-light-blue"></i> All Paises</a></li>
                 <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Marca</a></li>
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Marca</a></li>
                 <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Marca</a></li>

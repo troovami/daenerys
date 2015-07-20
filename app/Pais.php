@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Troovami;
 
 use Illuminate\Database\Eloquent\Model;
 
