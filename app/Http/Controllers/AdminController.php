@@ -98,9 +98,9 @@ class AdminController extends Controller
      */
     public function update($id, Request $request)
     {
-        // "         uu";
-        $request['name']  = trim($request['name']);
-        return $request['name'];
+        
+        //$request['name']  = trim($request['name']);
+        //return $request['name'];
     	$this->validate($request, [
 	        'name'         => 'required|max:255|unique:tbl_admins,name,'.$id,
             'str_cedula'   => 'required|max:255|unique:tbl_admins,str_cedula,'.$id,   

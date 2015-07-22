@@ -14,9 +14,9 @@
           <div class="row">
           	<div class="col-md-4">
   			@if ($user->bol_eliminado == 0)
-		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/lena-headey.png') }}" alt="..."></p>
+		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
 		  	   @else
-		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/ned-stark.png') }}" alt="..."></p>
+		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-offline.png') }}" alt="..."></p>
 		  	   @endif
   			<h2 class="text-center">&laquo; {{$user->name}} &raquo;</h2>
   			</div>

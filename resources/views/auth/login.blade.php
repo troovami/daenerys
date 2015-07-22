@@ -4,7 +4,12 @@
 
 <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>Admin</b> Troovami</a>
+
+        <a href="#">
+        <p class="text-center"><img style="width:90px;" class="" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
+        <b>Admin</b> Troovami
+
+        </a>
 		  			
       </div><!-- /.login-logo -->
       @if (count($errors) > 0)

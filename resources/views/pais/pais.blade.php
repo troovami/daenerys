@@ -43,7 +43,8 @@
                     <td>
                       @if($pais->blb_img==NULL)
                         <i class="fa fa-flag text-red"></i>
-                      @else
+                      @else                      
+
                         <img class="img-rounded" style="width:100px;" src="data:{{$pais->format}};base64,{{$pais->blb_img}}" />
                       @endif                        
                     </td>

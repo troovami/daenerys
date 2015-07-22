@@ -5,7 +5,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="{{ asset('images/daenerys.png') }}" class="img-circle" alt="User Image" />
+              <img src="{{ asset('images/troovami-logo-online.png') }}" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p> &laquo; {{ Auth::user()->name }} &raquo;</p>              
@@ -79,7 +79,18 @@
                 <li><a href="{{route('pais.index')}}"><i class="fa fa-flag text-light-blue"></i> All Paises</a></li>
               </ul>
             </li>           
-            <!-- /fin -->            
+            <!-- /fin -->   
+            <!-- Marcas -->
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bullseye"></i> <span>Marcas</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
+                <li><a href="{{route('marca.index')}}"><i class="fa fa-flag text-light-blue"></i> All Marcas</a></li>
+              </ul>
+            </li>           
+            <!-- /fin -->         
             <!-- ############################################################################## -->
             <li class="header text-aqua"><i class="fa fa-tablet"></i> MOBILE</li>
             <!-- ############################################################################## -->
@@ -121,21 +132,7 @@
                 <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Vocalulario</a></li>
               </ul>
             </li>           
-            <!-- /fin -->
-            <!-- Marcas -->
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-bullseye"></i> <span>Marcas</span> <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
-                <li><a href="{{route('marca.index')}}"><i class="fa fa-flag text-light-blue"></i> All Paises</a></li>
-                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Marca</a></li>
-                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Marca</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Marca</a></li>
-              </ul>
-            </li>           
-            <!-- /fin -->
+            <!-- /fin -->            
             <!-- Frecuencias -->
             <li class="treeview">
               <a href="#">

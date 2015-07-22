@@ -4,7 +4,9 @@
 <div class="login-box">
       <div class="login-logo">
       	
-        <a href="#"><b>Recuperación</b> Password</a>
+        <a href="#">
+        <p class="text-center"><img style="width:90px;" class="" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
+        <b>Recuperación</b> Password</a>
 				
       </div><!-- /.login-logo -->      
       

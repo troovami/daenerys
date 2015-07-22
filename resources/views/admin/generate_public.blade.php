@@ -5,9 +5,13 @@
 <div class="login-box">
       <div class="login-logo">
       	@if ($user->bol_eliminado == FALSE)
-        <a href="#"><b>Generar </b> Password</a>
+        <a href="#">
+        <p class="text-center"><img style="width:90px;" class="" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
+        <b>Generar </b> Password</a>
 		@else
-		<a href="#"><b>Admin</b> Troovami</a>
+		<a href="#">
+    <p class="text-center"><img style="width:90px;" class="" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
+    <b>Admin</b> Troovami</a>
 		@endif  			
       </div><!-- /.login-logo -->      
       

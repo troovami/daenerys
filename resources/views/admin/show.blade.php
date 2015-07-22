@@ -5,7 +5,12 @@
 <section class="content col-md-6 col-md-push-3">
           <div class="row">
           	<div class="col-md-4">
-  			<p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/lena-headey.png') }}" alt="..."></p>
+          	@if ($user->bol_eliminado == 0)
+		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
+		  	   @else
+		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-offline.png') }}" alt="..."></p>
+		  	   @endif
+  			
   			<h2 class="text-center">&laquo; {{$user->name}} &raquo;</h2>
   			</div>
             <div class="col-md-8">

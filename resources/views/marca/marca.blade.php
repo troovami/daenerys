@@ -23,11 +23,11 @@
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-flag text-light-blue"></i> All Paises</h3>
+                  <h3 class="box-title"><i class="fa fa-flag text-light-blue"></i> All Marcas</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <p><i class="fa fa-users"></i> Total de Paises: <b>{{count($marcas)}}</b></p>
+                <p><i class="fa fa-users"></i> Total de Marcas: <b>{{count($marcas)}}</b></p>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>                        

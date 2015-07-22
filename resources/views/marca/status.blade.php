@@ -1,6 +1,6 @@
 @extends('template.app')
 @section('page', $page_title)
-@section('padre', 'Administracion')
+@section('padre', 'Marcas')
 @section('content')
 <section class="content col-md-6 col-md-push-3">
           @if (count($errors) > 0)
@@ -22,57 +22,36 @@
             </div>        
     	  @endif
           <div class="row">
-          	<div class="col-md-4">
-          	@if ($user->bol_eliminado == 0)
-		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
-		  	   @else
-		  		    <p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-offline.png') }}" alt="..."></p>
-		  	   @endif
+          	<div class="col-md-6">
+          	<p class="text-center">
+              <img class="img-rounded" style="width:230px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
+            </p>
   			
-  			<h2 class="text-center">&laquo; {{$user->name}} &raquo;</h2>
+  			     <h2 class="text-center">&laquo; {{$marca->str_marca}} &raquo;</h2>
   			</div>
-            <div class="col-md-8">
+            <div class="col-md-6">
               <div class="box box-purple">
                 <div class="box-header with-border">
-                  <h3 class="box-title"><i class="fa fa-ban"></i> {{$page_title}} del Administrador </h3>
+                  <h3 class="box-title"><i class="fa fa-ban"></i> {{$page_title}} de la Marca </h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
                   	<tbody>
 		  			<tr>
-		  			<th class="text-right">Usuario:</th>
-		  			<td>{{$user->name}}</td>
-		  			
-		  			
-		  			</tr>
-		  			<tr>
-		  				<th class="text-right">Nombre Completo:</th>
-		  				<td>{{$user->str_nombre}}, {{$user->str_apellido}}</td>
-		  			</tr>
-		  			<tr>
-		  				<th class="text-right">Correo:</th>
-		  				<td>{{$user->email}}</td>
-		  			</tr>		  			
-		  			<tr>
-		  				<th class="text-right">Fecha de Creación:</th>
-		  				<td>{{$user->created_at}}</td>
-		  			</tr>		  					  			
-		  				<th class="text-right">Estado:</th>
-		  				@if ($user->bol_eliminado == 0)
-		  					<td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
-		  				@else
-		  					<td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
-		  				@endif
-		  			<tr>
-		  			</tr>
-		  			<tr>
-              @if ($user->password == '')
-              <th class="text-right">Estado Inactivo:</th>
-              <td><span class="label label-default"><i class="fa fa-eraser"></i> Password Resetado, Imposible cambiar el Estado</span></td>
+            <th class="text-right">Marca:</th>
+            <td>{{$marca->str_marca}}</td>
+            </tr>
+            <tr>
+              <th class="text-right">Estado:</th>
+              @if ($marca->bol_eliminado == 0)
+                <td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
               @else
-              <th class="text-right">Cambiar Estado:</th>
-              <td>
-                {!! Form::model($user,['route'=>['admin.status',$user->id],'method'=>'PUT']) !!}
+                <td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
+              @endif
+            </tr>
+		  			<tr>
+              <td colspan="2">
+                {!! Form::model($marca,['route'=>['marca.status',$marca->id],'method'=>'PUT']) !!}
                     <div class="input-group col-md-12">
                             {!! Form::select('bol_eliminado',
                                       ([
@@ -92,11 +71,6 @@
                  {!! Form::close() !!} 
            
                 </td>
-                @endif
-		  				
-		  				<td>
-		  					 
-		  				</td>
 		  			</tr>
 		  			   		  			
 		  			</tbody>			  		

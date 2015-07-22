@@ -204,13 +204,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="https://avatars2.githubusercontent.com/u/12239594?v=3&s=460" class="user-image" alt="User Image" />
+                  <img src="{{ asset('images/troovami-logo-online.png') }}" class="user-image" alt="User Image" />
                   <span class="hidden-xs">{{ Auth::user()->str_nombre }}, {{ Auth::user()->str_apellido }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="{{ asset('images/daenerys.png') }}" class="img-circle" alt="User Image" />
+                    <img src="{{ asset('images/troovami-logo-online.png') }}" class="img-circle" alt="User Image" />
                     <p>
                       {{ Auth::user()->name }}
                       <small>Miembro desde {{ Auth::user()->created_at }}</small>
