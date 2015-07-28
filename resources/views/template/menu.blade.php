@@ -48,10 +48,8 @@
                 <i class="fa fa-user-plus"></i> <span>Personas</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Persona</a></li>
-                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Persona</a></li>
-                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Persona</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Persona</a></li>
+                <li class="active"><a href="{{route('persona.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Persona</a></li>
+                <li><a href="{{route('persona.index')}}"><i class="fa fa-users text-light-blue"></i> All Personas</a></li>                
               </ul>
             </li>           
             <!-- /fin -->
@@ -87,7 +85,7 @@
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
-                <li><a href="{{route('marca.index')}}"><i class="fa fa-flag text-light-blue"></i> All Marcas</a></li>
+                <li><a href="{{route('marca.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</a></li>
               </ul>
             </li>           
             <!-- /fin -->         

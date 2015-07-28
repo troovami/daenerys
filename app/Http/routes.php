@@ -116,6 +116,27 @@ Route::group(['middleware' => 'auth'], function()
 	});
 	// Fin (Routes Marca)
 
+	// Routes Persona
+	Route::group(array('prefix' => 'persona'), function() {
+		// All Personas
+		Route::get('/', ['uses' => 'PersonaController@index','as' => 'persona.index']);
+		// Agregar Persona
+		Route::get('add/', ['uses' => 'PersonaController@create','as' => 'persona.create']);
+	    Route::post('add', 'PersonaController@store');
+	    // Editar Persona
+	 	Route::get('edit/{id}', ['uses' => 'PersonaController@edit','as' => 'persona.edit']);
+	 	Route::put('edit/{id}', ['uses' => 'PersonaController@update','as' => 'persona.update']);	
+	 	// Ver Persona
+	    Route::get('show/{id}', ['uses' => 'PersonaController@show','as' => 'persona.show']); 
+	    // Desactivar Persona
+	 	Route::get('status/{id}',array('uses' => 'PersonaController@status', 'as' => 'persona.status'));
+	 	Route::put('status/{id}', 'PersonaController@statusChange');	
+	 	// Delete Persona 
+	 	Route::get('delete/{id}',array('uses' => 'PersonaController@delete', 'as' => 'persona.delete'));
+	 	Route::delete('delete/{id}',array('uses' => 'PersonaController@destroy', 'as' => 'persona.destroy')); 	
+	});
+	// Fin (Routes Persona)
+
 });
 // Fin Middleware
 /*  --------------------------------------------------- */

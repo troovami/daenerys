@@ -89,7 +89,7 @@
 			            <th class="text-center"><i class="fa fa-envelope-o"></i> Correo</th>
 			            <th class="text-center"><i class="fa fa-phone"></i> Teléfono</th>
 			            <th class="text-center"><i class="fa fa-clock-o"></i> Fecha de Creación</th>
-			            <th class="text-center"><i class="fa fa-cog"></i> Operacines</th>
+			            <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
                       </tr>
                     </thead>
                     <tbody>                    
