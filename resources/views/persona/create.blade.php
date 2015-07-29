@@ -98,7 +98,7 @@
                             {!! Form::input('text', 'str_pasaporte', null, ['class'=> 'form-control']) !!}
                         </div>                          
                         <div class="form-group col-md-3">
-                            <label>Pais</label>
+                            <label>Pais de Residencia</label>
                             
                             {!! Form::select('lng_idpais', 
                                                 (['' => 'Seleccione'] + $paises), 

@@ -62,16 +62,16 @@ class PersonaController extends Controller
             'mes'                   => 'required|max:255',
             'anio'                  => 'required|max:255',
             'str_ididentificacion'  => 'required|max:255|unique:tbl_personas',
-            'str_pasaporte'         => 'required|max:255|unique:tbl_personas',
+            'str_pasaporte'         => 'max:255|unique:tbl_personas',
             'lng_idpais'            => 'required|max:255',
             'password'              => 'required|min:6',
             'email'                 => 'required|email|max:255|unique:tbl_personas',
             'str_telefono'          => 'required|max:255',
             'lng_idrol'             => 'required|max:255',
-            'str_twitter'           => 'required|max:255|unique:tbl_personas',
-            'str_facebook'          => 'required|max:255|unique:tbl_personas',
-            'str_instagram'         => 'required|max:255|unique:tbl_personas',                               
-            'blb_img'               => 'required|image|mimes:jpeg,png',            
+            'str_twitter'           => 'max:255|unique:tbl_personas',
+            'str_facebook'          => 'max:255|unique:tbl_personas',
+            'str_instagram'         => 'max:255|unique:tbl_personas',                               
+            'blb_img'               => 'image|mimes:jpeg,png',            
         ]);
         $dmt_fecha_nacimiento = $request['anio'] .'-'. $request['mes'] .'-'. $request['dia'];
                 
@@ -123,6 +123,7 @@ class PersonaController extends Controller
             'genero.str_descripcion as genero', // Genero 
             'tbl_personas.dmt_fecha_nacimiento', 
             'tbl_personas.str_ididentificacion', 
+            'tbl_personas.str_telefono', 
             'tbl_personas.str_pasaporte', 
             'cat_paises.str_paises', // Pais
             'cat_paises.blb_img as bandera', // Bandera
@@ -148,7 +149,12 @@ class PersonaController extends Controller
             // Formato Bandera
             $c =  base64_decode($persona[0]->bandera);   
             $persona[0]->format_flag = finfo_buffer($b, $c, FILEINFO_MIME_TYPE);     
-        //return $persona;        
+        //return $persona;   
+
+        // Formatea la Fecha de Nacimiento         
+        $var = explode('-',$persona[0]->dmt_fecha_nacimiento);
+        $persona[0]->dmt_fecha_nacimiento = "$var[2]-$var[1]-$var[0]";   
+
         return view('persona.show',['persona'=>$persona])->with('page_title', 'Consultar');
 
     }
@@ -205,7 +211,6 @@ class PersonaController extends Controller
      */
     public function update($id, Request $request)
     {
-        //'str_marca'            => 'required|unique:cat_marcas,str_marca,'. $id,
         $this->validate($request, [
             'name'                  => 'required|max:255|unique:tbl_personas,name,'. $id,
             'str_nombre'            => 'required|max:255',
@@ -215,14 +220,14 @@ class PersonaController extends Controller
             'mes'                   => 'required|max:255',
             'anio'                  => 'required|max:255',
             'str_ididentificacion'  => 'required|max:255|unique:tbl_personas,str_ididentificacion,'. $id,
-            'str_pasaporte'         => 'required|max:255|unique:tbl_personas,str_pasaporte,'. $id,
+            'str_pasaporte'         => 'max:255|unique:tbl_personas,str_pasaporte,'. $id,
             'lng_idpais'            => 'required|max:255',            
             'email'                 => 'required|email|max:255|unique:tbl_personas,email,'. $id,
             'str_telefono'          => 'required|max:255',
             'lng_idrol'             => 'required|max:255',
-            'str_twitter'           => 'required|max:255|unique:tbl_personas,str_twitter,'. $id,
-            'str_facebook'          => 'required|max:255|unique:tbl_personas,str_facebook,'. $id,
-            'str_instagram'         => 'required|max:255|unique:tbl_personas,str_instagram,'. $id,                               
+            'str_twitter'           => 'max:255|unique:tbl_personas,str_twitter,'. $id,
+            'str_facebook'          => 'max:255|unique:tbl_personas,str_facebook,'. $id,
+            'str_instagram'         => 'max:255|unique:tbl_personas,str_instagram,'. $id,                               
             'blb_img'               => 'image|mimes:jpeg,png',            
         ]);
         $dmt_fecha_nacimiento = $request['anio'] .'-'. $request['mes'] .'-'. $request['dia'];
@@ -257,6 +262,62 @@ class PersonaController extends Controller
         return Redirect::route('persona.edit',$id);
     }
 
+    public function status($id)
+    {        
+        $persona = Persona::findOrFail($id);    
+        // Detectando el Tipo de Formato del la Imagen              
+        $a = base64_decode($persona->blb_img);
+        $b = finfo_open();            
+        //Agregando un nuevo atributo al array
+        $persona->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);              
+        return view('persona.status',['persona'=>$persona])->with('page_title', 'Estado');
+    }
+
+    public function statusChange($id, Request $request)
+    {
+        $this->validate($request, [
+            'bol_eliminado'         => 'required|boolean',            
+        ]);             
+        $persona = Persona::find($id);
+        $persona->fill($request->all());
+        $persona->save();
+        Session::flash('message', 'El Usuario ha cambiado de Estado');
+        return Redirect::route('persona.status',$id);       
+    }
+
+    public function certificate($id)
+    {        
+        $persona = Persona::findOrFail($id);    
+        // Detectando el Tipo de Formato del la Imagen              
+        $a = base64_decode($persona->blb_img);
+        $b = finfo_open();            
+        //Agregando un nuevo atributo al array
+        $persona->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);              
+        return view('persona.certificate',['persona'=>$persona])->with('page_title', 'Certificado');
+    }
+
+    public function certificateChange($id, Request $request)
+    {
+        $this->validate($request, [
+            'bol_certificado'         => 'required|boolean',            
+        ]);             
+        $persona = Persona::find($id);
+        $persona->fill($request->all());
+        $persona->save();
+        Session::flash('message', 'El Usuario ha cambiado el Estado del Certificado');
+        return Redirect::route('persona.certificate',$id);       
+    }
+
+    public function delete($id){                   
+        $persona = Persona::findOrFail($id);    
+        // Detectando el Tipo de Formato del la Imagen              
+        $a = base64_decode($persona->blb_img);
+        $b = finfo_open();            
+        //Agregando un nuevo atributo al array
+        $persona->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+        return view('persona.delete',['persona'=>$persona])->with('page_title', 'Eliminar');                            
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -265,6 +326,8 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Persona::destroy($id);
+        Session::flash('message', 'Usuario Eliminado Exitosamente');
+        return Redirect::route('persona.index',$id);
     }
 }

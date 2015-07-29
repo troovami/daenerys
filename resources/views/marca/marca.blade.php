@@ -49,7 +49,7 @@
                       @endif                        
                     </td>
                     <td>{{$marca->str_marca}}</td>                    
-                    <td>{{$marca->str_tipo}}</td>
+                    <td>{{$marca->str_descripcion}}</td>
 			            	@if ($marca->bol_eliminado == 0)
                       <td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
                       @else

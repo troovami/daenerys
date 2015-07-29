@@ -21,8 +21,9 @@
                   <b><i class="fa fa-cog"></i> Operaciones </b>
                     <div class="btn-group">
 			        	<a class="btn btn-warning btn-flat" href="{{route('persona.edit',$persona[0]->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>	
-			            <a class="btn bg-purple btn-flat" href="#" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>
+			            <a class="btn bg-purple btn-flat" href="{{route('persona.status',$persona[0]->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>
 			            <a class="btn btn-danger btn-flat" href="{{route('persona.delete',$persona[0]->id)}}" title="Eliminar"><i class="fa fa-close"></i></a>
+			            <a class="btn btn-success btn-flat" href="{{route('persona.certificate',$persona[0]->id)}}" title="Cambiar Estado del Certificado"><i class="fa fa-certificate"></i></a>
 			        </div>
                   </div>
                 </div><!-- /.box-header -->
@@ -54,21 +55,15 @@
 		  			</tr>
 		  			
 		  			<tr>
-		  				<th class="text-right">País:</th>
+		  				<th class="text-right">Pais de Residencia:</th>
 			  			<td>{{$persona[0]->str_paises}} <img class="img-rounded" style="width:30px;" src="data:{{$persona[0]->format_flag}};base64,{{$persona[0]->bandera}}" /></td>
-		  				<th class="text-right">Estado y Certificado:</th>
+		  				<th class="text-right">Estado:</th>
 		  				<td>
 		  				@if ($persona[0]->bol_eliminado == 0)
 		  					<span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span>
 		  				@else
 		  					<span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span>
-		  				@endif
-		  				@if ($persona[0]->bol_certificado == NULL)		  				
-		  					<span class="label label-default"><i class="fa fa-certificate"></i> NO CERTIFICADO</span>
-		  				@else
-		  					<span class="label label-primary"><i class="fa fa-certificate"></i> CERTIFICADO</span>
-		  				@endif		  					
-		  					
+		  				@endif	  						  					
 		  				</td>
 		  			</tr>
 
@@ -78,6 +73,18 @@
 		  				<th class="text-right">Rol:</th>
 		  				<td>{{$persona[0]->str_rol}}</td>
 		  			</tr>	
+		  			<tr>
+			  			<th class="text-right">Teléfono:</th>
+			  			<td>{{$persona[0]->str_telefono}}</td>
+		  				<th class="text-right">Certificado:</th>
+		  				<td>
+		  					@if ($persona[0]->bol_certificado == false)		  				
+		  					<span class="label label-default"><i class="fa fa-certificate"></i> NO CERTIFICADO</span>
+		  					@else
+		  					<span class="label label-primary"><i class="fa fa-certificate"></i> CERTIFICADO</span>
+		  					@endif
+		  				</td>
+		  			</tr>
 
 		  			<tr>
 			  			<th class="text-right"><i class="fa fa-twitter"></i> Twitter:</th>
@@ -92,13 +99,7 @@
 		  				<th class="text-right">Servicio:</th>
 		  				<td>{{$persona[0]->servicio}}</td>
 		  			</tr>
-
-		  			<tr>
-			  			<th class="text-right">Email:</th>
-			  			<td>{{$persona[0]->email}}</td>
-		  				<th class="text-right">Rol:</th>
-		  				<td>{{$persona[0]->str_rol}}</td>
-		  			</tr>
+		  			
             		</tbody>			  		
                   </table>                  
                 </div>

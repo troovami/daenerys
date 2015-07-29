@@ -131,9 +131,19 @@ Route::group(['middleware' => 'auth'], function()
 	    // Desactivar Persona
 	 	Route::get('status/{id}',array('uses' => 'PersonaController@status', 'as' => 'persona.status'));
 	 	Route::put('status/{id}', 'PersonaController@statusChange');	
+	 	// Certificar Persona
+	 	Route::get('certificate/{id}',array('uses' => 'PersonaController@certificate', 'as' => 'persona.certificate'));
+	 	Route::put('certificate/{id}', 'PersonaController@certificateChange');
 	 	// Delete Persona 
 	 	Route::get('delete/{id}',array('uses' => 'PersonaController@delete', 'as' => 'persona.delete'));
-	 	Route::delete('delete/{id}',array('uses' => 'PersonaController@destroy', 'as' => 'persona.destroy')); 	
+	 	Route::delete('delete/{id}',array('uses' => 'PersonaController@destroy', 'as' => 'persona.destroy')); 
+	 	// Resetar Password de una Persona
+	 	Route::get('reset/{id}',array('uses' => 'PersonaController@reset', 'as' => 'persona.reset'));
+	 	Route::put('reset/{id}', 'PersonaController@resetChange');
+	 	// Generar Password de una Persona	 	
+	 		// Un Administrador genera el Nuevo Password de una Persona
+	 		Route::get('generate/{id}',array('uses' => 'PersonaController@generate', 'as' => 'persona.generate'));
+	 		Route::put('generate/{id}', 'PersonaController@generatePassword');	
 	});
 	// Fin (Routes Persona)
 

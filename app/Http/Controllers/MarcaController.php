@@ -23,7 +23,7 @@ class MarcaController extends Controller
         $marcas= DB::table('cat_marcas')
         ->join('cat_datos_maestros', 'cat_marcas.lng_idtipo', '=', 'cat_datos_maestros.id')
         ->select(
-            'cat_datos_maestros.str_tipo', 
+            'cat_datos_maestros.str_descripcion', 
             'cat_marcas.id',
             'cat_marcas.str_marca',            
             'cat_marcas.bol_eliminado',
@@ -49,8 +49,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        $tipo = DB::table('cat_datos_maestros')->whereIn('str_tipo',['mobile','vehiculos'])->orderBy('str_tipo')->lists('str_tipo','id');
-        //return $tipo;
+        $tipo = DB::table('cat_datos_maestros')->where('str_tipo','tipo_marca')->orderBy('str_tipo')->lists('str_descripcion','id');
         return view('marca.create',compact('tipo'))->with('page_title', 'Agregar');        
     }
 
@@ -96,7 +95,7 @@ class MarcaController extends Controller
         $marca= DB::table('cat_marcas')->where('cat_marcas.id', '=',$id)
         ->join('cat_datos_maestros', 'cat_marcas.lng_idtipo', '=', 'cat_datos_maestros.id')
         ->select(
-            'cat_datos_maestros.str_tipo', 
+            'cat_datos_maestros.str_descripcion', 
             'cat_marcas.id',
             'cat_marcas.str_marca',            
             'cat_marcas.bol_eliminado',
@@ -113,7 +112,7 @@ class MarcaController extends Controller
             $b = finfo_open();            
             //Agregando un nuevo atributo al array
             $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);            
-            $value->str_tipo = ucfirst(strtolower($value->str_tipo));
+            $value->str_descripcion = ucfirst(strtolower($value->str_descripcion));
         }         
         return view('marca.show',['marca'=>$marca])->with('page_title', 'Consultar');
     }
@@ -126,7 +125,7 @@ class MarcaController extends Controller
      */
     public function edit($id)
     {        
-        $tipo = DB::table('cat_datos_maestros')->whereIn('str_tipo',['mobile','vehiculos'])->orderBy('str_tipo')->lists('str_tipo','id');
+        $tipo = DB::table('cat_datos_maestros')->where('str_tipo','tipo_marca')->orderBy('str_tipo')->lists('str_descripcion','id');
         $marca = Marca::findOrFail($id);
         $a = base64_decode($marca->blb_img);
         $b = finfo_open(); 

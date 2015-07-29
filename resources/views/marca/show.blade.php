@@ -38,7 +38,7 @@
 		  			</tr>
 		  			<tr>
 		  			<th class="text-right">Tipo:</th>
-		  			<td>{{$marca[0]->str_tipo}}</td>
+		  			<td>{{$marca[0]->str_descripcion}}</td>
 		  			</tr>
 		  			<tr>
 		  				<th class="text-right">Estado:</th>

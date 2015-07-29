@@ -1,6 +1,6 @@
 @extends('template.app')
 @section('page', $page_title)
-@section('padre', 'Administracion')
+@section('padre', 'Personas')
 @section('content')
 <div class="container">
     <div class="row">
@@ -101,7 +101,7 @@
                             {!! Form::input('text', 'str_pasaporte', null, ['class'=> 'form-control']) !!}
                         </div>                          
                         <div class="form-group col-md-3">
-                            <label>Pais</label>
+                            <label>Pais de Residencia</label>
                             
                             {!! Form::select('lng_idpais', 
                                                 (['' => 'Seleccione'] + $paises), 
