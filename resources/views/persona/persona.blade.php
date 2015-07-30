@@ -67,8 +67,8 @@
 			                          <a class="btn btn-info btn-flat" href="{{route('persona.show',$persona->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
 			                          <a class="btn bg-purple btn-flat" href="{{route('persona.status',$persona->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>
 			                          <a class="btn btn-danger btn-flat" href="{{route('persona.delete',$persona->id)}}" title="Eliminar"><i class="fa fa-user-times"></i></a>
-			                          <a class="btn btn-default btn-flat" href="#" title="Resetar Password"><i class="fa fa-eraser"></i></a>
-			                          <a class="btn btn-primary btn-flat" href="#" title="Generar Password"><i class="fa fa-shield"></i></a>
+			                          <a class="btn btn-default btn-flat" href="{{route('persona.reset',$persona->id)}}" title="Resetar Password"><i class="fa fa-eraser"></i></a>
+			                          <a class="btn btn-primary btn-flat" href="{{route('persona.generate',$persona->id)}}" title="Generar Password"><i class="fa fa-shield"></i></a>
                                 <a class="btn btn-success btn-flat" href="{{route('persona.certificate',$persona->id)}}" title="Cambiar Estado del Certificado"><i class="fa fa-certificate"></i></a>
 
 			                    </div>

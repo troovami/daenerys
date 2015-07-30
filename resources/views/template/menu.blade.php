@@ -26,6 +26,23 @@
           <ul class="sidebar-menu">
             <li><a href="{{route('home')}}"><i class="fa fa-home"></i> <span>Principal</span></a></li>
             <!-- ############################################################################## -->
+            <li class="header text-aqua"><i class="fa fa-car"></i> CARS</li>
+            <!-- ############################################################################## -->
+            <!-- Vehiculos -->
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bus"></i> <span>Vehiculos</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{route('vehicles.index')}}"><i class="fa fa-car text-light-blue"></i> All Vehiculos</a></li>
+                <li><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Vehiculo</a></li>
+                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Vehiculo</a></li>
+                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Vehiculo</a></li>
+                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Vehiculo</a></li>
+              </ul>
+            </li>           
+            <!-- /fin -->
+            <!-- ############################################################################## -->
             <li class="header text-aqua"><i class="fa fa-globe"></i> MENU GLOBAL</li>
             <!-- ############################################################################## -->
             
@@ -218,23 +235,7 @@
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Ventas</a></li>
               </ul>
             </li>           
-            <!-- /fin -->
-            <!-- ############################################################################## -->
-            <li class="header text-aqua"><i class="fa fa-car"></i> CARS</li>
-            <!-- ############################################################################## -->
-            <!-- Vehiculos -->
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-bus"></i> <span>Vehiculos</span> <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="#"><i class="fa fa-plus-square text-green"></i> Agregar Vehiculo</a></li>
-                <li><a href="#"><i class="fa fa-pencil text-yellow"></i> Editar Vehiculo</a></li>
-                <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Vehiculo</a></li>
-                <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Vehiculo</a></li>
-              </ul>
-            </li>           
-            <!-- /fin -->
+            <!-- /fin -->            
             <!-- ############################################################################## -->
             <li class="header text-aqua"><i class="fa fa-building"></i> HOUSE</li>
             <!-- ############################################################################## -->

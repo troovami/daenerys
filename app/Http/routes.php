@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	// Delete Admin 
 	 	Route::get('delete/{id}',array('uses' => 'AdminController@delete', 'as' => 'admin.delete'));
 	 	Route::delete('delete/{id}',array('uses' => 'AdminController@destroy', 'as' => 'admin.destroy'));
-	 	// Desactivar Usuario
+	 	// Desactivar/Activar Usuario
 	 	Route::get('status/{id}',array('uses' => 'AdminController@status', 'as' => 'admin.status'));
 	 	Route::put('status/{id}', 'AdminController@statusChange');
 	 	// Resetar Password de Administrador
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	Route::put('edit/{id}', ['uses' => 'PaisController@update','as' => 'pais.update']);	
 	 	// Ver Pais
 	    Route::get('show/{id}', ['uses' => 'PaisController@show','as' => 'pais.show']); 
-	    // Desactivar Pais
+	    // Desactivar/Activar Pais
 	 	Route::get('status/{id}',array('uses' => 'PaisController@status', 'as' => 'pais.status'));
 	 	Route::put('status/{id}', 'PaisController@statusChange');	
 	 	// Delete Pais 
@@ -107,7 +107,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	Route::put('edit/{id}', ['uses' => 'MarcaController@update','as' => 'marca.update']);	
 	 	// Ver Marca
 	    Route::get('show/{id}', ['uses' => 'MarcaController@show','as' => 'marca.show']); 
-	    // Desactivar Marca
+	    // Desactivar/Activar Marca
 	 	Route::get('status/{id}',array('uses' => 'MarcaController@status', 'as' => 'marca.status'));
 	 	Route::put('status/{id}', 'MarcaController@statusChange');	
 	 	// Delete Marca 
@@ -128,7 +128,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	Route::put('edit/{id}', ['uses' => 'PersonaController@update','as' => 'persona.update']);	
 	 	// Ver Persona
 	    Route::get('show/{id}', ['uses' => 'PersonaController@show','as' => 'persona.show']); 
-	    // Desactivar Persona
+	    // Desactivar/Activar Persona
 	 	Route::get('status/{id}',array('uses' => 'PersonaController@status', 'as' => 'persona.status'));
 	 	Route::put('status/{id}', 'PersonaController@statusChange');	
 	 	// Certificar Persona
@@ -146,6 +146,31 @@ Route::group(['middleware' => 'auth'], function()
 	 		Route::put('generate/{id}', 'PersonaController@generatePassword');	
 	});
 	// Fin (Routes Persona)
+
+	// Routes Vehiculo
+	Route::group(array('prefix' => 'vehicles'), function() {
+		// All Vehiculos
+		Route::get('/', ['uses' => 'VehiculoController@index','as' => 'vehicles.index']);
+		// Agregar Vehiculo
+		/*
+		Route::get('add/', ['uses' => 'VehiculoController@create','as' => 'vehicles.create']);
+	    Route::post('add', 'VehiculoController@store');
+	    */
+	    // Editar Marca
+	 	/*
+	 	Route::get('edit/{id}', ['uses' => 'MarcaController@edit','as' => 'vehicles.edit']);
+	 	Route::put('edit/{id}', ['uses' => 'MarcaController@update','as' => 'vehicles.update']);	
+	 	*/
+	 	// Ver Vehiculo
+	    Route::get('show/{id}', ['uses' => 'VehiculoController@show','as' => 'vehicles.show']); 
+	    // Desactivar/Activar Vehiculo
+	 	Route::get('status/{id}',array('uses' => 'VehiculoController@status', 'as' => 'vehicles.status'));
+	 	Route::put('status/{id}', 'VehiculoController@statusChange');	
+	 	// Delete Vehiculo 
+	 	Route::get('delete/{id}',array('uses' => 'VehiculoController@delete', 'as' => 'vehicles.delete'));
+	 	Route::delete('delete/{id}',array('uses' => 'VehiculoController@destroy', 'as' => 'vehicles.destroy')); 	
+	});
+	// Fin (Routes Vehiculo)
 
 });
 // Fin Middleware

@@ -330,4 +330,60 @@ class PersonaController extends Controller
         Session::flash('message', 'Usuario Eliminado Exitosamente');
         return Redirect::route('persona.index',$id);
     }
+
+    public function reset($id)
+    { 
+        $persona = Persona::findOrFail($id);    
+        // Detectando el Tipo de Formato del la Imagen              
+        $a = base64_decode($persona->blb_img);
+        $b = finfo_open();            
+        //Agregando un nuevo atributo al array
+        $persona->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);        
+        return view('persona.reset',['persona'=>$persona])->with('page_title', 'Reset Password');                    
+    }
+
+    public function resetChange($id, Request $request)
+    {
+        $this->validate($request, [
+            'bol_eliminado' => 'required|boolean',            
+            'password'      => 'required',
+        ]); 
+
+        $request['bol_eliminado'] = 1;
+        $request['password'] = '';        
+        $persona = Persona::find($id);
+        $persona->fill($request->all());
+        $persona->save();
+        Session::flash('message', 'Password Reseteado de manera Exitosa');
+        return Redirect::route('persona.reset',$id);
+               
+    }
+
+    public function generate($id){                   
+        $persona = Persona::findOrFail($id);    
+        // Detectando el Tipo de Formato del la Imagen              
+        $a = base64_decode($persona->blb_img);
+        $b = finfo_open();            
+        //Agregando un nuevo atributo al array
+        $persona->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);        
+        return view('persona.generate',['persona'=>$persona])->with('page_title', 'Generar Password');                    
+    }
+
+    public function generatePassword($id, Request $request)
+    {
+        
+        $this->validate($request, [
+            'bol_eliminado' => 'required|boolean',            
+            'password'      => 'required|confirmed|min:6',
+        ]); 
+
+        $request['bol_eliminado'] = 0;
+        $request['password'] = bcrypt($request['password']);        
+        $persona = Persona::find($id);
+        $persona->fill($request->all());
+        $persona->save();
+        Session::flash('message', 'Password Generado de manera Exitosa');
+        return Redirect::route('persona.generate',$id);
+               
+    }
 }
