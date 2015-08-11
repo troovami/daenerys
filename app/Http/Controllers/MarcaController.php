@@ -328,6 +328,7 @@ class MarcaController extends Controller
         ->select(
             'cat_marcas.*'                         
                 )
+        ->distinct()
         ->get(); 
         //return $marcas;
         foreach ($marcas as $key => $value) {                    
