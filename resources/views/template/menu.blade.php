@@ -103,6 +103,8 @@
               <ul class="treeview-menu">
                 <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
                 <li><a href="{{route('marca.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</a></li>
+                <li><a href="{{route('marca.mobile')}}"><i class="fa fa-tablet text-light-blue"></i> Marcas Móviles</a></li>
+                <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-car text-light-blue"></i> Marcas Vehículos</a></li>
               </ul>
             </li>           
             <!-- /fin -->         

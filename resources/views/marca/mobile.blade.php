@@ -23,7 +23,7 @@
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-flag text-light-blue"></i> All Marcas</h3>
+                  <h3 class="box-title"><i class="fa fa-flag text-light-blue"></i>Marcas Asociadas a Móviles</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">

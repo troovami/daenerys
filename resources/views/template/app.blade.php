@@ -12,7 +12,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons 2.0.0 -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-
+    <!-- Select2 -->
+    {!! Html::style('admin-lte/plugins/select2/select2.min.css') !!} 
     <!-- Theme style -->    
     {!! Html::style('admin-lte/dist/css/AdminLTE.min.css') !!}    
     <!-- AdminLTE Skins. Choose a skin from the css/skins

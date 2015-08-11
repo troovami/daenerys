@@ -20,11 +20,8 @@ class Marca extends Model
      */
     protected $fillable = [
                             'str_marca',
-                            'str_friendly_url',
-                            'str_meta_descripcion',
-                            'str_meta_keyword',
-                            'str_website',
-                            'lng_idtipo',
+                            'str_friendly_url',                            
+                            'str_website',                            
                             'bol_eliminado',
                             'blb_img'                            
                           ];

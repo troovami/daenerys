@@ -2,6 +2,8 @@
 @section('page', $page_title)
 @section('padre', 'Marcas')
 @section('content')
+
+    
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -35,33 +37,30 @@
                             {!! Form::input('text', 'str_marca', null, ['class'=> 'form-control']) !!}
                     </div> 
                     <div class="form-group col-md-6">
-                            <label>Tipo</label>
-                            
-                            {!! Form::select('lng_idtipo', 
-                                                (['' => 'Seleccione'] + $tipo), 
-                                                null, 
-                                                ['class' => 'form-control']
-                                            ) 
-                            !!} 
-                            
-                    </div>                                                                  
-                    <div class="form-group col-md-6">
                             <label>Imagen</label>
                             {!! Form::file('blb_img') !!}                            
                     </div>
                     
+                    
+                    <div class="form-group col-md-12">
+                            <label>Tipo(s)</label>
+                            
+                            {!! Form::select('lng_idtipo[]', 
+                                                ($tipo), 
+                                                null, 
+                                                ['class' => 'form-control select2',
+                                                 'data-placeholder' => 'Indique los Tipos Ej: Carros',
+                                                 'multiple' => 'multiple']
+                                            ) 
+                            !!} 
+                            
+                    </div>                                                                  
+                    
+                    
                     <div class="form-group col-md-6">
                             <label>Friendly URL</label>
                             {!! Form::input('text', 'str_friendly_url', null, ['class'=> 'form-control']) !!}
-                    </div>
-                    <div class="form-group col-md-12">
-                            <label>Meta Description</label>
-                            {!! Form::textarea('str_meta_descripcion', null, ['class'=> 'form-control','rows'=> '3']) !!}
-                    </div>
-                    <div class="form-group col-md-6">
-                            <label>Meta Keyword</label>
-                            {!! Form::input('text', 'str_meta_keyword', null, ['class'=> 'form-control']) !!}
-                    </div>
+                    </div>                    
                     <div class="form-group col-md-6">
                             <label>Website Ruta</label>
                             {!! Form::input('text', 'str_website', null, ['class'=> 'form-control']) !!}
@@ -80,4 +79,17 @@
     </div>
     <!-- .row -->
 </div>
+ 
+@section('footer')
+    <!-- Select2 -->
+    {!! Html::script('admin-lte/plugins/select2/select2.full.min.js') !!}
+    <script type="text/javascript">
+      $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+
+        
+      });
+    </script>
+@endsection
 @endsection

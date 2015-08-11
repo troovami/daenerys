@@ -23,11 +23,15 @@
     	  @endif
           <div class="row">
           	<div class="col-md-6">
-          	<p class="text-center">
-              <img class="img-rounded" style="width:230px;" src="data:{{$marca[0]->format}};base64,{{$marca[0]->blb_img}}" />
+          	<p class="text-center">           
+            @if ($marca->format == "application/x-empty")
+              <img class="img-rounded" style="width:230px;" src="{{ asset('images/troovami-logo-offline.png') }}" />
+            @else
+              <img class="img-rounded" style="width:230px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
+            @endif              
             </p>
   			
-  			     <h2 class="text-center">&laquo; {{$marca[0]->str_marca}} &raquo;</h2>
+  			     <h2 class="text-center">&laquo; {{$marca->str_marca}} &raquo;</h2>
   			</div>
             <div class="col-md-6">
               <div class="box box-purple">
@@ -39,11 +43,21 @@
                   	<tbody>
 		  			<tr>
             <th class="text-right">Marca:</th>
-            <td>{{$marca[0]->str_marca}}</td>
+            <td>{{$marca->str_marca}}</td>
             </tr>
+            @if ($tipos != FALSE)
+            <tr>            
+            <th class="text-right">Tipo(s):</th>
+            <td>
+              @for ($i = 0; $i < count($tipos); $i++)
+                <span class="label label-primary">{{$tipos[$i]->str_descripcion}}</span>
+              @endfor 
+            </td>
+            </tr>
+            @endif
             <tr>
               <th class="text-right">Estado:</th>
-              @if ($marca[0]->bol_eliminado == 0)
+              @if ($marca->bol_eliminado == 0)
                 <td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
               @else
                 <td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
@@ -52,7 +66,7 @@
             <tr>
               <th class="text-right">Accion:</th>
               <td>
-                {!! Form::open(['route'=>['marca.destroy',$marca[0]->id],'method'=>'DELETE']) !!}    {!!Form::button('<i class="fa fa-close"></i> Eliminar Marca', array('class'=>'btn btn-danger btn-block', 'type'=>'submit')) !!}     
+                {!! Form::open(['route'=>['marca.destroy',$marca->id],'method'=>'DELETE']) !!}    {!!Form::button('<i class="fa fa-close"></i> Eliminar Marca', array('class'=>'btn btn-danger btn-block', 'type'=>'submit')) !!}     
                   {!! Form::close() !!}
               </td>
             </tr>	  			

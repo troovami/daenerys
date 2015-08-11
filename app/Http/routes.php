@@ -99,6 +99,10 @@ Route::group(['middleware' => 'auth'], function()
 	Route::group(array('prefix' => 'marca'), function() {
 		// All Marcas
 		Route::get('/', ['uses' => 'MarcaController@index','as' => 'marca.index']);
+		// All Marcas Mobile
+		Route::get('mobile', ['uses' => 'MarcaController@mobile','as' => 'marca.mobile']);
+		// All Marcas Vehicle
+		Route::get('vehicle', ['uses' => 'MarcaController@vehicle','as' => 'marca.vehicle']);
 		// Agregar Marca
 		Route::get('add/', ['uses' => 'MarcaController@create','as' => 'marca.create']);
 	    Route::post('add', 'MarcaController@store');
@@ -113,6 +117,8 @@ Route::group(['middleware' => 'auth'], function()
 	 	// Delete Marca 
 	 	Route::get('delete/{id}',array('uses' => 'MarcaController@delete', 'as' => 'marca.delete'));
 	 	Route::delete('delete/{id}',array('uses' => 'MarcaController@destroy', 'as' => 'marca.destroy')); 	
+	 	// Prueba Marca 
+	 	Route::get('prueba',array('uses' => 'MarcaController@prueba', 'as' => 'marca.prueba'));
 	});
 	// Fin (Routes Marca)
 
