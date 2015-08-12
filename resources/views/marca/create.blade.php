@@ -3,7 +3,6 @@
 @section('padre', 'Marcas')
 @section('content')
 
-    
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -30,7 +29,7 @@
                   <h3 class="box-title"><i class="fa fa-plus-square text-green"></i> {{$page_title}} Marca</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <div class="box-body">
+                <div class="box-body">                 
                 {!! Form::open(['route' => 'marca.create', 'class' => 'form','enctype'=>'multipart/form-data']) !!}
                     <div class="form-group col-md-6">
                             <label>Marca</label>
@@ -43,8 +42,7 @@
                     
                     
                     <div class="form-group col-md-12">
-                            <label>Tipo(s)</label>
-                            
+                            <label>Tipo(s)</label>                            
                             {!! Form::select('lng_idtipo[]', 
                                                 ($tipo), 
                                                 null, 
@@ -53,10 +51,7 @@
                                                  'multiple' => 'multiple']
                                             ) 
                             !!} 
-                            
-                    </div>                                                                  
-                    
-                    
+                    </div>                      
                     <div class="form-group col-md-6">
                             <label>Friendly URL</label>
                             {!! Form::input('text', 'str_friendly_url', null, ['class'=> 'form-control']) !!}
@@ -67,10 +62,13 @@
                     </div>
                     <div class="form-group col-md-6 col-md-push-6">
                         <br>
-                        {!! Form::submit('Agregar',['class' => 'btn btn-success btn-block']) !!}
+                        {!! Form::submit('Agregar',['class' => 'btn btn-success btn-block','name' => 'boton']) !!}
+                        
+
                     </div>
                         
                 {!! Form::close() !!}
+                <p id="demo"></p>
                 <!-- form end -->
                 </div>
               </div><!-- /.box -->            

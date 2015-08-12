@@ -1054,6 +1054,43 @@
           showInputs: false
         });
       });
+
+
+
+    function validacion(elemento){
+    validado=false;      
+    
+    var cont_elementos = document.getElementById("myForm").elements.length;
+    // Toma los name de cada campo
+    var names = [];
+    // Toma los values de cada campo
+    var values = [];
+
+    var elementos = [];
+    var valores = "";
+    var form = document.getElementById("myForm");
+    for (var i=0; i<cont_elementos; i++) {
+        var name = document.getElementById("myForm").elements[i].name;
+        if(name == ""){name="notName";}
+        var tipo = typeof document.getElementById("myForm").elements[i].options;
+        if(tipo == "object"){            
+            tipo="ARRAY";
+            contador = document.getElementById("myForm").elements[i].options.length;            
+            for (j=0; j<contador;j++) {
+                if(document.getElementById("myForm").elements[i].options[j].selected == true){
+                var value = value + document.getElementById("myForm").elements[i].options[j].value + ',';
+                }
+            };           
+        }else{
+            tipo="NOT";
+            var value = document.getElementById("myForm").elements[i].value;
+        }
+        elementos[name] = value;
+        valores = valores + 'name:' + name + ' \n' + 'value:' + value + ' \n' + 'tipo:' + tipo + ' \n' + ' \n';
+    }   
+    //alert(valores);
+    return validado;        
+}
     </script>
   </body>
 </html>

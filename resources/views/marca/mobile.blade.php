@@ -31,10 +31,9 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>                        
-                        <th class="text-center"><i class="fa fa-flag"></i> Logo</th>
-                        <th class="text-center"><i class="fa fa-file-text-o"></i> Marca</th>
-                        <!--<th class="text-center"><i class="fa fa-cog"></i> Tipo</th>-->
-                        <th class="text-center"><i class="fa fa-cog"></i> Estado</th>
+                        <th class="text-center"><i class="fa fa-image"></i> Logo</th>
+                        <th class="text-center"><i class="fa fa-bullseye"></i> Marca</th>                        
+                        <th class="text-center"><i class="fa fa-ban"></i> Estado</th>
                         <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
                       </tr>
                     </thead>
@@ -48,7 +47,7 @@
                         <img class="img-rounded" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
                       @endif                        
                     </td>
-                    <td style="padding-top:5%">{{$marca->str_marca}}</td>                    
+                    <td style="padding-top:4%"><h4>{{$marca->str_marca}}</h4></td>                    
                     <!--<td>TIPO</td>-->
 			            	@if ($marca->bol_eliminado == 0)
                       <td style="padding-top:4%"><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>

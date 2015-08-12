@@ -24,36 +24,32 @@
                
               <div class="box box-warning">
                 <div class="box-header with-border">
-                  <h3 class="box-title"><i class="fa fa-pencil text-yellow"></i> {{$page_title}} Marca &laquo; <img style="width:40px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" /> &raquo;  {{$marca->str_marca}}</h3>
+                  <h3 class="box-title"><i class="fa fa-pencil text-yellow"></i> {{$page_title}} SEO Tipos Asociados &laquo; <img style="width:40px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" /> &raquo;  {{$marca->str_marca}}</h3>
 
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">                
-                {!! Form::model($marca,['route'=>['marca.update',$marca->id],'method'=>'PUT', 'enctype'=>'multipart/form-data']) !!} 
-        			<div class="form-group col-md-6">
-                            <label>Marca</label>
-                            {!! Form::input('text', 'str_marca', null, ['class'=> 'form-control']) !!}
-                    </div> 
-                    <div class="form-group col-md-6">
-                            <label>Imagen</label>
-                            {!! Form::file('blb_img') !!}                            
-                    </div>                    
-                    <div class="form-group col-md-12">
-                        <label>Tipo(s)</label>
-                        <select name="lng_idtipo[]" id="hola" multiple="multiple" class="form-control select2" data-placeholder="Indique los Tipos Ej: Carros">
+                {!! Form::model($marca,['route'=>['marca.update_seo',$marca->id],'method'=>'PUT', 'enctype'=>'multipart/form-data']) !!}         			                                        
+                    
+                        
+                        
                         @for ($i = 0; $i < count($tipos); $i++)                                  
-                            <option value="{{$tipos[$i]->id}}" {{$tipos[$i]->attrib}}>{{$tipos[$i]->str_descripcion}}</option>                        
+                            <!--<option value="{{$tipos[$i]->id}}" {{$tipos[$i]->attrib}}>{{$tipos[$i]->str_descripcion}}</option> -->
+                            <div class="form-group col-md-12">
+                            <h2>{{$tipos[$i]->str_descripcion}}</h2>
+                            {!! Form::hidden('lng_idmarca', '') !!}
+                            </div>
+                            <div class="form-group col-md-12">
+                            <label>Meta Descripción</label>
+                            {!! Form::textarea('str_meta_descripcion', null, ['class'=> 'form-control','rows'=> '3']) !!}
+                            </div> 
+                            <div class="form-group col-md-12">
+                            <label>Meta Keywords</label>   
+                            {!! Form::input('text', 'str_meta_keyword', null, ['class'=> 'form-control']) !!}
+                            </div>                                                                          
                         @endfor                                
-                        </select>
-                    </div> 
-                    <div class="form-group col-md-6">
-                            <label>Friendly URL</label>
-                            {!! Form::input('text', 'str_friendly_url', null, ['class'=> 'form-control']) !!}
-                    </div>                   
-                    <div class="form-group col-md-6">
-                            <label>Website Ruta</label>
-                            {!! Form::input('text', 'str_website', null, ['class'=> 'form-control']) !!}
-                    </div>  
+                        
+                    </div>                       
         			<div class="form-group col-md-6 col-md-push-6">
                     <br>
                     {!! Form::button('<i class="fa fa-pencil"></i> Editar', array('class'=>'btn btn-warning btn-block', 'type'=>'submit')) !!}

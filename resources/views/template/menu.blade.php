@@ -105,6 +105,7 @@
                 <li><a href="{{route('marca.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</a></li>
                 <li><a href="{{route('marca.mobile')}}"><i class="fa fa-tablet text-light-blue"></i> Marcas Móviles</a></li>
                 <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-car text-light-blue"></i> Marcas Vehículos</a></li>
+                <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-globe text-light-blue"></i> SEO Tipos Asociados</a></li>
               </ul>
             </li>           
             <!-- /fin -->         

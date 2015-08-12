@@ -23,18 +23,17 @@
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-flag text-light-blue"></i> All Marcas</h3>
+                  <h3 class="box-title"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <p><i class="fa fa-users"></i> Total de Marcas: <b>{{count($marcas)}}</b></p>
+                <p><i class="fa fa-bullseye"></i> Total de Marcas: <b>{{count($marcas)}}</b></p>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>                        
-                        <th class="text-center"><i class="fa fa-flag"></i> Logo</th>
-                        <th class="text-center"><i class="fa fa-file-text-o"></i> Marca</th>
-                        <!--<th class="text-center"><i class="fa fa-cog"></i> Tipo</th>-->
-                        <th class="text-center"><i class="fa fa-cog"></i> Estado</th>
+                        <th class="text-center"><i class="fa fa-image"></i> Logo</th>
+                        <th class="text-center"><i class="fa fa-bullseye"></i> Marca</th>                        
+                        <th class="text-center"><i class="fa fa-ban"></i> Estado</th>
                         <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
                       </tr>
                     </thead>
@@ -48,8 +47,7 @@
                         <img class="img-rounded" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
                       @endif                        
                     </td>
-                    <td style="padding-top:5%">{{$marca->str_marca}}</td>                    
-                    <!--<td>TIPO</td>-->
+                    <td style="padding-top:4%"><h4>{{$marca->str_marca}}</h4></td>                                      
 			            	@if ($marca->bol_eliminado == 0)
                       <td style="padding-top:4%"><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
                       @else
@@ -60,7 +58,9 @@
 			                          <a class="btn btn-warning btn-flat" href="{{route('marca.edit',$marca->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>
 			                          <a class="btn btn-info btn-flat" href="{{route('marca.show',$marca->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
 			                          <a class="btn bg-purple btn-flat" href="{{route('marca.status',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>			
-                                <a class="btn btn-danger btn-flat" href="{{route('marca.delete',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>                         
+                                <a class="btn btn-danger btn-flat" href="{{route('marca.delete',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>
+                                <a class="btn btn-success btn-flat" href="{{route('marca.edit_seo',$marca->id)}}" title="SEO Tipos Asociados"><i class="fa fa-globe"></i></a>                         
+
 			                    </div>
 			                </td>	
                       	            	

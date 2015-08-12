@@ -103,6 +103,11 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('mobile', ['uses' => 'MarcaController@mobile','as' => 'marca.mobile']);
 		// All Marcas Vehicle
 		Route::get('vehicle', ['uses' => 'MarcaController@vehicle','as' => 'marca.vehicle']);
+		// SEO Tipos Asociados
+		Route::get('seo', ['uses' => 'MarcaController@seo','as' => 'marca.seo']);
+		// Editar SEO Tipos Asociados
+	 	Route::get('seo/{id}', ['uses' => 'MarcaController@editSEO','as' => 'marca.edit_seo']);
+	 	Route::put('seo/{id}', ['uses' => 'MarcaController@updateSEO','as' => 'marca.update_seo']);
 		// Agregar Marca
 		Route::get('add/', ['uses' => 'MarcaController@create','as' => 'marca.create']);
 	    Route::post('add', 'MarcaController@store');
