@@ -43,9 +43,9 @@
 			              <tr class="text-center">                   
                     <td>
                       @if($marca->blb_img==NULL)
-                        <img class="img-rounded" style="width:100px;" src="{{ asset('images/troovami-logo-offline.png') }}" />
+                        <img class="img-rounded" alt="empty" title="Sin Logo" style="width:100px;" src="{{ asset('images/troovami-logo-offline.png') }}" />
                       @else
-                        <img class="img-rounded" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
+                        <img class="img-rounded" alt="{{$marca->str_marca}}" title="{{$marca->str_marca}}" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
                       @endif                        
                     </td>
                     <td style="padding-top:5%">{{$marca->str_marca}}</td>                    
@@ -60,7 +60,8 @@
 			                          <a class="btn btn-warning btn-flat" href="{{route('marca.edit',$marca->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>
 			                          <a class="btn btn-info btn-flat" href="{{route('marca.show',$marca->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
 			                          <a class="btn bg-purple btn-flat" href="{{route('marca.status',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>			
-                                <a class="btn btn-danger btn-flat" href="{{route('marca.delete',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>                         
+                                <a class="btn btn-danger btn-flat" href="{{route('marca.delete',$marca->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>
+                                <a class="btn btn-success btn-flat" href="{{route('marca.edit_seo',$marca->id)}}" title="SEO Tipos Asociados"><i class="fa fa-globe"></i></a>                         
 			                    </div>
 			                </td>	
                       	            	

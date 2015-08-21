@@ -42,9 +42,9 @@
 			              <tr class="text-center">                   
                     <td>
                       @if($marca->blb_img==NULL)
-                        <img class="img-rounded" style="width:100px;" src="{{ asset('images/troovami-logo-offline.png') }}" />
+                        <img class="img-rounded" alt="empty" title="Sin Logo" style="width:100px;" src="{{ asset('images/troovami-logo-offline.png') }}" />
                       @else
-                        <img class="img-rounded" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
+                        <img class="img-rounded" alt="{{$marca->str_marca}}" title="{{$marca->str_marca}}" style="width:100px;" src="data:{{$marca->format}};base64,{{$marca->blb_img}}" />
                       @endif                        
                     </td>
                     <td style="padding-top:4%"><h4>{{$marca->str_marca}}</h4></td>                                      

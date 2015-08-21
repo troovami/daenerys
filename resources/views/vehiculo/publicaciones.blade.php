@@ -23,33 +23,42 @@
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> All Vehiculos</h3>
+                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> Vehiculos Publicados</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <p><i class="fa fa-car"></i> Total de Vehiculos: <b>{{count($vehiculos)}}</b></p>
+                <p><i class="fa fa-car"></i> Total de Vehiculos Publicados: <b>{{count($vehiculos)}}</b></p>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>                        
-                        <th class="text-center"><i class="fa fa-car"></i> Tipo</th>
-                        <th class="text-center"><i class="fa fa-barcode"></i> Placa</th>                        
+                        <th class="text-center"><i class="fa fa-user-plus"></i> Usuario</th>
+                        <th class="text-center"><i class="fa fa-car"></i> Vehiculo</th>
+                        <th class="text-center"><i class="fa fa-circle"></i> Clasificación</th>
+                        <th class="text-center"><i class="fa fa-circle"></i> Marca</th>
+                        <th class="text-center"><i class="fa fa-circle"></i> Modelo</th>
                         <th class="text-center"><i class="fa fa-ban"></i> Estado</th>
+                        <th class="text-center"><i class="fa fa-flag"></i> Pais</th>
                         <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
                       </tr>
                     </thead>
                     <tbody>                    
                       @foreach($vehiculos as $vehiculo)                      
 			              <tr class="text-center">                                       
-                    <td>{{$vehiculo->tipo_vehiculo}}</td>                    
-                    <td><h4><span class="label label-default">{{$vehiculo->str_placa}}</span></h4></td>
+                    <td>{{$vehiculo->name}}</td>
+                    <td>{{$vehiculo->vehiculo}}</td>  
+                    <td>{{$vehiculo->clasificacion}}</td>                    
+                    <td>{{$vehiculo->str_marca}}</td>
+                    <td>{{$vehiculo->str_modelo}}</td>
+                    <!--<td><h4><span class="label label-default">placa</span></h4></td>-->
 			            	@if ($vehiculo->bol_eliminado == 0)
                       <td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>
                       @else
                         <td><span class="label label-default"><i class="fa fa-ban"></i> DESACTIVADO</span></td>
-                      @endif			                			                
+                      @endif	
+                    <td>{{$vehiculo->pais}}</td> 		                			                
 			                <td>
 			                	<div class="btn-group">
-			                          <a class="btn btn-warning btn-flat" href="{{route('marca.edit',$vehiculo->id)}}" title="Editar"><i class="fa fa-pencil"></i></a>
+			                          
 			                          <a class="btn btn-info btn-flat" href="{{route('marca.show',$vehiculo->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
 			                          <a class="btn bg-purple btn-flat" href="{{route('marca.status',$vehiculo->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>			
                                 <a class="btn btn-danger btn-flat" href="{{route('marca.delete',$vehiculo->id)}}" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>                         

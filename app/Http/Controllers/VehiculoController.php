@@ -20,32 +20,39 @@ class VehiculoController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function publicaciones()
     {
-        $vehiculos= DB::table('tbl_vehiculos')
-        ->join('cat_datos_maestros as vehiculos', 'tbl_vehiculos.lng_idtipo_vehiculo', '=', 'vehiculos.id') // TIPO VEHICULO
-        ->join('cat_paises as paises', 'tbl_vehiculos.lng_idpais', '=', 'paises.id') // PAIS
+        $vehiculos= DB::table('tbl_vehiculos as publicaciones')
+        ->join('cat_datos_maestros as vehiculos', 'publicaciones.lng_idtipo_vehiculo', '=', 'vehiculos.id') // TIPO VEHICULO
+        ->join('cat_paises as paises', 'publicaciones.lng_idpais', '=', 'paises.id') // PAIS
+        ->join('tbl_personas as personas', 'publicaciones.lng_idpersona', '=', 'personas.id') // Persona
+        ->join('tbl_modelos as modelos', 'publicaciones.lng_idmodelo', '=', 'modelos.id') // PAIS
+        ->join('cat_marcas as marcas', 'modelos.lng_idmarca', '=', 'marcas.id') // PAIS
         ->select(
-            'vehiculos.str_descripcion as tipo_vehiculo',  // TIPO VEHICULO
+            'vehiculos.str_descripcion as clasificacion',  // Clasificacion
+            'vehiculos.str_tipo as vehiculo',  // Vehiculo
             'paises.str_paises as pais',  // PAIS
-            'paises.blb_img as blb_img',  // IMAGEN PAIS            
-            'tbl_vehiculos.id',
-            'tbl_vehiculos.str_placa',
-            'tbl_vehiculos.bol_eliminado'
+            'personas.name',  // name
+            //'paises.blb_img as blb_img', // IMAGEN PAIS            
+            'publicaciones.id',
+            'modelos.str_modelo',            
+            'marcas.str_marca', 
+            'publicaciones.bol_eliminado'
             )
         ->get(); 
-        foreach ($vehiculos as $key => $value) {                    
+        //return $vehiculos;
+        //foreach ($vehiculos as $key => $value) {                    
             // Detectando el Tipo de Formato del la Imagen              
-            $a = base64_decode($value->blb_img);
-            $b = finfo_open();            
+            //$a = base64_decode($value->blb_img);
+            //$b = finfo_open();            
             //Agregando un nuevo atributo al array
-            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE); 
-            $value->str_placa = strtoupper($value->str_placa);           
-        } 
+            //$value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE); 
+            //$value->str_placa = strtoupper($value->str_placa);           
+        //} 
         //return $vehiculos;
         
         
-        return view('vehiculo.vehiculo',compact('vehiculos'))->with('page_title', 'Principal');
+        return view('vehiculo.publicaciones',compact('vehiculos'))->with('page_title', 'Principal');
     }
 
     /**

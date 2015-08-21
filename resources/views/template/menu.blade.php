@@ -26,12 +26,104 @@
           <ul class="sidebar-menu">
             <li><a href="{{route('home')}}"><i class="fa fa-home"></i> <span>Principal</span></a></li>
             <!-- ############################################################################## -->
-            <li class="header text-aqua"><i class="fa fa-car"></i> CARS</li>
-            <!-- ############################################################################## -->
-            <!-- Vehiculos -->
+            <!--<li class="header text-aqua"><i class="fa fa-car"></i> VEHICULOS</li>-->
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-bus"></i> <span>Vehiculos</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-car"></i> <span>Vehiculos</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">   
+                <li><a href="{{route('vehicles.publicaciones')}}"><i class="fa fa-circle-o text-green"></i> <span>Publicaciones</span></a></li>                             
+                <li>
+                  <a href="#"><i class="fa fa-circle-o text-green"></i> Opciones del Formulario<i class="fa fa-angle-left pull-right"></i></a>                  
+                  <ul class="treeview-menu">  
+                    <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Tipos de Vehiculos</a></li>                  
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o text-light-blue"></i> Descripciones <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Clasificaciónes</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Modelos</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Otros</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o text-light-blue"></i> Características <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Seguridad</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Sonido</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Exterior</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Confort</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Accesorios Internos</a></li>
+                      </ul>
+                    </li>
+                  </ul>                  
+                </li>                
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-globe"></i> <span>Opciones Globales</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">                
+                <li>
+                  <a href="#"><i class="fa fa-user-secret text-green"></i> Administradores <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li><a href="{{route('admin.create')}}"><i class="fa fa-circle-o text-light-blue"></i> Agregar Admin</a></li>
+                    <li><a href="{{route('admin.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Consultar Admins</a></li>
+                    <li><a href="{{route('admin.profile')}}"><i class="fa fa-circle-o text-light-blue"></i> Mi Perfil</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-user-plus text-green"></i> Personas <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li class="active"><a href="{{route('persona.create')}}"><i class="fa fa-circle-o text-light-blue"></i> Agregar Persona</a></li>
+                    <li><a href="{{route('persona.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Consultar Personas</a></li>
+                  </ul>
+                </li>                
+                <li>
+                  <a href="#"><i class="fa fa-briefcase text-green"></i> Empresas <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li><a href="{{route('admin.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Admin</a></li>
+                    <li><a href="{{route('admin.index')}}"><i class="fa fa-users text-light-blue"></i> Consultar Admins</a></li>
+                    <li><a href="{{route('admin.profile')}}"><i class="fa fa-user-secret text-light-blue"></i> Mi Perfil</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-flag text-green"></i> Paises <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li><a href="{{route('pais.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Pais</a></li>
+                    <li><a href="{{route('pais.index')}}"><i class="fa fa-flag text-light-blue"></i> Consultar Paises</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-bullseye text-green"></i> Marcas <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li class="active"><a href="{{route('marca.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Marca</a></li>
+                    <li><a href="{{route('marca.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</a></li>
+                    <li><a href="{{route('marca.mobile')}}"><i class="fa fa-tablet text-light-blue"></i> Marcas Móviles</a></li>
+                    <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-car text-light-blue"></i> Marcas Vehículos</a></li>
+                    <!--<li><a href="{{route('marca.vehicle')}}"><i class="fa fa-globe text-light-blue"></i> SEO Tipos Asociados</a></li>-->
+                  </ul>
+                </li>
+                
+              </ul>
+            </li>
+
+            <!-- ############################################################################## -->
+            <!-- Publicaciones -->
+            <!--<li class="treeview">
+              <a href="#">
+                <i class="fa fa-car"></i> <span>Carros</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{route('vehicles.index')}}"><i class="fa fa-car text-light-blue"></i> All Vehiculos</a></li>
@@ -40,13 +132,15 @@
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Vehiculo</a></li>
                 <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Vehiculo</a></li>
               </ul>
-            </li>           
-            <!-- /fin -->
+            </li> -->          
+            <!-- /fin --> 
+
             <!-- ############################################################################## -->
-            <li class="header text-aqua"><i class="fa fa-globe"></i> MENU GLOBAL</li>
+            <!--<li class="header text-aqua"><i class="fa fa-globe"></i> MENU GLOBAL</li>-->
             <!-- ############################################################################## -->
             
             <!-- Administradores -->
+            <!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user-secret"></i> <span>Administradores</span> <i class="fa fa-angle-left pull-right"></i>
@@ -56,10 +150,12 @@
                 <li><a href="{{route('admin.index')}}"><i class="fa fa-users text-light-blue"></i> All Admins</a></li>
                 <li><a href="{{route('admin.profile')}}"><i class="fa fa-user-secret"></i> Mi Perfil</a></li>
               </ul>
-            </li>           
+            </li>  
+            -->         
             <!-- /fin -->
 
             <!-- Personas -->
+            <!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user-plus"></i> <span>Personas</span> <i class="fa fa-angle-left pull-right"></i>
@@ -68,9 +164,11 @@
                 <li class="active"><a href="{{route('persona.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Persona</a></li>
                 <li><a href="{{route('persona.index')}}"><i class="fa fa-users text-light-blue"></i> All Personas</a></li>                
               </ul>
-            </li>           
+            </li>        
+            -->   
             <!-- /fin -->
             <!-- Empresas -->
+            <!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-briefcase"></i> <span>Empresas</span> <i class="fa fa-angle-left pull-right"></i>
@@ -81,10 +179,12 @@
                 <li><a href="#"><i class="fa fa-search text-aqua"></i> Consultar Empresa</a></li>
                 <li><a href="#"><i class="fa fa-user-times text-red"></i> Desactivar Empresa</a></li>
               </ul>
-            </li>           
+            </li>  
+            -->         
             <!-- /fin -->
 
             <!-- Paises -->
+            <!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-flag"></i> <span>Paises</span> <i class="fa fa-angle-left pull-right"></i>
@@ -93,9 +193,11 @@
                 <li><a href="{{route('pais.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar Pais</a></li>
                 <li><a href="{{route('pais.index')}}"><i class="fa fa-flag text-light-blue"></i> All Paises</a></li>
               </ul>
-            </li>           
+            </li>  
+            -->         
             <!-- /fin -->   
             <!-- Marcas -->
+            <!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-bullseye"></i> <span>Marcas</span> <i class="fa fa-angle-left pull-right"></i>
@@ -105,9 +207,12 @@
                 <li><a href="{{route('marca.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Marcas</a></li>
                 <li><a href="{{route('marca.mobile')}}"><i class="fa fa-tablet text-light-blue"></i> Marcas Móviles</a></li>
                 <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-car text-light-blue"></i> Marcas Vehículos</a></li>
-                <li><a href="{{route('marca.vehicle')}}"><i class="fa fa-globe text-light-blue"></i> SEO Tipos Asociados</a></li>
+              -->
+                <!--<li><a href="{{route('marca.vehicle')}}"><i class="fa fa-globe text-light-blue"></i> SEO Tipos Asociados</a></li>-->
+            <!--
               </ul>
-            </li>           
+            </li>
+            -->           
             <!-- /fin -->         
             <!-- ############################################################################## -->
             <li class="header text-aqua"><i class="fa fa-tablet"></i> MOBILE</li>
