@@ -112,6 +112,8 @@
     {!! Html::script('admin-lte/dist/js/pages/dashboard.js') !!}    
     <!-- AdminLTE for demo purposes -->
     {!! Html::script('admin-lte/dist/js/demo.js') !!} 
+    <!-- AdminLTE for demo purposes -->
+    {!! Html::script('js/ajax/ajax.js') !!} 
 
   </body>
 </html>
