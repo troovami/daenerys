@@ -21,55 +21,56 @@ class MarcaController extends Controller
      */
     public function index()
     {   
-        $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado')->orderBy('str_marca')->skip(0)->take(50)->get();
-        //$allMarcas = Marca::All();
-        // Creacion de Filtro
-
-        $countMarcas = DB::table('cat_marcas')->count(); // Cantidad de Marcas ej: 1000 marcas
-        $filtro = 50; // el filtro
-        $i = 0;
-        $k = 1; 
-        $c = 0;
-        
-        /*$filtro = [
-            'countMarcas' => $countMarcas,
-            'filtroMarcas' => 50
-        ];*/
-
-        //echo $filtro['filtroMarcas'];
-                    //echo $filtro['countMarcas'];
-                    
-                         
-                                  
-                    
-                    // $filtro['countMarcas'] = Todas las Marcas
-                    // $filtro['filtroMarcas'] = 50
-                    
-                      
-
-
-            //$filtro['countMarcas'] = $countMarcas;
-            //return $filtro['countMarcas'];
-            //return $filtro;
-        //$all = count($allMarcas);
-        //return $all;
-        //return $countMarcas;
-        //  $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado')->skip(0)->take(30)->get();
-
-        //return $marcas;
-        /*
-        $marcas = Marca::All();       
-
+        $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado','blb_img')->orderBy('str_marca')->skip(0)->take(50)->get();
         foreach ($marcas as $key => $value) {                    
             // Detectando el Tipo de Formato del la Imagen              
             $a = base64_decode($value->blb_img);
             $b = finfo_open();            
             //Agregando un nuevo atributo al array
-            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);                       
-        }   
-        */       
-        //return view('marca.marca',compact('marcas'),$countMarcas)->with('page_title', 'Principal');
-        return view('marca.marca',['marcas'=>$marcas,'filtro'=>$filtro])->with('page_title', 'Principal');
+            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);   
+            //return $value->format;         
+        }
+        //return $marcas;
+        //$allMarcas = Marca::All();        
+        // Inicio Paginador
+        $count = DB::table('cat_marcas')->count(); // Cantidad de Marcas ej: 1000 marcas        
+        $paginado = [
+            'incremento'  => 0,      // inicializado en 0 para el while
+            'numeracion'  => 0,      // Numeros de paginas, inicializado en 0 Ej: pag 1 . pagi 2 . pag n...
+            'filtro'      => 50,     // cantidad por pagina take('filtro') laravel
+            'total'       => $count, // Total de datos en tabla            
+            'recorrido'   => 0       // skip('recorrido') laravel
+            ];
+        $filtro = [];         
+        while ($paginado['incremento'] < $paginado['total']) {
+
+            $paginado['incremento'] = $paginado['incremento'] + $paginado['filtro']; // Ej: incremento = 0 + 50 => 50            
+                
+            if($paginado['incremento'] >= $paginado['total']){                
+                $paginado['recorrido']  = $paginado['incremento'] - $paginado['filtro'];                
+                $paginado['numeracion']++;
+                $filtro[] = 
+                    [ 
+                        'numeracion' => $paginado['numeracion'],
+                        'skip'       => $paginado['recorrido'],
+                        'take'       => $paginado['filtro']
+                    ];                                      
+                    //echo '<'. $paginado['numeracion'] .'>' . 'desde ' . $paginado['recorrido'] . ' hasta ' . $paginado['total'] . '<br>';
+
+            }else {
+                $paginado['recorrido']  = $paginado['incremento'] - $paginado['filtro'];
+                $paginado['numeracion']++;
+                $filtro[] = 
+                    [ 
+                        'numeracion' => $paginado['numeracion'],
+                        'skip'       => $paginado['recorrido'],
+                        'take'       => $paginado['filtro']
+                    ];   
+                    //echo '<'. $paginado['numeracion'] .'>' . 'desde ' . $paginado['recorrido'] . ' hasta ' . $paginado['incremento'] . '<br>';
+            }
+        }        
+        // Fin Paginador       
+        return view('marca.marca',['marcas'=>$marcas,'filtro'=>$filtro, 'total'=>$count])->with('page_title', 'Principal');
     }
 
     /**
@@ -514,7 +515,16 @@ class MarcaController extends Controller
     public function ajaxGlobal($valor)
     {
         //$marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado')->take(50)->get();
-        $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado')->orderBy('str_marca')->skip($valor)->take(50)->get();
+        //$marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado')->orderBy('str_marca')->skip($valor)->take(50)->get();
+        $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado','blb_img')->orderBy('str_marca')->skip($valor)->take(50)->get();
+        foreach ($marcas as $key => $value) {                    
+            // Detectando el Tipo de Formato del la Imagen              
+            $a = base64_decode($value->blb_img);
+            $b = finfo_open();            
+            //Agregando un nuevo atributo al array
+            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);   
+            //return $value->format;         
+        }
         $k = $valor + 1;
         return view('marca.marca-filtro',['marcas'=>$marcas,'k'=>$k]);
         //return $valor . "---" . $valor2;

@@ -126,6 +126,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	Route::get('prueba',array('uses' => 'MarcaController@prueba', 'as' => 'marca.prueba'));
 	});
 	// Fin (Routes Marca)
+	Route::get('ajax/{valor}', 'MarcaController@ajaxGlobal');
 
 	// Routes Persona
 	Route::group(array('prefix' => 'persona'), function() {
@@ -203,6 +204,6 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-Route::get('ajax/{valor}', 'MarcaController@ajaxGlobal');
+
 
 
