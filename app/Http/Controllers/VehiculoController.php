@@ -20,7 +20,7 @@ class VehiculoController extends Controller
      *
      * @return Response
      */
-    public function publicaciones()
+    public function publicacionesActivas()
     {
         $vehiculos= DB::table('tbl_vehiculos as publicaciones')
         ->join('cat_datos_maestros as vehiculos', 'publicaciones.lng_idtipo_vehiculo', '=', 'vehiculos.id') // TIPO VEHICULO
@@ -39,20 +39,10 @@ class VehiculoController extends Controller
             'marcas.str_marca', 
             'publicaciones.bol_eliminado'
             )
-        ->get(); 
-        //return $vehiculos;
-        //foreach ($vehiculos as $key => $value) {                    
-            // Detectando el Tipo de Formato del la Imagen              
-            //$a = base64_decode($value->blb_img);
-            //$b = finfo_open();            
-            //Agregando un nuevo atributo al array
-            //$value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE); 
-            //$value->str_placa = strtoupper($value->str_placa);           
-        //} 
-        //return $vehiculos;
+        ->get();         
         
         
-        return view('vehiculo.publicaciones',compact('vehiculos'))->with('page_title', 'Principal');
+        return view('vehiculo.publicaciones-activas',compact('vehiculos'))->with('page_title', 'Principal');
     }
 
     /**

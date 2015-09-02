@@ -164,8 +164,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::group(array('prefix' => 'vehicles'), function() {
 		// All Vehiculos
 		Route::get('/', ['uses' => 'VehiculoController@index','as' => 'vehicles.index']);
-		// All Publicaciones
-		Route::get('publicaciones/', ['uses' => 'VehiculoController@publicaciones','as' => 'vehicles.publicaciones']);
+		// All publicaciones Activas
+		Route::get('publicaciones-activas/', ['uses' => 'VehiculoController@publicacionesActivas','as' => 'vehicles.publicaciones-activas']);
 		// Agregar Vehiculo
 		/*
 		Route::get('add/', ['uses' => 'VehiculoController@create','as' => 'vehicles.create']);
