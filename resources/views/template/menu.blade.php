@@ -32,18 +32,34 @@
                 <i class="fa fa-car"></i> <span>Vehiculos</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">   
-                <li><a href="{{route('vehicles.publicaciones')}}"><i class="fa fa-circle-o text-green"></i> <span>Publicaciones</span></a></li>                             
+              <ul class="treeview-menu">                   
+                <li>
+                  <a href="#"><i class="fa fa-circle-o text-green"></i> Publicaciones<i class="fa fa-angle-left pull-right"></i></a>                  
+                  <ul class="treeview-menu">  
+                    <li><a href="{{route('vehicles.publicaciones')}}"><i class="fa fa-circle-o text-light-blue"></i> Activas</a></li> 
+                    <li><a href=""><i class="fa fa-circle-o text-light-blue"></i> Inactivas</a></li>             
+                  </ul>                            
+                </li>
                 <li>
                   <a href="#"><i class="fa fa-circle-o text-green"></i> Opciones del Formulario<i class="fa fa-angle-left pull-right"></i></a>                  
                   <ul class="treeview-menu">  
-                    <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Tipos de Vehiculos</a></li>                  
                     <li>
                       <a href="#"><i class="fa fa-circle-o text-light-blue"></i> Descripciones <i class="fa fa-angle-left pull-right"></i></a>
                       <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Clasificaciónes</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Tipos de Vehiculos</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Clasificaciones</a></li>
                         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Modelos</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Otros</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Colores</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Dirección</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Estereo</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Transmisión</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Tapizado</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Vidrios</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Tracción</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Combustible</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Cilindrada</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Sistema de Frenos</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Arranque</a></li>
                       </ul>
                     </li>
                     <li>

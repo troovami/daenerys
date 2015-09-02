@@ -32,7 +32,8 @@
     {!! Html::style('admin-lte/plugins/daterangepicker/daterangepicker-bs3.css') !!}    
     <!-- bootstrap wysihtml5 - text editor -->
     {!! Html::style('admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}    
-
+    <!-- Ajax -->
+    {!! Html::script('js/ajax/ajax.js') !!}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -112,8 +113,7 @@
     {!! Html::script('admin-lte/dist/js/pages/dashboard.js') !!}    
     <!-- AdminLTE for demo purposes -->
     {!! Html::script('admin-lte/dist/js/demo.js') !!} 
-    <!-- Ajax -->
-    {!! Html::script('js/ajax/ajax.js') !!} 
+     
 
   </body>
 </html>

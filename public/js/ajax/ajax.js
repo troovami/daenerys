@@ -101,3 +101,37 @@ function filtro(valor){
     http.send(null);
 
 }
+
+
+function brandSearch(){     
+    divname = "ajax";
+    var valor = document.getElementById('brandSearchInput').value;
+
+    // Asigna un valor si la variable solo tiene espacion en blanco unicamente
+    if(/^\s*$/.test(valor)){
+        valor = "empty";
+    } 
+    //alert(valor.length);
+    http.open("GET", 'brand-search/' + valor, true);    
+    http.onreadystatechange = handleHttpResponse;
+    http.send(null);
+    
+
+}
+/*
+function brandSearch(){     
+    divname = "brandSearch";
+    var valor = document.getElementById('brandSearchInput').value;
+
+    // Asigna un valor si la variable solo tiene espacion en blanco unicamente
+    if(/^\s*$/.test(valor)){
+        valor = "empty";
+    } 
+    //alert(valor.length);
+    http.open("GET", 'brand-search/' + valor, true);    
+    http.onreadystatechange = handleHttpResponse;
+    http.send(null);
+    
+
+}
+*/

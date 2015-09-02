@@ -532,7 +532,36 @@ class MarcaController extends Controller
         //return $marcas;
     }
 
-    
+    public function brandSearch($valor)
+    {
+
+
+        if($valor == "empty"){
+            $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado','blb_img')->orderBy('str_marca')->skip(0)->take(50)->get();
+
+        }else{
+            
+            $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado','blb_img')->where('str_marca','like', "%$valor%")->orderBy('str_marca')->take(50)->get();    
+        }
+            foreach ($marcas as $key => $value) {                    
+            // Detectando el Tipo de Formato del la Imagen              
+            $a = base64_decode($value->blb_img);
+            $b = finfo_open();            
+            //Agregando un nuevo atributo al array
+            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);   
+            //return $value->format;         
+            }
+
+            $k = $valor + 1;
+            //return count($marcas);
+            $contMarcas = count($marcas);
+            if($contMarcas==0){
+                return "Sin Resultados";
+            }else {
+            return view('marca.search-marca',['marcas'=>$marcas,'k'=>$k]);
+            }
+        
+    }   
 
 }
 

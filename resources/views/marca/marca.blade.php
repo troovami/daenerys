@@ -36,61 +36,72 @@
                   <div class="col-md-12">
                     <form action="">
                       <div class="row">  
-                      <div class="col-lg-6 col-md-push-6">
+                      <div class="col-lg-7 col-md-push-5">
                         <div class="row">
                           <br>
                           <div class="input-group">                            
-                            <input type="text" class="form-control" placeholder="Buscar Marcas...">
+                            <input id="brandSearchInput" onkeyup="brandSearch();" type="text" class="form-control" placeholder="Buscar Marcas...">
+                            <!--<input id="brandSearchInput" onkeyup="javascript:alert(document.getElementById('brandSearchInput').value);" type="text" class="form-control" placeholder="Buscar Marcas...">-->
+                            
                             <span class="input-group-btn">
                               <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
                             </span>
                           </div><!-- /input-group -->
-                          <div style="background-color:#CCC; position:absolute; z-index:1;float:left">
-                          <table class="table table-bordered" style="width: 100%;">
+                          <!--<div id="brandSearch" class="col-md-12" style="border:1px solid #CCC;background-color:#FFF;position:absolute; z-index:3;">-->
+                          <!--
+                          <br>
+                          <table class="table table-bordered col-md-12 table-hover">
                             <tr>
                               <th class="text-center" style="width: 10%">#</th>
                               <th class="text-center" style="width: 20%">Logo</th>
                               <th class="text-center" style="width: 30%">Marca</th>
-                              <th class="text-center" style="width: 10%"><i class="fa fa-circle-o"></i></th>
-                              <th class="text-center" style="width: 35%"><i class="fa fa-cog"></i></th>
+                              <th class="text-center" style="width: 10%">Estatus</th>
+                              <th class="text-center" style="width: 35%">Operaciones</th>
                             </tr>
-                            <tr class="text-center"> 
-                              <td style="padding-top:20px;">1</td>
+                            
+                            @for ($i = 1; $i <= 5; $i++)
+                             <tr class="text-center"> 
+                              <td style="padding-top:20px;">{{ $i }}</td>
                               <td><img style="width:50px;" src="{{ asset('images/troovami-logo-online.png') }}" /></td>
                               <td style="padding-top:20px;">Troovami</td>
                               <td style="padding-top:20px;"><span class="label label-success"><i class="fa fa-check"></i></span></td>
                               <td style="padding-top:15px;">
-                                <!-- Single button -->
+                                
                                 <div class="btn-group">
                                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Action <span class="caret"></span>
+                                    <i class="fa fa-cog"></i> <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#"><i class="fa fa-pencil"></i> Editar</a></li>
+                                    <li><a href="#"><i class="fa fa-search"></i> Consultar</a></li>
+                                    <li><a href="#"><i class="fa fa-ban"></i> Cambiar Estatus</a></li>
+                                    <li><a href="#"><i class="fa fa-close"></i> Eliminar</a></li>
+                                    <li><a href="#"><i class="fa fa-globe"></i> SEO Tipos Asociados</a></li>
                                   </ul>
                                 </div>
                               </td>
                             </tr>
+                            @endfor
+                            
                           </table>   
+                               -->                        
                           
-                        </div>                        
+                        </div> 
+                        <br>                       
                       </div><!-- /.col-lg-6 -->
                       </div><!-- /.row -->
-                    </form>
+                    </form>                    
                   </div>
                 </div><!-- /.box-header -->
-                <div class="box-body" id="ajax">
-                  <table class="table table-bordered">
+                <div class="box-body" id="ajax">    
+
+                  <table class="table table-bordered table-hover">
                     <tr>
                       <th class="text-center" style="width: 5%">#</th>
                       <th class="text-center" style="width: 20%">Logo</th>
                       <th class="text-center" style="width: 30%">Marca</th>
-                      <th class="text-center" style="width: 10%">Progress</th>
-                      <th class="text-center" style="width: 35%">Label</th>
+                      <th class="text-center" style="width: 10%">Estatus</th>
+                      <th class="text-center" style="width: 35%">Operaciones</th>
                     </tr>
                     <!--{{$k = 1}}-->
                     @foreach($marcas as $marca)                      

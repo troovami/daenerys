@@ -3,8 +3,8 @@
                       <th class="text-center" style="width: 5%">#</th>
                       <th class="text-center" style="width: 20%">Logo</th>
                       <th class="text-center" style="width: 30%">Marca</th>
-                      <th class="text-center" style="width: 10%">Progress</th>
-                      <th class="text-center" style="width: 35%">Label</th>
+                      <th class="text-center" style="width: 10%">Estatus</th>
+                      <th class="text-center" style="width: 35%">Operaciones</th>
                     </tr>
                     
                     @foreach($marcas as $marca)                      

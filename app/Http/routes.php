@@ -127,6 +127,7 @@ Route::group(['middleware' => 'auth'], function()
 	});
 	// Fin (Routes Marca)
 	Route::get('ajax/{valor}', 'MarcaController@ajaxGlobal');
+	Route::get('brand-search/{valor}', 'MarcaController@brandSearch');
 
 	// Routes Persona
 	Route::group(array('prefix' => 'persona'), function() {
