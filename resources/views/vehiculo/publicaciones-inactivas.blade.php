@@ -23,7 +23,7 @@
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> Vehiculos Publicados Activos</h3>
+                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> Vehiculos Publicados Inactivos</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">

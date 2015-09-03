@@ -166,6 +166,10 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('/', ['uses' => 'VehiculoController@index','as' => 'vehicles.index']);
 		// All publicaciones Activas
 		Route::get('publicaciones-activas/', ['uses' => 'VehiculoController@publicacionesActivas','as' => 'vehicles.publicaciones-activas']);
+		// All publicaciones Inactivas
+		Route::get('publicaciones-inactivas/', ['uses' => 'VehiculoController@publicacionesInactivas','as' => 'vehicles.publicaciones-inactivas']);
+		// Ver Vehiculo
+	    Route::get('show/{id}', ['uses' => 'VehiculoController@show','as' => 'vehicles.show']);
 		// Agregar Vehiculo
 		/*
 		Route::get('add/', ['uses' => 'VehiculoController@create','as' => 'vehicles.create']);
@@ -176,8 +180,7 @@ Route::group(['middleware' => 'auth'], function()
 	 	Route::get('edit/{id}', ['uses' => 'MarcaController@edit','as' => 'vehicles.edit']);
 	 	Route::put('edit/{id}', ['uses' => 'MarcaController@update','as' => 'vehicles.update']);	
 	 	*/
-	 	// Ver Vehiculo
-	    Route::get('show/{id}', ['uses' => 'VehiculoController@show','as' => 'vehicles.show']); 
+	 	 
 	    // Desactivar/Activar Vehiculo
 	 	Route::get('status/{id}',array('uses' => 'VehiculoController@status', 'as' => 'vehicles.status'));
 	 	Route::put('status/{id}', 'VehiculoController@statusChange');	

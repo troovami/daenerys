@@ -37,7 +37,7 @@
                   <a href="#"><i class="fa fa-circle-o text-green"></i> Publicaciones<i class="fa fa-angle-left pull-right"></i></a>                  
                   <ul class="treeview-menu">  
                     <li><a href="{{route('vehicles.publicaciones-activas')}}"><i class="fa fa-circle-o text-light-blue"></i> Activas</a></li> 
-                    <li><a href=""><i class="fa fa-circle-o text-light-blue"></i> Inactivas</a></li>             
+                    <li><a href="{{route('vehicles.publicaciones-inactivas')}}"><i class="fa fa-circle-o text-light-blue"></i> Inactivas</a></li>             
                   </ul>                            
                 </li>
                 <li>
