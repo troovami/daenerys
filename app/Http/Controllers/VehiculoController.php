@@ -131,7 +131,8 @@ class VehiculoController extends Controller
         // Consulta la tabla Marcas 
         //$data = DB::table('tbl_vehiculos as publicacion')->where('publicacion.id','=',$id)->get();        
         $vehiculo= DB::table('tbl_vehiculos as publicacion')
-        ->where('publicacion.id','=',$id)        
+        ->where('publicacion.id','=',$id)
+        ->orderBy('publicacion.int_peso')      
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // JOINS DATOS PERSONA
         ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,23 +165,53 @@ class VehiculoController extends Controller
         ->join('cat_datos_maestros as transmision', 'publicacion.lng_idtransmision', '=', 'transmision.id')
         // EQUIPO MEDICO
         ->leftjoin('cat_datos_maestros as equipo_medico', 'publicacion.lng_idequipo_medico', '=', 'equipo_medico.id')        
-
-                
-        /*    
-        
-        
-            int_pisos
-            int_alto
-            int_ancho
-            str_carroceria
-            lng_idfrenado
+        // FRENADO
+        ->leftjoin('cat_datos_maestros as frenado', 'publicacion.lng_idfrenado', '=', 'frenado.id')     
+        // ACEITE
+        ->leftjoin('cat_datos_maestros as aceite', 'publicacion.lng_idlibreaceite', '=', 'aceite.id') 
+        // ENFRIAMIENTO
+        ->leftjoin('cat_datos_maestros as enfriamiento', 'publicacion.lng_idenfriamiento', '=', 'enfriamiento.id')  
+        // NEGOCIABLE
+        ->join('cat_datos_maestros as negociable', 'publicacion.lng_idnegociable', '=', 'negociable.id')
+        // TRACCION
+        ->join('cat_datos_maestros as traccion', 'publicacion.lng_idtraccion', '=', 'traccion.id')
+        // TAPIZADO
+        ->join('cat_datos_maestros as tapizado', 'publicacion.lng_idtapizado', '=', 'tapizado.id')
+        // MOTOR REPARADO
+        ->join('cat_datos_maestros as motor_reparado', 'publicacion.lng_idmotorreparado', '=', 'motor_reparado.id')
+        // VIDRIOS
+        ->join('cat_datos_maestros as vidrios', 'publicacion.lng_idvidrios', '=', 'vidrios.id')
+        // COLOR
+        ->join('cat_datos_maestros as color', 'publicacion.lng_idcolor', '=', 'color.id')
+        // COMBUSTIBLE
+        ->join('cat_datos_maestros as combustible', 'publicacion.lng_idcombustible', '=', 'combustible.id')
+        // Unico Dueño
+        ->join('cat_datos_maestros as unico_dueno', 'publicacion.lng_idunicodueno', '=', 'unico_dueno.id')
+        // Tipo de Motor
+        ->leftjoin('cat_datos_maestros as tipo_motor', 'publicacion.lng_idtipomotor', '=', 'tipo_motor.id')
+        // Financiamiento
+        ->join('cat_datos_maestros as financiamiento', 'publicacion.lng_idfinanciamiento', '=', 'financiamiento.id')
+        // Chocado
+        ->join('cat_datos_maestros as chocado', 'publicacion.lng_idchocado', '=', 'chocado.id')
+        // Recibo Moto
+        ->leftjoin('cat_datos_maestros as recibo_moto', 'publicacion.lng_idrecibomoto', '=', 'recibo_moto.id')
+        // Sistema de Arranque
+        ->leftjoin('cat_datos_maestros as sistema_arranque', 'publicacion.lng_idsistemaarranque', '=', 'sistema_arranque.id')
+        // Maximo de Tripulantes
+        ->leftjoin('cat_datos_maestros as max_tripulantes', 'publicacion.lng_idmaxtripulantes', '=', 'max_tripulantes.id')
+        // Material
+        ->leftjoin('cat_datos_maestros as material', 'publicacion.lng_idmaterial', '=', 'material.id')
+        // Ciudad
+        ->join('cat_ciudades as ciudad', 'publicacion.lng_idciudad', '=', 'ciudad.id')        
+        // Baño
+        ->leftjoin('cat_datos_maestros as bano', 'publicacion.lng_idbano', '=', 'bano.id') 
+        // Ventana
+        ->leftjoin('cat_datos_maestros as ventana', 'publicacion.lng_idventana', '=', 'ventana.id')
+        /*            
+         
+            
          */     
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        //->join('cat_datos_maestros as vehiculo', 'publicaciones.lng_idtipo_vehiculo', '=', 'vehiculos.id') // TIPO VEHICULO
-        //->join('cat_paises as paises', 'publicaciones.lng_idpais', '=', 'paises.id') // PAIS VEHICULO PUBLICADO
-        
-        //->join('tbl_modelos as modelos', 'publicaciones.lng_idmodelo', '=', 'modelos.id') // PAIS
-        //->join('cat_marcas as marcas', 'modelos.lng_idmarca', '=', 'marcas.id') // PAIS
+        ///////////////////////////////////////////////////////////////////////////////////////////////////   
         ->select(
             // DATOS PERSONA
             'persona.name',                                 // Nickname de la Persona
@@ -193,9 +224,9 @@ class VehiculoController extends Controller
             //'persona.lng_idgenero',                       // id Genero de la Persona
             'genero.str_descripcion as genero',             // Genero  de la Persona
             'pais_persona.str_paises as pais_persona',      // Pais  de la Persona
-            //'pais_persona.blb_img as pais_imagen_persona',  // Pais Imagen de la Persona
+            'pais_persona.blb_img as pais_imagen_persona',  // Pais Imagen de la Persona
             'servicio.str_descripcion as servicio_persona',  // Servicio en donde se Registro la Persona
-            //'persona.blb_img as imagen-persona',            // Imagen Persona
+            'persona.blb_img as imagen_persona',            // Imagen Persona
             // Tipos - Vehiculo
             'tipo_vehiculo.str_descripcion as v_tipo',  
             // Clasificaciones - Vehiculos
@@ -229,44 +260,158 @@ class VehiculoController extends Controller
             // Alto - Vehiculo
             'publicacion.int_alto as v_alto',
             // Ancho - Vehiculo
-            'publicacion.int_ancho as v_ancho'
-
-            //'vehiculos.str_descripcion as clasificacion',  // Clasificacion
-            //'vehiculos.str_tipo as vehiculo',  // Vehiculo
-            //'paises.str_paises as pais',  // PAIS
-            //'personas.name',  // name
-            //'paises.blb_img as blb_img', // IMAGEN PAIS            
-            //'publicaciones.id',
-            //'modelos.str_modelo',            
-            //'marcas.str_marca', 
-            //'publicaciones.bol_eliminado'
-            )
+            'publicacion.int_ancho as v_ancho',
+            // Carroceria - Vehiculo
+            'publicacion.str_carroceria as v_carroceria',
+            // Frenado - Vehiculo
+            'frenado.str_descripcion as v_frenado',
+            // Frenado - Vehiculo 
+            'publicacion.int_carga as v_carga',
+            // Levantamiento - Vehiculo 
+            'publicacion.int_levantamiento as v_levantamiento',
+            // Lastre - Vehiculo 
+            'publicacion.int_lastre as v_lastre',
+            // Largo - Vehiculo 
+            'publicacion.int_largo as v_largo',
+            // Aceite - Vehiculo
+            'aceite.str_descripcion as v_aceite',
+            // Potencia Bruta - Vehiculo 
+            'publicacion.int_potenciabruta as v_potencia_bruta',
+            // Tambor - Vehiculo 
+            'publicacion.str_tambor as v_tambor',
+            // Produccion - Vehiculo 
+            'publicacion.int_produccion as v_produccion',
+            // Enfriamiento - Vehiculo
+            'enfriamiento.str_descripcion as v_enfriamiento',
+            // Neumatico - Vehiculo 
+            'publicacion.dbl_neumatico as v_neumatico',
+            // Potencia - Vehiculo 
+            'publicacion.int_potencia as v_potencia',
+            // Velocidades - Vehiculo 
+            'publicacion.int_velocidades as v_velocidades',
+            // Pasajeros - Vehiculo 
+            'publicacion.int_pasajeros as v_pasajeros',
+            // Horas uso - Vehiculo 
+            'publicacion.int_horasuso as v_horas_uso',
+            // Comentario - Vehiculo 
+            'publicacion.str_comentario as v_comentario',
+            // Negociable - Vehiculo 
+            'negociable.str_descripcion as v_negociable',
+            // Traccion - Vehiculo 
+            'traccion.str_descripcion as v_traccion',
+            // Tapizado - Vehiculo 
+            'tapizado.str_descripcion as v_tapizado',
+            // Motor Reparado - Vehiculo 
+            'motor_reparado.str_descripcion as v_motor_reparado',
+            // vidrios - Vehiculo 
+            'vidrios.str_descripcion as v_vidrios',
+            // Cantidad de Puertas - Vehiculo 
+            'publicacion.int_cantidad_puertas as v_cantidad_puertas',
+            // Color - Vehiculo 
+            'color.str_descripcion as v_color',
+            // Combustible - Vehiculo 
+            'combustible.str_descripcion as v_combustible',
+            // Unico Dueño - Vehiculo 
+            'unico_dueno.str_descripcion as v_unico_dueno',
+            // Recorrido - Vehiculo  
+            'publicacion.str_recorrido as v_str_recorrido',
+            // Version - Vehiculo  
+            'publicacion.str_version as v_version',
+            // Tipo de Motor - Vehiculo 
+            'tipo_motor.str_descripcion as v_tipo_motor',
+            // Financiamiento - Vehiculo 
+            'financiamiento.str_descripcion as v_financiamiento',
+            // Chocado - Vehiculo 
+            'chocado.str_descripcion as v_chocado',
+            // Recibo Moto - Vehiculo 
+            'recibo_moto.str_descripcion as v_recibo_moto',
+            // Sistema de Arranque - Vehiculo 
+            'sistema_arranque.str_descripcion as v_sistema_arranque',
+            // Fecha de Publicacion Fin - Vehiculo  
+            'publicacion.dmt_fecha_publicacion_fin as v_fecha_publicacion_fin',
+            // Fecha de Publicacion Inicio - Vehiculo  
+            'publicacion.dmt_fecha_publicacion as v_fecha_publicacion_inicio',
+            // bol_eliminado - Vehiculo  
+            'publicacion.bol_eliminado as v_bol_eliminado',
+            // bol_activa - Vehiculo  
+            'publicacion.bol_activa as v_bol_activa',
+            // esloralargo - Vehiculo  
+            'publicacion.int_esloralargo as v_esloralargo',
+            // Manga Ancho - Vehiculo  
+            'publicacion.int_mangaancho as v_manga_ancho',
+            // Maximo de Tripulantes - Vehiculo 
+            'max_tripulantes.str_descripcion as v_max_tripulantes',
+            // Material - Vehiculo 
+            'material.str_descripcion as v_material',
+            // Peso - Vehiculo  
+            'publicacion.int_peso as v_peso',
+            // Potencia maxima - Vehiculo  
+            'publicacion.int_potenciamax as v_potencia_max',
+            // Precio de Venta - Vehiculo  
+            'publicacion.str_precio_venta as v_precio_venta',
+            // Moneda - Vehiculo  
+            'publicacion.str_moneda as v_moneda',
+            // Ciudad - Vehiculo  
+            'ciudad.str_ciudad as v_ciudad',         
+            // Video - Vehiculo  
+            'publicacion.str_video as v_video',            
+            // updated_at - Vehiculo  
+            'publicacion.updated_at as v_updated_at',            
+            // created_at - Vehiculo              
+            'publicacion.created_at as v_created_at',  
+            // created_at - Vehiculo  
+            'publicacion.status_admin as v_status_admin',
+            // status_user - Vehiculo  
+            'publicacion.status_user as v_status_user',
+            // Baño - Vehiculo  
+            'bano.str_descripcion as v_bano',
+            // Ventana - Vehiculo  
+            'ventana.str_descripcion as v_ventana'            
+        	)
         ->get();  
-        return $vehiculo;
-        //return $vehiculo[0]->name;
-        /*
-        $ImagenesVehiculo = DB::table('tbl_imagenes_vehiculos')->where('lng_idvehiculo','=',$id)->get();
-        return $ImagenesVehiculo;
-        $DetalleVehiculo = DB::table('tbl_detalles_vehiculos')->where('lng_idvehiculo','=',$id)->get();
-        return $DetalleVehiculo;
-        */
-        //return count($DetalleVehiculo);
-        //$ImagenesVehiculos = ImagenesVehiculos::findOrFail($id);
-        /*
-        $a = base64_decode($marca->blb_img);
+        //return $vehiculo;
+        
+        $a = base64_decode($vehiculo[0]->pais_imagen_persona);
+
         $b = finfo_open(); 
-        $marca->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
-        // Consulta los Tipos Asociados a la Marca       
-        $tipos= DB::table('tbl_tipos_marcas')        
-        ->where('lng_idmarca',$id)
-        ->join('cat_datos_maestros', 'tbl_tipos_marcas.lng_idtipo', '=', 'cat_datos_maestros.id')
-        ->select(            
-            'cat_datos_maestros.str_descripcion'                                    
-                )         
-        ->get();    
-                  
-        return view('marca.show',['marca'=>$marca,'tipos'=>$tipos])->with('page_title', 'Consultar');
-        */
+        $vehiculo[0]->formato_pais_imagen_persona = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);        
+        $c = base64_decode($vehiculo[0]->pais_imagen_persona);
+        $vehiculo[0]->formato_imagen_persona = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+        //return $vehiculo[0]->formato_imagen_persona;        
+        //return $vehiculo[0]->imagen_persona; 
+        //echo '<img src="data:'. $vehiculo[0]->formato_pais_imagen_persona .';base64,'. $vehiculo[0]->pais_imagen_persona .'">';
+        //echo '<img src="data:'. $vehiculo[0]->formato_imagen_persona .';base64,'. $vehiculo[0]->imagen_persona .'">';
+        //die();        
+        $imagenesVehiculo = DB::table('tbl_imagenes_vehiculos as imagenes')
+        ->where('lng_idvehiculo','=',$id)
+
+        // CLASIFICACIONES
+        ->select(
+        	'imagenes.blb_img as v_imagen',
+        	'imagenes.int_peso as v_peso'   
+        	)
+        ->get();
+		//return $ImagenesVehiculo;
+		//return $imagenesVehiculo[0]->v_imagen;
+        //echo '<img src="'. $imagenesVehiculo[0]->v_imagen .'">';
+        //die();
+        $detalleVehiculo = DB::table('tbl_detalles_vehiculos as detalles')
+        ->where('lng_idvehiculo','=',$id)
+        // CLASIFICACIONES
+        ->join('cat_datos_maestros as caracteristica', 'detalles.lng_idcaracteristica', '=', 'caracteristica.id')
+        ->select(
+        	// Caracteristica Descripcion - Vehiculo  
+        	'caracteristica.str_tipo as v_tipo',
+            'caracteristica.str_descripcion as v_descripcion'            
+            )
+        ->get();
+        //return $DetalleVehiculo;
+        //return $detalleVehiculo[0]->v_tipo;
+         
+        //return view('vehiculo.publicaciones-inactivas',compact('vehiculo'))->with('page_title', 'Publicaciones Inactivas');    
+        //return "Hola";
+        return view('vehiculo.show',['vehiculo'=>$vehiculo,'imagenesVehiculo'=>$imagenesVehiculo,'detalleVehiculo'=>$detalleVehiculo])->with('page_title', 'Consultar');
+        
     }
 
     /**
