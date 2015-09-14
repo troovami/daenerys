@@ -405,7 +405,7 @@ class VehiculoController extends Controller
             'caracteristica.str_descripcion as v_descripcion'            
             )
         ->get();
-        //return $DetalleVehiculo;
+        //return $detalleVehiculo;
         //return $detalleVehiculo[0]->v_tipo;
          
         //return view('vehiculo.publicaciones-inactivas',compact('vehiculo'))->with('page_title', 'Publicaciones Inactivas');    
