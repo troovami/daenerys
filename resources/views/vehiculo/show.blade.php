@@ -5,6 +5,23 @@
 <section class="content col-md-12">
           <div class="row">  
           	<div class="col-md-4">
+
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-calendar"></i> Fecha de Publicación</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-bordered ">
+                    <tr>
+                      <th style="width: 16.5%" class="text-right">Fecha de Inicio:</th>
+                      <td style="width: 16.5%">{{$vehiculo[0]->v_fecha_publicacion_inicio}}</td>
+                      <th style="width: 16.5%" class="text-right">Fecha Fin:</th>
+                      <td style="width: 16.5%">{{$vehiculo[0]->v_fecha_publicacion_fin}}</td>
+                    </tr>
+                  </table>                 
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+
               <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title"><i class="fa fa-image"></i> Imagenes</h3>
@@ -50,7 +67,37 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-            </div><!-- /.col -->       	
+
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="glyphicon glyphicon-align-justify"></i> Comentario</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  @if ($vehiculo[0]->v_comentario == null)  
+                  <h4><span data-toggle="tooltip" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> Publicación sin Comentario</span></h4>
+                  @else
+                  {{$vehiculo[0]->v_comentario}}
+                  @endif                                    
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->            
+
+              
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-film"></i> Video</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  @if ($vehiculo[0]->v_video == null)  
+                  <h4><span data-toggle="tooltip" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> Publicación sin Video</span></h4>
+                  @else
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$vehiculo[0]->v_video}}" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                  @endif              
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->                 
+            </div><!-- /.col -->  
+              	
            	<div class="col-md-8">
               <!-- Custom Tabs (Pulled to the right) -->
               <div class="nav-tabs-custom">
@@ -69,8 +116,8 @@
                       <li role="presentation" class="divider"></li>
                       <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
                     </ul>
-                  </li>
-                  <li class="pull-left header"><i class="fa fa-car"></i>{{$vehiculo[0]->v_marca}} {{$vehiculo[0]->v_modelo}} {{$vehiculo[0]->v_anio}}</li>
+                  </li>   
+                  <li class="pull-left header"><i class="fa fa-car"></i> {{$vehiculo[0]->v_marca}} {{$vehiculo[0]->v_modelo}} {{$vehiculo[0]->v_anio}}</li>              
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane" id="tab_1-1">                  
@@ -89,13 +136,13 @@
                       </div>
                       <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="box-body">
-                            <h4>
+                            <p>
                           @for ($j = 0; $j < count($detalleVehiculo); $j++)                            
                             @if ($detalleVehiculo[$j]->v_tipo == 'seguridad_vehiculos')                            
                               <span class="label label-primary" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
                             @endif 
                           @endfor 
-                            </h4>                          
+                            </p>                          
                         </div>
                       </div>
                     </div>
@@ -109,13 +156,13 @@
                       </div>
                       <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="box-body">                          
-                          <h4>
+                          <p>
                           @for ($j = 0; $j < count($detalleVehiculo); $j++)                            
                             @if ($detalleVehiculo[$j]->v_tipo == 'sonido_vehiculos')                            
                               <span class="label label-danger" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
                             @endif 
                           @endfor 
-                          </h4>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -129,13 +176,13 @@
                       </div>
                       <div id="collapseThree" class="panel-collapse collapse">
                         <div class="box-body">                          
-                          <h4>
+                          <p>
                           @for ($j = 0; $j < count($detalleVehiculo); $j++)                            
                             @if ($detalleVehiculo[$j]->v_tipo == 'exterior_vehiculos')                            
                               <span class="label label-success" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
                             @endif 
                           @endfor 
-                          </h4>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -149,13 +196,13 @@
                       </div>
                       <div id="collapseFour" class="panel-collapse collapse">
                         <div class="box-body">                          
-                          <h4>
+                          <p>
                           @for ($j = 0; $j < count($detalleVehiculo); $j++)                            
                             @if ($detalleVehiculo[$j]->v_tipo == 'confort_vehiculos')                            
                               <span class="label label-default" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
                             @endif 
                           @endfor 
-                          </h4>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -169,13 +216,13 @@
                       </div>
                       <div id="collapseFive" class="panel-collapse collapse">
                         <div class="box-body">                          
-                          <h4>
+                          <p>
                           @for ($j = 0; $j < count($detalleVehiculo); $j++)                            
                             @if ($detalleVehiculo[$j]->v_tipo == 'accesoriosInternos_vehiculos')                            
-                              <span class="label label-default" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
+                              <span class="label label-warning" title="{{$detalleVehiculo[$j]->v_descripcion}}">{{$detalleVehiculo[$j]->v_descripcion}}</span>
                             @endif 
                           @endfor 
-                          </h4>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -187,16 +234,30 @@
                   <div class="tab-pane active" id="tab_2-2">
                     <table class="table table-bordered ">
                         <tr>
+                          <th style="width: 16.5%" class="text-right">Status de Usuario:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_status_user}}</td>
+                          <th style="width: 16.5%" class="text-right">Activación:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_bol_activa}}</td>
+                          <th style="width: 16.5%" class="text-right">Estado:</th>
+                          @if ($vehiculo[0]->v_bol_eliminado == 0)
+                            <td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion Activa</span></td> 
+                          @else 
+                            <td style="width: 16.5%"><span class="label label-default"><i class="fa fa-close"></i> Publicacion Inactiva</span></td>
+                          @endif                                                    
+                        </tr>                                            
+
+                        <tr>
                           <th style="width: 16.5%" class="text-right">Tipo:</th>
                           <td style="width: 16.5%">{{$vehiculo[0]->v_tipo}}</td>
                           <th style="width: 16.5%" class="text-right">Clasificacion:</th>
                           <td style="width: 16.5%">{{$vehiculo[0]->v_clasificacion}}</td>
                           <th style="width: 16.5%" class="text-right">Marca:</th>
                           <td style="width: 16.5%">{{$vehiculo[0]->v_marca}}</td>                          
-                        </tr>                                            
+                        </tr>
+
                         <tr>
-                          <th style="width: 16.5%" class="text-right">País:</th>
-                          <td style="width: 16.5%">{{$vehiculo[0]->v_pais}}</td>
+                          <th style="width: 16.5%" class="text-right">Version:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_version}}</td>
                           <th style="width: 16.5%" class="text-right">Placa:</th>
                           <td style="width: 16.5%">{{$vehiculo[0]->v_placa}}</td>
                           <th style="width: 16.5%" class="text-right">Cilindrada:</th>
@@ -209,7 +270,7 @@
                           <td style="width: 16.5%">{{$vehiculo[0]->v_anio}}</td>
                           <th style="width: 16.5%" class="text-right">Arranque:</th>
                           @if ($vehiculo[0]->v_arranque == 0)  
-                            <td style="width: 16.5%">No Aplica</td>
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
                           @else
                             <td style="width: 16.5%">{{$vehiculo[0]->v_arranque}}</td>
                           @endif
@@ -227,7 +288,7 @@
                         <tr>
                           <th style="width: 16.5%" class="text-right">Equipo Medico:</th>
                           @if ($vehiculo[0]->v_equipo_medico == 0)  
-                            <td style="width: 16.5%">No Aplica</td>
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
                           @else
                             <td style="width: 16.5%">{{$vehiculo[0]->v_equipo_medico}}</td>
                           @endif                          
@@ -235,7 +296,7 @@
                           <td style="width: 16.5%">{{$vehiculo[0]->v_pisos}}</td>
                           <th style="width: 16.5%" class="text-right">Alto:</th>
                           @if ($vehiculo[0]->v_alto == 0)  
-                            <td style="width: 16.5%">No Aplica</td>
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
                           @else
                             <td style="width: 16.5%">{{$vehiculo[0]->v_alto}}</td>
                           @endif                           
@@ -244,119 +305,263 @@
                         <tr>
                           <th style="width: 16.5%" class="text-right">Ancho:</th>
                           @if ($vehiculo[0]->v_ancho == 0)  
-                            <td style="width: 16.5%">No Aplica</td>
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
                           @else
                             <td style="width: 16.5%">{{$vehiculo[0]->v_ancho}}</td>
                           @endif
-                          <th style="width: 16.5%" class="text-right">Estereo:</th>
-                          <td style="width: 16.5%">{{$vehiculo[0]->v_estereo}}</td>
-                          <th style="width: 16.5%" class="text-right">Transmision:</th>
-                          <td style="width: 16.5%">{{$vehiculo[0]->v_transmision}}</td>
+                          <th style="width: 16.5%" class="text-right">Carroceria:</th>
+                          @if ($vehiculo[0]->v_carroceria == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_carroceria}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Frenado:</th>
+                          @if ($vehiculo[0]->v_frenado == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_frenado}}</td>
+                          @endif                          
                         </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Carga:</th>
+                          @if ($vehiculo[0]->v_carga == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_carga}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Levantamiento:</th>
+                          @if ($vehiculo[0]->v_levantamiento == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_levantamiento}}</td>
+                          @endif                           
+                          <th style="width: 16.5%" class="text-right">Lastre:</th>
+                          @if ($vehiculo[0]->v_lastre == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_lastre}}</td>
+                          @endif                           
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Largo:</th>
+                          @if ($vehiculo[0]->v_largo == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_largo}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Aceite:</th>
+                          @if ($vehiculo[0]->v_aceite == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_aceite}}</td>
+                          @endif                           
+                          <th style="width: 16.5%" class="text-right">Potencia Bruta:</th>
+                          @if ($vehiculo[0]->v_potencia_bruta == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_potencia_bruta}}</td>
+                          @endif                          
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Tambor:</th>
+                          @if ($vehiculo[0]->v_tambor == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_tambor}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Produccion:</th>
+                          @if ($vehiculo[0]->v_produccion == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_produccion}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Enfriamiento:</th>
+                          @if ($vehiculo[0]->v_enfriamiento == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_enfriamiento}}</td>
+                          @endif                          
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Neumatico:</th>
+                          @if ($vehiculo[0]->v_neumatico == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_neumatico}}</td>
+                          @endif                           
+                          <th style="width: 16.5%" class="text-right">Potencia:</th>
+                          @if ($vehiculo[0]->v_potencia == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_potencia}}</td>
+                          @endif                           
+                          <th style="width: 16.5%" class="text-right">Velocidades:</th>
+                          @if ($vehiculo[0]->v_velocidades == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_velocidades}}</td>
+                          @endif                           
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Pasajeros:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_pasajeros}}</td>
+                          <th style="width: 16.5%" class="text-right">Horas uso:</th>
+                          @if ($vehiculo[0]->v_horas_uso == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_horas_uso}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Negociable:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_negociable}}</td>
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Traccion:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_traccion}}</td>
+                          <th style="width: 16.5%" class="text-right">Tapizado:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_tapizado}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Motor Reparado:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_motor_reparado}}</td>
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Vidrios:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_vidrios}}</td>
+                          <th style="width: 16.5%" class="text-right">Cantidad de Puertas:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_cantidad_puertas}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Cantidad de Puertas:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_cantidad_puertas}}</td>
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Color:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_color}}</td>
+                          <th style="width: 16.5%" class="text-right">Combustible:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_combustible}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Unico Dueño:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_unico_dueno}}</td>
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Recorrido:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_str_recorrido}}</td>
+                          <th style="width: 16.5%" class="text-right">Potencia maxima:</th>
+                          @if ($vehiculo[0]->v_potencia_max == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_potencia_max}}</td>
+                          @endif                         
+                          <th style="width: 16.5%" class="text-right">Tipo de Motor:</th>
+                          @if ($vehiculo[0]->v_tipo_motor == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_tipo_motor}}</td>
+                          @endif                          
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Financiamiento:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_financiamiento}}</td>
+                          <th style="width: 16.5%" class="text-right">Chocado:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_chocado}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Recibo Moto:</th>
+                          @if ($vehiculo[0]->v_recibo_moto == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_recibo_moto}}</td>
+                          @endif                          
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Sistema de Arranque:</th>
+                          @if ($vehiculo[0]->v_sistema_arranque == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_sistema_arranque}}</td>
+                          @endif                          
+                          <th style="width: 16.5%" class="text-right">Esloralargo:</th>
+                          @if ($vehiculo[0]->v_esloralargo == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_esloralargo}}</td> 
+                          @endif                                                  
+                          <th style="width: 16.5%" class="text-right">Manga Ancho:</th>
+                          @if ($vehiculo[0]->v_manga_ancho == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_manga_ancho}}</td>
+                          @endif                          
+                        </tr>
+
+                         <tr>
+                          <th style="width: 16.5%" class="text-right">Maximo de Tripulantes:</th>
+                          @if ($vehiculo[0]->v_max_tripulantes == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_max_tripulantes}}</td>
+                          @endif                           
+                          <th style="width: 16.5%" class="text-right">Material:</th>
+                          @if ($vehiculo[0]->v_material == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_material}}</td>
+                          @endif                                                    
+                          <th style="width: 16.5%" class="text-right">Peso:</th>
+                          @if ($vehiculo[0]->v_peso == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_peso}}</td>
+                          @endif                           
+                        </tr>
+
+                        <tr>                          
+                          <th style="width: 16.5%" class="text-right">País:</th>
+                          <td style="width: 16.5%"><img title="{{$vehiculo[0]->v_pais}}" style="width:20px" src="data:{{$vehiculo[0]->formato_v_pais_imagen}};base64,{{$vehiculo[0]->v_pais_imagen}}" /> {{$vehiculo[0]->v_pais}}</td>                          
+                          <th style="width: 16.5%" class="text-right">Ciudad:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_ciudad}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Precio de Venta:</th>
+                          @if($vehiculo[0]->v_moneda=="")
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_precio_venta}} <small>{{$vehiculo[0]->v_moneda_abreviatura}} <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Moneda &laquo; {{$vehiculo[0]->v_moneda_pais}} &raquo;"></i></small></td>
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_precio_venta}} <small>USD <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Moneda &laquo; Dólares Americanos &raquo;"></i></small></td>
+                          @endif                          
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Última Actualización:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_updated_at}}</td>
+                          <th style="width: 16.5%" class="text-right">Fecha de Creación:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_created_at}}</td>                         
+                          <th style="width: 16.5%" class="text-right">Status de Usuario:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_status_user}}</td>
+                        </tr>
+
+                        <tr>
+                          <th style="width: 16.5%" class="text-right">Status Admin:</th>
+                          <td style="width: 16.5%">{{$vehiculo[0]->v_status_admin}}</td>
+                          <th style="width: 16.5%" class="text-right">Baño:</th>
+                          @if ($vehiculo[0]->v_bano == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_bano}}</td>
+                          @endif                                                   
+                          <th style="width: 16.5%" class="text-right">Ventana:</th>
+                          @if ($vehiculo[0]->v_ventana == 0)  
+                            <td style="width: 16.5%"><span data-toggle="tooltip" data-placement="top" title="No Aplica en {{$vehiculo[0]->v_tipo}} ({{$vehiculo[0]->v_clasificacion}})" class="label label-default"><i class="glyphicon glyphicon-info-sign"></i> No Aplica</span></td>                            
+                          @else
+                            <td style="width: 16.5%">{{$vehiculo[0]->v_ventana}}</td>
+                          @endif                          
+                        </tr>
+
+                       
                         <!--            
-           
-            // Carroceria - Vehiculo
-            'publicacion.str_carroceria as v_carroceria',
-            // Frenado - Vehiculo
-            'frenado.str_descripcion as v_frenado',
-            // Frenado - Vehiculo 
-            'publicacion.int_carga as v_carga',
-            // Levantamiento - Vehiculo 
-            'publicacion.int_levantamiento as v_levantamiento',
-            // Lastre - Vehiculo 
-            'publicacion.int_lastre as v_lastre',
-            // Largo - Vehiculo 
-            'publicacion.int_largo as v_largo',
-            // Aceite - Vehiculo
-            'aceite.str_descripcion as v_aceite',
-            // Potencia Bruta - Vehiculo 
-            'publicacion.int_potenciabruta as v_potencia_bruta',
-            // Tambor - Vehiculo 
-            'publicacion.str_tambor as v_tambor',
-            // Produccion - Vehiculo 
-            'publicacion.int_produccion as v_produccion',
-            // Enfriamiento - Vehiculo
-            'enfriamiento.str_descripcion as v_enfriamiento',
-            // Neumatico - Vehiculo 
-            'publicacion.dbl_neumatico as v_neumatico',
-            // Potencia - Vehiculo 
-            'publicacion.int_potencia as v_potencia',
-            // Velocidades - Vehiculo 
-            'publicacion.int_velocidades as v_velocidades',
-            // Pasajeros - Vehiculo 
-            'publicacion.int_pasajeros as v_pasajeros',
-            // Horas uso - Vehiculo 
-            'publicacion.int_horasuso as v_horas_uso',
-            // Comentario - Vehiculo 
-            'publicacion.str_comentario as v_comentario',
-            // Negociable - Vehiculo 
-            'negociable.str_descripcion as v_negociable',
-            // Traccion - Vehiculo 
-            'traccion.str_descripcion as v_traccion',
-            // Tapizado - Vehiculo 
-            'tapizado.str_descripcion as v_tapizado',
-            // Motor Reparado - Vehiculo 
-            'motor_reparado.str_descripcion as v_motor_reparado',
-            // vidrios - Vehiculo 
-            'vidrios.str_descripcion as v_vidrios',
-            // Cantidad de Puertas - Vehiculo 
-            'publicacion.int_cantidad_puertas as v_cantidad_puertas',
-            // Color - Vehiculo 
-            'color.str_descripcion as v_color',
-            // Combustible - Vehiculo 
-            'combustible.str_descripcion as v_combustible',
-            // Unico Dueño - Vehiculo 
-            'unico_dueno.str_descripcion as v_unico_dueno',
-            // Recorrido - Vehiculo  
-            'publicacion.str_recorrido as v_str_recorrido',
-            // Version - Vehiculo  
-            'publicacion.str_version as v_version',
-            // Tipo de Motor - Vehiculo 
-            'tipo_motor.str_descripcion as v_tipo_motor',
-            // Financiamiento - Vehiculo 
-            'financiamiento.str_descripcion as v_financiamiento',
-            // Chocado - Vehiculo 
-            'chocado.str_descripcion as v_chocado',
-            // Recibo Moto - Vehiculo 
-            'recibo_moto.str_descripcion as v_recibo_moto',
-            // Sistema de Arranque - Vehiculo 
-            'sistema_arranque.str_descripcion as v_sistema_arranque',
-            // Fecha de Publicacion Fin - Vehiculo  
-            'publicacion.dmt_fecha_publicacion_fin as v_fecha_publicacion_fin',
-            // Fecha de Publicacion Inicio - Vehiculo  
-            'publicacion.dmt_fecha_publicacion as v_fecha_publicacion_inicio',
-            // bol_eliminado - Vehiculo  
-            'publicacion.bol_eliminado as v_bol_eliminado',
-            // bol_activa - Vehiculo  
-            'publicacion.bol_activa as v_bol_activa',
-            // esloralargo - Vehiculo  
-            'publicacion.int_esloralargo as v_esloralargo',
-            // Manga Ancho - Vehiculo  
-            'publicacion.int_mangaancho as v_manga_ancho',
-            // Maximo de Tripulantes - Vehiculo 
-            'max_tripulantes.str_descripcion as v_max_tripulantes',
-            // Material - Vehiculo 
-            'material.str_descripcion as v_material',
-            // Peso - Vehiculo  
-            'publicacion.int_peso as v_peso',
-            // Potencia maxima - Vehiculo  
-            'publicacion.int_potenciamax as v_potencia_max',
-            // Precio de Venta - Vehiculo  
-            'publicacion.str_precio_venta as v_precio_venta',
-            // Moneda - Vehiculo  
-            'publicacion.str_moneda as v_moneda',
-            // Ciudad - Vehiculo  
-            'ciudad.str_ciudad as v_ciudad',         
-            // Video - Vehiculo  
-            'publicacion.str_video as v_video',            
-            // updated_at - Vehiculo  
-            'publicacion.updated_at as v_updated_at',            
-            // created_at - Vehiculo              
-            'publicacion.created_at as v_created_at',  
-            // created_at - Vehiculo  
-            'publicacion.status_admin as v_status_admin',
-            // status_user - Vehiculo  
-            'publicacion.status_user as v_status_user',
+              
+            
             // Baño - Vehiculo  
             'bano.str_descripcion as v_bano',
             // Ventana - Vehiculo  

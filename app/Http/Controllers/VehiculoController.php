@@ -236,7 +236,13 @@ class VehiculoController extends Controller
             // Modelos - Vehiculos
             'modelo.str_modelo as v_modelo',            
             // Paises  - Publicaciones
+            'pais.blb_img as v_pais_imagen',
+            // Pais Imagen - Publicaciones
             'pais.str_paises as v_pais',
+            // Pais Moneda - Publicaciones
+            'pais.str_moneda as v_moneda_pais',
+            // Pais Abreviatura Moneda - Publicaciones
+            'pais.str_abreviatura as v_moneda_abreviatura',
             // Placa - Vehiculo
             'publicacion.str_placa as v_placa',
             // cilindrada - Vehiculo
@@ -370,13 +376,68 @@ class VehiculoController extends Controller
         	)
         ->get();  
         //return $vehiculo;
+
+        //return $vehiculo[0]->v_video;
+        // Extrayendo Valores de Video Youtube y validando parámetros
+        /// *********************************************************************************************************
+        if ($vehiculo[0]->v_video != NULL) {
+                
+        $youtube = $vehiculo[0]->v_video;
+        // Simple
+        //$youtube = "https://www.youtube.com/watch?v=rYEDA3JcQqw"; 
+        // Lista 1 una variable
+        //$youtube = "https://www.youtube.com/watch?v=rYEDA3JcQqw&list=RDEMTPfPURSbYpb0YHCKyIG37Q";
+        // Lista 2 Variables
+        //$youtube = "https://www.youtube.com/watch?v=hLQl3WQQoQ0&list=RDEMTPfPURSbYpb0YHCKyIG37Q&index=2";
+        // Embebido
+        //$youtube = "https://www.youtube.com/embed/LEWcNGcUNAY";
+        // Link Otro
+        //$youtube = "https://youtu.be/rYEDA3JcQqw?list=RDEMTPfPURSbYpb0YHCKyIG37Q";
+
+        $c1 = "https://www.youtube.com/watch?v=";   // Link Directo
+        $c2 = "https://www.youtube.com/embed/";     // Embed
+        $c3 = "https://youtu.be/"; // Link otro        
+        $caso1 = stristr($youtube, $c1);
+        $caso2 = stristr($youtube, $c2);
+        $caso3 = stristr($youtube, $c3);         
+        
+        // Caso 1     
+        //echo $caso2;   
+        if ($caso1 != NULL) {                        
+            // 1.1 Detecta si es un link simple o de lista de reproduccion                     
+            $contador = substr_count($youtube, '&');
+            //echo $contador;
+            if($contador ==0){               
+                //echo "Es Caso 1 Simple &raquo; ". $caso1 . "<br>";                              
+                $caso1 = str_replace($c1,'',$youtube);                
+                $vehiculo[0]->v_video = $caso1;
+            }else{
+                //echo "Es Caso 1 Lista &raquo; ". $caso1 . "<br>";                              
+                $caso1 = str_replace($c1,'',$youtube);
+                $caso1 = str_replace('&','?',$caso1);
+                $vehiculo[0]->v_video = $caso1;
+            }
+        // Caso 2   
+        }elseif($caso2 != NULL){
+            //echo "Es Caso 2 &raquo; ". $caso2 . "<br>";
+            $caso2 = str_replace($c2,'',$youtube);                
+            $vehiculo[0]->v_video = $caso2;
+        }elseif($caso3 != NULL){
+            //echo "Es Caso 3 &raquo; ". $caso3 . "<br>";
+            $caso3 = str_replace($c3,'',$youtube);                
+            $vehiculo[0]->v_video = $caso3;
+        }
+        } // Fin de ($vehiculo[0]->v_video != NULL) 
+        /// *********************************************************************************************************
         
         $a = base64_decode($vehiculo[0]->pais_imagen_persona);
 
         $b = finfo_open(); 
         $vehiculo[0]->formato_pais_imagen_persona = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);        
         $c = base64_decode($vehiculo[0]->pais_imagen_persona);
-        $vehiculo[0]->formato_imagen_persona = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+        $vehiculo[0]->formato_imagen_persona = finfo_buffer($b, $c, FILEINFO_MIME_TYPE);
+        $d = base64_decode($vehiculo[0]->v_pais_imagen);
+        $vehiculo[0]->formato_v_pais_imagen = finfo_buffer($b, $d, FILEINFO_MIME_TYPE);
         //return $vehiculo[0]->formato_imagen_persona;        
         //return $vehiculo[0]->imagen_persona; 
         //echo '<img src="data:'. $vehiculo[0]->formato_pais_imagen_persona .';base64,'. $vehiculo[0]->pais_imagen_persona .'">';
