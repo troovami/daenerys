@@ -30,14 +30,14 @@ class Persona extends Model
                             'password',
                             'email',
                             'str_telefono',
-                            'lng_idrol',
-                            'str_twitter',
-                            'str_facebook',
-                            'str_instagram',
+                            //'lng_idrol',
+                            //'str_twitter',
+                            //'str_facebook',
+                            //'str_instagram',
                             'bol_certificado',
                             'bol_eliminado',
-                            'lng_idservicio',
-                            'blb_img'
+                            'lng_idservicio'//,
+                            //'blb_img'
                           ];
 	/**
      * The attributes excluded from the model's JSON form.
