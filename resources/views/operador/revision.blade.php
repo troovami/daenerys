@@ -11,7 +11,7 @@
 		
         <section class="content">
           <div class="row">
-            <div class="col-xs-10 col-md-8 col-md-offset-2">             
+            <div class="" style="margin:25px;">             
 
             @if(Session::has('message'))
 
@@ -21,13 +21,13 @@
             </div>        
     		@endif
 
-              <div class="box">
+              <div class="box" style="padding:20px;">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> Vehiculos Publicados Activos</h3>
+                  <h3 class="box-title"><i class="fa fa-car text-light-blue"></i> Publicaciones en Revisión</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <p><i class="fa fa-car"></i> Total de Vehiculos Publicados: <b>{{count($vehiculos)}}</b></p>
+                <p><i class="fa fa-car"></i> Total de Publiaciones en Revisión: <b>{{count($revisiones)}}</b></p>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>                        
@@ -36,25 +36,25 @@
                         <th class="text-center"><i class="fa fa-circle"></i> Clasificación</th>
                         <th class="text-center"><i class="fa fa-circle"></i> Marca</th>
                         <th class="text-center"><i class="fa fa-circle"></i> Modelo</th>                        
-                        <th class="text-center"><i class="fa fa-flag"></i> Pais</th>                        
+                        <th class="text-center"><i class="fa fa-flag"></i> Pais</th>  
+                        <th class="text-center"><i class="fa fa-user-secret"></i> Supervisor</th>                          
                         <th class="text-center"><i class="fa fa-cog"></i> Operaciones</th>
                       </tr>
                     </thead>
                     <tbody>                    
-                      @foreach($vehiculos as $vehiculo)                      
+                      @foreach($revisiones as $revision)                      
 			              <tr class="text-center">                                       
-                    <td>{{$vehiculo->name}}</td>
-                    <td>{{$vehiculo->tipo_vehiculo}}</td>  
-                    <td>{{$vehiculo->clasificacion}}</td>                    
-                    <td>{{$vehiculo->marca}}</td>
-                    <td>{{$vehiculo->modelo}}</td>                   
-			            	<td>{{$vehiculo->pais}}</td> 		                			                
+                    <td>{{$revision->name}}</td>
+                    <td>{{$revision->tipo_vehiculo}}</td>  
+                    <td>{{$revision->clasificacion}}</td>                    
+                    <td>{{$revision->marca}}</td>
+                    <td>{{$revision->modelo}}</td>                   
+			            	<td>{{$revision->pais}}</td>
+			            	<td>{{$revision->admin}}</td>  		                			                
 			                <td>
 			                	<div class="btn-group">
-			                	<a class="btn btn-info btn-flat" href="{{route('vehicles.show',$vehiculo->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
-                                <a class="btn bg-purple btn-flat" href="#" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-ban"></i></a>      
-                                <a class="btn btn-danger btn-flat" href="#" title="Cambiar Status (Activar / Desactivar)"><i class="fa fa-close"></i></a>  </div>
-			                </td>  	
+			                	<a class="btn btn-info btn-flat" href="{{route('operador.detalle',$revision->id)}}" title="Consultar"><i class="fa fa-search"></i></a>
+                            </td>  	
 			            </tr>
 			            @endforeach
                     </tbody>                    

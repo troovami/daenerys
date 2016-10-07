@@ -40,7 +40,8 @@ class PersonaController extends Controller
         for ($k = 1950; $k <= 2015; $k++){ $anios[$k] = $k; }
         //return $dia;                       
         
-        $roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');                       
+        //$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id'); 
+        $roles = 2; 
         $generos = DB::table('cat_datos_maestros')->where('str_tipo','genero')->orderBy('str_descripcion')->lists('str_descripcion','id');
         $paises = DB::table('cat_paises')->orderBy('str_paises')->lists('str_paises','id'); 
         return view('persona.create',compact('roles','generos','paises','dias','meses','anios'))->with('page_title', 'Agregar');
@@ -67,11 +68,11 @@ class PersonaController extends Controller
             'password'              => 'required|min:6',
             'email'                 => 'required|email|max:255|unique:tbl_personas',
             'str_telefono'          => 'required|max:255',
-            'lng_idrol'             => 'required|max:255',
-            'str_twitter'           => 'max:255|unique:tbl_personas',
-            'str_facebook'          => 'max:255|unique:tbl_personas',
-            'str_instagram'         => 'max:255|unique:tbl_personas',                               
-            'blb_img'               => 'image|mimes:jpeg,png',            
+            //'lng_idrol'             => 'required|max:255',
+            //'str_twitter'           => 'max:255|unique:tbl_personas',
+            //'str_facebook'          => 'max:255|unique:tbl_personas',
+            //'str_instagram'         => 'max:255|unique:tbl_personas',                               
+            //'blb_img'               => 'image|mimes:jpeg,png',            
         ]);
         $dmt_fecha_nacimiento = $request['anio'] .'-'. $request['mes'] .'-'. $request['dia'];
                 
@@ -87,14 +88,14 @@ class PersonaController extends Controller
             'password'              => bcrypt($request['password']),
             'email'                 => $request['email'],
             'str_telefono'          => $request['str_telefono'],
-            'lng_idrol'             => $request['lng_idrol'],
-            'str_twitter'           => $request['str_twitter'],
-            'str_facebook'          => $request['str_facebook'],
-            'str_instagram'         => $request['str_instagram'],
+            //'lng_idrol'             => $request['lng_idrol'],
+            //'str_twitter'           => $request['str_twitter'],
+            //'str_facebook'          => $request['str_facebook'],
+            //'str_instagram'         => $request['str_instagram'],
             'bol_certificado'       => NULL,
             'bol_eliminado'         => 0,
             'lng_idservicio'        => 152,
-            'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),            
+            //'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),            
         ]);        
         
         Session::flash('message', 'El Usuario &laquo;'. $request['name'] .'&raquo;, ha sido Registrado Exitosamente');        

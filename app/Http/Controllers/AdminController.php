@@ -21,10 +21,39 @@ class AdminController extends Controller
     }
 
     public function all(){
-    	$users = User::All();
-        return view('admin.admin',compact('users'))->with('page_title', 'Principal');
+    	//$users = User::All();
+    	$users= DB::table('tbl_admins as users')
+    	// ADMINISTRADOR
+    	->join('cat_roles as rol', 'users.lng_idrol', '=', 'rol.id')
+    	->select(
+    			
+    			'users.id',
+    			
+    			'users.bol_eliminado',
+    			
+    			'users.password',
+    			
+    			'users.name',
+    			
+    			'users.str_nombre',
+    			
+    			'users.str_apellido',
+    			
+    			'users.email',
+    			
+    			'users.str_telefono',
+    			
+    			'users.created_at',
+    			
+    			'users.created_at',
+    			
+    			'rol.str_rol as rol'
+    			)
+    			->get();
     	
-    }
+    	return view('admin.admin', compact('users'))->with('page_title', 'Principal');
+    	
+     }
 
     public function profile(){    	
         return view('admin.profile')->with('page_title', 'Perfil');    	      	

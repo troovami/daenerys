@@ -120,18 +120,6 @@
                             <label>Teléfono</label>
                             {!! Form::input('text', 'str_telefono', null, ['class'=> 'form-control']) !!}
                         </div>
-                        
-                        <div class="form-group col-md-3">
-                            <label>Rol</label>
-                            
-                            {!! Form::select('lng_idrol', 
-                                                (['' => 'Seleccione'] + $roles), 
-                                                null, 
-                                                ['class' => 'form-control']
-                                            ) 
-                            !!} 
-                            
-                        </div> 
                         <div class="form-group col-md-3">
                             <label>Imagen de Perfil</label><br>
                             <span class="btn btn-default btn-file col-md-12">
@@ -151,7 +139,8 @@
                             {!! Form::input('text', 'str_instagram', null, ['class'=> 'form-control']) !!}
                         </div>
                         
-                        <div class="form-group col-md-3 col-md-push-9">
+                        <div class="form-group col-md-3">
+                        <label></label>
                             {!! Form::submit('Agregar',['class' => 'btn btn-success btn-block']) !!}
                         </div>
                     {!! Form::close() !!}
