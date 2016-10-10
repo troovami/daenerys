@@ -137,7 +137,7 @@
                             {!! Form::input('text', 'str_telefono', null, ['class'=> 'form-control']) !!}
                         </div>
                         
-                        <div class="form-group col-md-3">
+                        <!--<div class="form-group col-md-3">
                             <label>Rol</label>
                             
                             {!! Form::select('lng_idrol', 
@@ -147,7 +147,7 @@
                                             ) 
                             !!} 
                             
-                        </div> 
+                        </div>--> 
                         
                         <div class="form-group col-md-3">
                             <label>Twitter <i class="fa fa-twitter"></i></label>

@@ -236,14 +236,21 @@
                           <th style="width: 16.5%" class="text-right">Activación:</th>
                           <td style="width: 16.5%">{{$vehiculo[0]->v_bol_activa}}</td>
                           <th style="width: 16.5%" class="text-right">Estado:</th>
-                          @if ($vehiculo[0]->v_bol_eliminado == 0 || $vehiculo ->v_status_admin == 710)
-                            <td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion en Revision</span></td> 
-                          @elseif ($vehiculo[0]->v_bol_eliminado == 0 || $vehiculo ->v_status_admin == 708)
-                            <td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion Activa</span></td>
-                          @else 
-                            <td style="width: 16.5%"><span class="label label-default"><i class="fa fa-close"></i> Publicacion Inactiva</span></td>
-                          @endif                                                    
-                        </tr>                                            
+                          <?php
+                          if($vehiculo[0]->v_status_admin == "710")
+                          {
+                          	echo '<td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion en Revision</span></td>';
+                          }
+                          elseif($vehiculo[0]->v_status_admin == "708")
+                          {
+                          	echo '<td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion Activa</span></td>';
+                          }
+                          else
+                          {
+                          	echo '<td style="width: 16.5%"><span class="label label-success"><i class="fa fa-check"></i> Publicacion Inactiva</span></td>';
+                          }
+                          ?>
+                         </tr>                                            
 
                         <tr>
                           <th style="width: 16.5%" class="text-right">Tipo:</th>

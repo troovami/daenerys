@@ -11,17 +11,20 @@ use Session;
 use Redirect;
 use DB;
 
+
 class AdminController extends Controller
 {
 	
-	public function index(){
-    	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');                       
-        return view('admin.create',compact('roles'))->with('page_title', 'Agregar');
+	public function index()
+	{
+    	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
+    	$generos = DB::table('cat_datos_maestros')->where('str_tipo','genero')->orderBy('str_descripcion')->lists('str_descripcion','id');
+        return view('admin.create',compact('roles','generos'))->with('page_title', 'Agregar');
     	
     }
 
-    public function all(){
-    	//$users = User::All();
+    public function all()
+    {
     	$users= DB::table('tbl_admins as users')
     	// ADMINISTRADOR
     	->join('cat_roles as rol', 'users.lng_idrol', '=', 'rol.id')
@@ -61,45 +64,37 @@ class AdminController extends Controller
 
     public function create(Request $request)
     {
-        $this->validate($request, [
+    	$this->validate($request, [
 	        'name'         => 'required|max:255|unique:tbl_admins',
             'str_cedula'   => 'required|max:255|unique:tbl_admins',   
             'str_nombre'   => 'required|max:255',
             'str_apellido' => 'required|max:255',
-            'password'     => 'required|confirmed|min:6',
+    		//'lng_idgenero' => 'required|max:255',
+    	    'password'     => 'required|confirmed|min:6',
             'email'        => 'required|email|max:255|unique:tbl_admins',
             'str_telefono' => 'required|max:255',
             'lng_idrol'    => 'required|max:255',
+            'blb_img'      => 'image|mimes:jpeg,png',  
     	]);
         $request['password'] = bcrypt($request['password']);
         $request['name'] = strtolower($request['name']);
-        //$user = $request->all();
-        //$user['password'] = bcrypt($user['password']);
-        //return $user .'<br><hr>';
-        //return "---------" . $request['password']  . "---------";
-        $user = User::create($request->all());
-        /*
+        
      	$user = User::create([
             'name'         => $request['name'],
             'str_cedula'   => $request['str_cedula'],
             'str_nombre'   => $request['str_nombre'],
             'str_apellido' => $request['str_apellido'],
+     		'lng_idgenero' => $request['lng_idgenero'],
             'password'     => bcrypt($request['password']),
             'email'        => $request['email'],
             'str_telefono' => $request['str_telefono'],
             'lng_idrol'    => $request['lng_idrol'],
+     	    'blb_img'      => base64_encode(file_get_contents($request['blb_img'])),
         ]);
-        //return Redirect::to('/');'message','Usuario Registrado Exitosamente'        
-        
-        $data = array(
-    		'page_title'  => 'Agregar',
-    		'message'   => 'Usuario Registrado Exitosamente'    		
-		);
-		*/
-		Session::flash('message', 'Administrador(a) &laquo;'. $request['name'] .'&raquo; ('. $request['str_nombre'].', '. $request['str_apellido'] .'), ha sido Registrado Exitosamente');        
-        return Redirect::route('admin.create');
-        
-
+     	$generos = DB::table('cat_datos_maestros')->where('str_tipo','genero')->orderBy('str_descripcion')->lists('str_descripcion','id');
+     	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
+     	Session::flash('message', 'Administrador(a) &laquo;'. $request['name'] .'&raquo; ('. $request['str_nombre'].', '. $request['str_apellido'] .'), ha sido Registrado Exitosamente');        
+        return view('admin.create',compact('user','generos','roles'))->with('page_title', 'Agregar');
     }
 
     /**
@@ -110,13 +105,17 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
+       $user = User::findOrFail($id);
         
-    	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
-        $user = User::findOrFail($id);
-        //return view('admin.edit',['user'=>$user]);
-        //return view('admin.create',compact('roles'))->with('page_title', 'Agregar');
-        return view('admin.edit',['user'=>$user],compact('roles'))->with('page_title', 'Editar');
-        //return "Usuario a Editar" . $id;
+        // Detectando el Tipo de Formato del la Imagen
+        $a = base64_decode($user->blb_img);
+        $b = finfo_open();
+        //Agregando un nuevo atributo al array
+        $user->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+        
+        $roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
+        $generos = DB::table('cat_datos_maestros')->where('str_tipo','genero')->orderBy('str_descripcion')->lists('str_descripcion','id');
+        return view('admin.edit',['user'=>$user],compact('roles','generos'))->with('page_title', 'Editar');  
     }  
 
     /**
@@ -127,10 +126,7 @@ class AdminController extends Controller
      */
     public function update($id, Request $request)
     {
-        
-        //$request['name']  = trim($request['name']);
-        //return $request['name'];
-    	$this->validate($request, [
+      $this->validate($request, [
 	        'name'         => 'required|max:255|unique:tbl_admins,name,'.$id,
             'str_cedula'   => 'required|max:255|unique:tbl_admins,str_cedula,'.$id,   
             'str_nombre'   => 'required|max:255',
@@ -138,26 +134,81 @@ class AdminController extends Controller
             'email'        => 'required|email|max:255|unique:tbl_admins,email,'.$id,
             'str_telefono' => 'required|max:255',
             'lng_idrol'    => 'required|max:255',
-    	]);    	
-        $request['name'] = strtolower($request['name']);
+    	    'blb_img'      => 'image|mimes:jpeg,png', 
+      		'password'     => bcrypt($request['password']),
+    	]);    
+        
         $user = User::find($id);
-        $user->fill($request->all());
+        
+        if($request['blb_img']==""){
+        	$user->fill($request->all());
+        }else {
+        	$user->fill([
+        			'name'                  => strtolower($request['name']),
+        			'str_nombre'            => $request['str_nombre'],
+        			'str_apellido'          => $request['str_apellido'],
+        			'lng_idgenero'          => $request['lng_idgenero'],
+        			'str_cedula'            => $request['str_cedula'],
+        			'email'                 => $request['email'],
+        			'str_telefono'          => $request['str_telefono'],
+        			'lng_idrol'             => $request['lng_idrol'],
+        			'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),
+        			'password'              => bcrypt($request['password']),
+        	]);
+        }
         $user->save();
-        Session::flash('message', 'Administrador Actualizado Exitosamente');
+        
+        Session::flash('message', 'El Usuario &laquo;'. $request['name'] .'&raquo;, ha sido Registrado Exitosamente');
         return Redirect::route('admin.edit',$id);
         
     }
 
-    public function show($id){                   
-        $user = User::findOrFail($id);   
-        $rol = DB::table('cat_roles')->where('id', $user['lng_idrol'])->value('str_rol');
-        return view('admin.show',['user'=>$user, 'rol'=>$rol])->with('page_title', 'Consultar Perfil');                    
+    public function show($id)
+    {    
+    	$user= DB::table('tbl_admins')->where('tbl_admins.id', '=',$id)
+    	->join('cat_datos_maestros as genero', 'tbl_admins.lng_idgenero', '=', 'genero.id')
+    	->join('cat_roles', 'tbl_admins.lng_idrol', '=', 'cat_roles.id')
+    	->select(
+    			'tbl_admins.id',
+    			'tbl_admins.name',
+    			'tbl_admins.str_cedula',
+    			'tbl_admins.str_nombre',
+    			'tbl_admins.str_apellido',
+    			'genero.str_descripcion as genero', // Genero
+    			'tbl_admins.str_telefono',
+    			'tbl_admins.email',
+    			'tbl_admins.created_at',
+    			'cat_roles.str_rol',  // Rol
+    			'tbl_admins.bol_eliminado',
+    			'tbl_admins.blb_img'
+    	
+    			)
+    			->get();
+    	
+    			// Detectando el Tipo de Formato del la Imagen
+    			$a = base64_decode($user[0]->blb_img);
+    			$b = finfo_open();
+    			//Agregando un nuevo atributo al array
+    			$user[0]->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+    			 
+    			//return $persona;
+    	
+    			return view('admin.show',['user'=>$user])->with('page_title', 'Consultar');
+    	              
     }
 
     public function delete($id){                   
         $user = User::findOrFail($id);   
         $rol = DB::table('cat_roles')->where('id', $user['lng_idrol'])->value('str_rol');
-        return view('admin.delete',['user'=>$user, 'rol'=>$rol])->with('page_title', 'Eliminar');                    
+        return view('admin.delete',['user'=>$user, 'rol'=>$rol])->with('page_title', 'Eliminar');   
+        
+        /*$user = Admins::findOrFail($id);
+        // Detectando el Tipo de Formato del la Imagen
+        $a = base64_decode($user->blb_img);
+        $b = finfo_open();
+        //Agregando un nuevo atributo al array
+        $user->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);
+        return view('persona.delete',['user'=>$user])->with('page_title', 'Eliminar');*/
     }
 
     /**

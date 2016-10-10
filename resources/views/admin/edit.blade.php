@@ -28,7 +28,7 @@
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                {!! Form::model($user,['route'=>['admin.update',$user->id],'method'=>'PUT']) !!}
+                {!! Form::model($user,['route'=>['admin.update',$user->id],'method'=>'PUT', 'enctype'=>'multipart/form-data']) !!}
         			<div class="form-group col-md-4">
                             <label>Usuario</label>
                             {!! Form::input('text', 'name', null, ['class'=> 'form-control']) !!}
@@ -43,7 +43,17 @@
                         <div class="form-group col-md-4">
                             <label>Apellido</label>
                             {!! Form::input('text', 'str_apellido', null, ['class'=> 'form-control']) !!}
-                        </div>                               
+                        </div> 
+                        
+                        <div class="form-group col-md-4">
+                            <label>Genero</label>
+                            {!! Form::select('lng_idgenero', 
+                                                (['' => 'Seleccione'] + $generos), 
+                                                null, 
+                                                ['class' => 'form-control']
+                                            ) 
+                            !!}                            
+                        </div>                                
                         
                         
                         <div class="form-group col-md-4">
@@ -74,6 +84,14 @@
                             <label>Teléfono</label>
                             {!! Form::input('text', 'str_telefono', null, ['class'=> 'form-control']) !!}
                         </div>  
+                        
+                        <div class="form-group col-md-4">
+                            <label>Imagen de Perfil</label><br>
+                            <span class="btn btn-default btn-file col-md-12">
+                            <i class="fa fa-image"></i> Imagen de Perfil...{!! Form::file('blb_img') !!}    
+                            </span>                        
+                        </div> 
+                        
         			<div class="form-group col-md-4 col-md-push-4">
                     <br>
                     {!! Form::button('<i class="fa fa-pencil"></i> Editar', array('class'=>'btn btn-warning btn-block', 'type'=>'submit')) !!}

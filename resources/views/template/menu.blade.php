@@ -3,7 +3,7 @@
 	<section class="sidebar">
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="{{ asset('images/troovami-logo-online.png') }}" class="img-circle" alt="User Image" />
+				<img class="img-circle" alt="User Image" src="data:{{Auth::user()->format}};base64,{{Auth::user()->blb_img}}" />
 			</div>
 			<div class="pull-left info">
 				<p>&laquo; {{ Auth::user()->name }} &raquo;</p>

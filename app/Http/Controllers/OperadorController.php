@@ -23,45 +23,55 @@ class OperadorController extends Controller
     public function revision()
     {
     	$id = Auth::user()->id;
-    	$revisiones= DB::table('tbl_vehiculos as publicaciones')
-        ->where('publicaciones.bol_eliminado','=',0)
-        ->where('publicaciones.status_admin','=',710 )
-        ->where('publicaciones.lng_idoper', '=' , $id)
-        //->orderBy('id')
-        // PERSONAS      
-        ->join('tbl_personas as persona', 'publicaciones.lng_idpersona', '=', 'persona.id')
-        // TIPOS VEHICULOS
-        ->join('cat_datos_maestros as tipo_vehiculo', 'publicaciones.lng_idtipo_vehiculo', '=', 'tipo_vehiculo.id')
-        // CLASIFICACIONES
-        ->join('cat_datos_maestros as clasificacion', 'publicaciones.lng_idsubtipo_vehiculo', '=', 'clasificacion.id')         
-        // MODELOS
-        ->join('tbl_modelos as modelo', 'publicaciones.lng_idmodelo', '=', 'modelo.id')
-        // MARCAS
-        ->join('cat_marcas as marca', 'modelo.lng_idmarca', '=', 'marca.id')        
-        // PAISES
-        ->join('cat_paises as pais', 'publicaciones.lng_idpais', '=', 'pais.id')
-        // ADMINISTRADOR
-        ->leftjoin('tbl_admins as admin', 'publicaciones.lng_idadmin', '=', 'admin.id')
-        ->select(
-            // ID - Publicaciones
-            'publicaciones.id',
-            // Usuarios - Publicaciones
-            'persona.name',
-            // Tipos - Vehiculo
-            'tipo_vehiculo.str_descripcion as tipo_vehiculo',  
-            // Clasificaciones - Vehiculos
-            'clasificacion.str_descripcion as clasificacion',
-            // Modelos - Vehiculos
-            'marca.str_marca as marca',
-            // Modelos - Vehiculos
-            'modelo.str_modelo as modelo',            
-            // Paises  - Publicaciones
-            'pais.str_paises as pais',
-        	// Administrador
-        	'admin.name as admin'
-            )
-        ->get();
-        
+    	$idrol = Auth::user()->lng_idrol;
+    	if($idrol == 3)
+    	{
+    	 	$campo = 'publicaciones.lng_idadmin';
+    	}
+    	elseif($idrol == 4)
+    	{
+    		$campo = 'publicaciones.lng_idoper';
+    	}
+    		$revisiones= DB::table('tbl_vehiculos as publicaciones')
+    		->where('publicaciones.bol_eliminado','=',0)
+    		->where('publicaciones.status_admin','=',710)
+    		->where($campo, '=' , $id)
+    		//->orderBy('id')
+    		// PERSONAS
+    		->join('tbl_personas as persona', 'publicaciones.lng_idpersona', '=', 'persona.id')
+    		// TIPOS VEHICULOS
+    		->join('cat_datos_maestros as tipo_vehiculo', 'publicaciones.lng_idtipo_vehiculo', '=', 'tipo_vehiculo.id')
+    		// CLASIFICACIONES
+    		->join('cat_datos_maestros as clasificacion', 'publicaciones.lng_idsubtipo_vehiculo', '=', 'clasificacion.id')
+    		// MODELOS
+    		->join('tbl_modelos as modelo', 'publicaciones.lng_idmodelo', '=', 'modelo.id')
+    		// MARCAS
+    		->join('cat_marcas as marca', 'modelo.lng_idmarca', '=', 'marca.id')
+    		// PAISES
+    		->join('cat_paises as pais', 'publicaciones.lng_idpais', '=', 'pais.id')
+    		// ADMINISTRADOR
+    		->leftjoin('tbl_admins as admin', 'publicaciones.lng_idadmin', '=', 'admin.id')
+    		->select(
+    				// ID - Publicaciones
+    				'publicaciones.id',
+    				// Usuarios - Publicaciones
+    				'persona.name',
+    				// Tipos - Vehiculo
+    				'tipo_vehiculo.str_descripcion as tipo_vehiculo',
+    				// Clasificaciones - Vehiculos
+    				'clasificacion.str_descripcion as clasificacion',
+    				// Modelos - Vehiculos
+    				'marca.str_marca as marca',
+    				// Modelos - Vehiculos
+    				'modelo.str_modelo as modelo',
+    				// Paises  - Publicaciones
+    				'pais.str_paises as pais',
+    				// Administrador
+    				'admin.name as admin'
+    				)
+    				->get();
+    	
+    	
         return view('operador.revision',compact('revisiones'))->with('page_title', 'Revision');
     }
 
@@ -107,6 +117,7 @@ class OperadorController extends Controller
         //$data = DB::table('tbl_vehiculos as publicacion')->where('publicacion.id','=',$id)->get();        
         $vehiculo= DB::table('tbl_vehiculos as publicacion')
         ->where('publicacion.id','=',$id)
+        ->where('publicacion.bol_eliminado','=',0)
         ->orderBy('publicacion.int_peso')      
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // JOINS DATOS PERSONA

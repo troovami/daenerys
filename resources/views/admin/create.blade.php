@@ -29,9 +29,10 @@
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                {!! Form::open(['route' => 'admin.create', 'class' => 'form']) !!}                       
+                {!! Form::open(['route' => 'admin.create', 'class' => 'form' , 'enctype'=>'multipart/form-data']) !!}                       
                         @include('admin/forms/adm_form')
-                        <div class="form-group col-md-4 col-md-push-8">
+                        <div class="form-group col-md-3">
+                        <label></label><br>
                             {!! Form::submit('Agregar',['class' => 'btn btn-success btn-block']) !!}
                         </div>
                     {!! Form::close() !!}

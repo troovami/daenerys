@@ -29,11 +29,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                             'str_cedula',
                             'str_nombre',
                             'str_apellido',
+    						'lng_idgenero',
                             'password',
                             'email',
                             'str_telefono',
                             'lng_idrol',
-                            'bol_eliminado'
+                            'bol_eliminado',
+    						'blb_img'
                         ];
 
     /**

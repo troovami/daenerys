@@ -54,7 +54,7 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+    	$this->validate($request, [
             'name'                  => 'required|max:255|unique:tbl_personas',
             'str_nombre'            => 'required|max:255',
             'str_apellido'          => 'required|max:255',
@@ -69,10 +69,10 @@ class PersonaController extends Controller
             'email'                 => 'required|email|max:255|unique:tbl_personas',
             'str_telefono'          => 'required|max:255',
             //'lng_idrol'             => 'required|max:255',
-            //'str_twitter'           => 'max:255|unique:tbl_personas',
-            //'str_facebook'          => 'max:255|unique:tbl_personas',
-            //'str_instagram'         => 'max:255|unique:tbl_personas',                               
-            //'blb_img'               => 'image|mimes:jpeg,png',            
+            'str_twitter'           => 'max:255|unique:tbl_personas',
+            'str_facebook'          => 'max:255|unique:tbl_personas',
+            'str_instagram'         => 'max:255|unique:tbl_personas',                               
+            'blb_img'               => 'image|mimes:jpeg,png',            
         ]);
         $dmt_fecha_nacimiento = $request['anio'] .'-'. $request['mes'] .'-'. $request['dia'];
                 
@@ -88,14 +88,14 @@ class PersonaController extends Controller
             'password'              => bcrypt($request['password']),
             'email'                 => $request['email'],
             'str_telefono'          => $request['str_telefono'],
-            //'lng_idrol'             => $request['lng_idrol'],
-            //'str_twitter'           => $request['str_twitter'],
-            //'str_facebook'          => $request['str_facebook'],
-            //'str_instagram'         => $request['str_instagram'],
+            'lng_idrol'             => $request['lng_idrol'],
+            'str_twitter'           => $request['str_twitter'],
+            'str_facebook'          => $request['str_facebook'],
+            'str_instagram'         => $request['str_instagram'],
             'bol_certificado'       => NULL,
             'bol_eliminado'         => 0,
             'lng_idservicio'        => 152,
-            //'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),            
+            'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),            
         ]);        
         
         Session::flash('message', 'El Usuario &laquo;'. $request['name'] .'&raquo;, ha sido Registrado Exitosamente');        
