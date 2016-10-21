@@ -105,7 +105,7 @@
                   <li><a href="#tab_1-1" data-toggle="tab">Características</a></li>
                   <li class="active"><a href="#tab_2-2" data-toggle="tab">Descripciones</a></li>                  
                   <li><a href="#tab_3-2" data-toggle="tab">Datos Usuario</a></li>
-                  <li class="dropdown">
+                  <!--<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                       Dropdown <span class="caret"></span>
                     </a>
@@ -116,7 +116,7 @@
                       <li role="presentation" class="divider"></li>
                       <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
                     </ul>
-                  </li>   
+                  </li>-->
                   <li class="pull-left header"><i class="fa fa-car"></i> {{$vehiculo[0]->v_marca}} {{$vehiculo[0]->v_modelo}} {{$vehiculo[0]->v_anio}}</li>              
                 </ul>
                 <div class="tab-content">

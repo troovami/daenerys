@@ -6,6 +6,8 @@
     <link rel="icon" href="{{ asset('images/troovami-logo-online.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+     <!-- Style -->
+    {!! Html::style('css/app.css') !!} 
     <!-- Bootstrap 3.3.4 -->
     {!! Html::style('admin-lte/bootstrap/css/bootstrap.min.css') !!}    
     <!-- FontAwesome 4.3.0 -->    
@@ -34,6 +36,9 @@
     {!! Html::style('admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}    
     <!-- Ajax -->
     {!! Html::script('js/ajax/ajax.js') !!}
+    <!-- Cropbox  -->
+     {!! Html::script('js/cropbox.js') !!}
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,7 +47,7 @@
     <![endif]-->
     @yield('head')
   </head>
-  <body class="skin-blue sidebar-mini">
+  <body class="skin-blue sidebar-mini" onload="ImagenesGaleria()">
     <div class="wrapper">
 	    <!-- Menu Horizontal -->
       @include('template/header')

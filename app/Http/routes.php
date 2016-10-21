@@ -215,6 +215,8 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('activar/{id}', ['uses' => 'OperadorController@activar','as' => 'operador.activar']);
 		// Desactivar
 		Route::get('desactivar/{id}', ['uses' => 'OperadorController@desactivar','as' => 'operador.desactivar']);
+		// Actualizar Imagenes
+		Route::put('editar', ['uses' => 'OperadorController@editarPublicacion','as' =>'operador.editarPublicacion']);
 	});
 		// Fin (Routes Operador)
 

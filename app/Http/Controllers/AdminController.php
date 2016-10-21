@@ -91,6 +91,7 @@ class AdminController extends Controller
             'lng_idrol'    => $request['lng_idrol'],
      	    'blb_img'      => base64_encode(file_get_contents($request['blb_img'])),
         ]);
+
      	$generos = DB::table('cat_datos_maestros')->where('str_tipo','genero')->orderBy('str_descripcion')->lists('str_descripcion','id');
      	$roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');
      	Session::flash('message', 'Administrador(a) &laquo;'. $request['name'] .'&raquo; ('. $request['str_nombre'].', '. $request['str_apellido'] .'), ha sido Registrado Exitosamente');        
@@ -135,14 +136,16 @@ class AdminController extends Controller
             'str_telefono' => 'required|max:255',
             'lng_idrol'    => 'required|max:255',
     	    'blb_img'      => 'image|mimes:jpeg,png', 
-      		'password'     => bcrypt($request['password']),
     	]);    
         
         $user = User::find($id);
         
-        if($request['blb_img']==""){
+        if($request['blb_img']=="")
+        {
         	$user->fill($request->all());
-        }else {
+        }
+        else
+        {
         	$user->fill([
         			'name'                  => strtolower($request['name']),
         			'str_nombre'            => $request['str_nombre'],
@@ -153,7 +156,6 @@ class AdminController extends Controller
         			'str_telefono'          => $request['str_telefono'],
         			'lng_idrol'             => $request['lng_idrol'],
         			'blb_img'               => base64_encode(file_get_contents($request['blb_img'])),
-        			'password'              => bcrypt($request['password']),
         	]);
         }
         $user->save();

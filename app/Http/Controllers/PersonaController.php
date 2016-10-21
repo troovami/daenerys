@@ -88,7 +88,7 @@ class PersonaController extends Controller
             'password'              => bcrypt($request['password']),
             'email'                 => $request['email'],
             'str_telefono'          => $request['str_telefono'],
-            'lng_idrol'             => $request['lng_idrol'],
+            //'lng_idrol'             => $request['lng_idrol'],
             'str_twitter'           => $request['str_twitter'],
             'str_facebook'          => $request['str_facebook'],
             'str_instagram'         => $request['str_instagram'],
@@ -225,7 +225,7 @@ class PersonaController extends Controller
             'lng_idpais'            => 'required|max:255',            
             'email'                 => 'required|email|max:255|unique:tbl_personas,email,'. $id,
             'str_telefono'          => 'required|max:255',
-            'lng_idrol'             => 'required|max:255',
+            //'lng_idrol'             => 'required|max:255',
             'str_twitter'           => 'max:255|unique:tbl_personas,str_twitter,'. $id,
             'str_facebook'          => 'max:255|unique:tbl_personas,str_facebook,'. $id,
             'str_instagram'         => 'max:255|unique:tbl_personas,str_instagram,'. $id,                               
@@ -235,9 +235,12 @@ class PersonaController extends Controller
 
         $persona = Persona::find($id);
 
-        if($request['blb_img']==""){            
+        if($request['blb_img']=="")
+        {            
             $persona->fill($request->all());            
-        }else {
+        }
+        else 
+        {
             $persona->fill([
                 'name'                  => strtolower($request['name']),
                 'str_nombre'            => $request['str_nombre'],
@@ -249,7 +252,7 @@ class PersonaController extends Controller
                 'lng_idpais'            => $request['lng_idpais'],                
                 'email'                 => $request['email'],
                 'str_telefono'          => $request['str_telefono'],
-                'lng_idrol'             => $request['lng_idrol'],
+                //'lng_idrol'             => $request['lng_idrol'],
                 'str_twitter'           => $request['str_twitter'],
                 'str_facebook'          => $request['str_facebook'],
                 'str_instagram'         => $request['str_instagram'],                

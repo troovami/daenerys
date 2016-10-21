@@ -5,8 +5,8 @@
 <section class="content col-md-6 col-md-push-3">
           <div class="row">
           	<div class="col-md-4">
-  			<p class="text-center"><img class="img-circle img-responsive" src="{{ asset('images/troovami-logo-online.png') }}" alt="..."></p>
-  			<h2 class="text-center">&laquo; {{Auth::user()->name}} &raquo;</h2>
+  			<p class="text-center"><img class="img-circle img-responsive" src="data:{{Auth::user()->format}};base64,{{Auth::user()->blb_img}}" /></p>
+          	<h2 class="text-center">&laquo; {{Auth::user()->name}} &raquo;</h2>
   			</div>
             <div class="col-md-8">
               <div class="box">

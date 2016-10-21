@@ -24,7 +24,7 @@ class OperadorController extends Controller
     {
     	$id = Auth::user()->id;
     	$idrol = Auth::user()->lng_idrol;
-    	if($idrol == 3)
+    	if($idrol == 1 or $idrol == 3)
     	{
     	 	$campo = 'publicaciones.lng_idadmin';
     	}
@@ -435,10 +435,11 @@ class OperadorController extends Controller
         // CLASIFICACIONES
         ->select(
         	'imagenes.blb_img as v_imagen',
-        	'imagenes.int_peso as v_peso'   
+        	'imagenes.int_peso as v_peso',
+        	'imagenes.id as v_id'
         	)
         ->get();
-		//return $ImagenesVehiculo;
+        //return $ImagenesVehiculo;
 		//return $imagenesVehiculo[0]->v_imagen;
         //echo '<img src="'. $imagenesVehiculo[0]->v_imagen .'">';
         //die();
@@ -460,6 +461,20 @@ class OperadorController extends Controller
         $idVehiculo = $id;
         return view('operador.detalle',['idVehiculo'=>$id,'vehiculo'=>$vehiculo,'imagenesVehiculo'=>$imagenesVehiculo,'detalleVehiculo'=>$detalleVehiculo])->with('page_title', 'Detalles');
     }
+
+   public function editarPublicacion(Request $request)
+   {
+  		$id = $request->id;
+    	$idPublicacion = $request->idPublicacion;
+    	$imagenes = ImagenesVehiculos::find($id);
+    	$imagenes->fill($request->all());
+    	$imagenes->save();
+    	
+    	Session::flash('message','La imágen fue actualizada exitosamente!');
+    	return Redirect::to('/operador/detalle/'.$idPublicacion);
+    }
+    
+    
     
     /**
      * Show the form for creating a new resource.

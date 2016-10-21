@@ -110,7 +110,7 @@ class MarcaController extends Controller
             'blb_img'              => base64_encode(file_get_contents($request['blb_img'])),
             'str_friendly_url'     => $request['str_friendly_url'],            
             'str_website'          => $request['str_website'],
-
+        	'bol_eliminado'         => 0,
         ]);
         // Id de la Marca
         $lastInsertedId = $marca->id; 
@@ -122,8 +122,8 @@ class MarcaController extends Controller
             TipoMarca::create([
                 'lng_idmarca'           => $lastInsertedId,
                 'lng_idtipo'            => $tipo,               
-
-            ]);    
+            ]); 
+            
         } 
         Session::flash('message', 'La marca &laquo;'. $request['str_marca'] .'&raquo;, ha sido Registrada Exitosamente');        
         return Redirect::route('marca.create');

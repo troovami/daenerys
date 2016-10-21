@@ -22,7 +22,7 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 
-              <div class="box box-solid">
+               <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title"><i class="fa fa-image"></i> Imagenes</h3>
                 </div><!-- /.box-header -->
@@ -65,6 +65,141 @@
                       <span class="fa fa-angle-right"></span>
                     </a>
                   </div>
+                  
+                  <br>																					
+													
+													
+						<center>
+																	
+								<div class="btn-group" role="group" aria-label="...">
+								
+								
+								  <div class="btn-group" role="group" >
+								    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								      Seleccionar Imágen
+								      <span class="caret"></span>
+								    </button>
+								    <ul class="dropdown-menu">
+						      
+								      <?php $a = 0?>
+								      @foreach ($imagenesVehiculo as $key => $imagen)								      
+									      <li>								      	
+									      	<a href="#" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="botonCropVisible('0');document.getElementById('id').value={{$imagen->v_id}}"><img src="{{ $imagen->v_imagen }}" alt="..." style="height: 25px"> 
+
+													<?php 
+													
+														$num = $a+1;
+														
+														switch ($num){
+															
+															case 1:
+																echo "Editar Imagen Lateral";
+																break;															
+															case 2:
+																echo "Editar Imagen  Trasera";
+															break;
+															case 3:
+																echo "Editar Imagen  Frontal";
+															break;
+															case 4:
+																echo "Editar Imagen  Interior";
+																break;
+															case 5:
+																echo "Editar Imagen  Motor";
+															break;
+															case 6:
+																echo "Editar Imagen  Kilometraje";
+															break;															
+															
+														}
+													
+													?>
+
+
+</a>
+									      </li>
+									      <?php $a++?>
+								      @endforeach
+								      								                
+								    </ul>
+								  </div>
+								    
+								</div>																		
+							
+							</center>	
+							
+							<label style="color: #777">Vista Preliminar:</label>
+								
+								
+							 	{!! Form::model($imagenesVehiculo, ['route' => 'operador.editarPublicacion', 'method'=>'PUT','id' => 'demo-form','enctype'=>'multipart/form-data']) !!}
+							 	<input type="hidden" id="id" name="id" readonly="readonly" required="required" value="">
+							 	<input type="hidden" id="idPublicacion" name="idPublicacion" readonly="readonly" value="{{$idVehiculo}}">	
+								 	
+									<div class="cropped-0 thumbnail">
+									
+										<center><i class="fa fa-image"></i></center>
+									
+									</div>
+								
+									<center>
+										{!! Form::submit('Actualizar',['class' => 'btn btn-primary']) !!}
+									</center>	
+								
+								{!! Form::close() !!}
+								
+			<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog modal-lg" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Editar Imagen</h4>
+			      </div>
+			      <div class="modal-body">
+
+
+					<div class="" id="">
+					
+					    <div class="row">
+						    <div class="col-md-12">
+					    		<center>
+						    		<span class="btn btn-default btn-lg btn-block btn-file" style="background-color: #5bc0de; width: 650px;">							        
+								        <h3 class="panel-title" style="color: #FFF"><i class="fa fa-image"></i> Seleccione la Imágen</h3>
+								        <input type="file" id="file">
+								    </span>
+							    </center>
+								<div class="imageBox">
+							        <div class="thumbBox"></div>
+							        <div class="spinner" style="display: none">
+						        		<i class="glyphicon glyphicon-picture" style="font-size:10em;"></i>
+							        </div>
+							    </div>
+							</div>
+						</div>
+					 <br>
+					 	<center>
+						    <div class="btn-group"  role="group" aria-label="...">
+						        <button type="button" class="btn btn-primary btn-lg" id="btnZoomIn" title="Maximizar Imagen"><i class="fa fa-plus"></i></button>
+						        <button type="button" class="btn btn-danger btn-lg" id="btnZoomOut" title="Minimizar Imagen"><i class="fa fa-minus"></i></button>
+						        <button type="button" id="btnCrop-0" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						        <button type="button" id="btnCrop-1" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						        <button type="button" id="btnCrop-2" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						        <button type="button" id="btnCrop-3" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						        <button type="button" id="btnCrop-4" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						        <button type="button" id="btnCrop-5" class="crop btn btn-success btn-lg" data-dismiss="modal">Aceptar</button>
+						    </div>
+					    </center>
+					    
+					</div>
+
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 

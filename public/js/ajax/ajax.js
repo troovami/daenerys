@@ -1,137 +1,98 @@
-var divname;
-var http = getXmlHttpObject();
-
-function handleHttpResponse()
-{
- /*   
-    if (http.readyState == 0)
-    {
-        results = "Error al Cargar los datos";
-        //innerHTML es para llenar el div resultado con info, recuerden javascript es casesensitive (una variable a != A)
-        document.getElementById(divname).innerHTML = results;
-    }
-
-    if (http.readyState == 1)
-    {
-        results = "";
-        //results = '<img src="../imagenes/fetching.gif">';
-        //innerHTML es para llenar el div resultado con info, recuerden javascript es casesensitive (una variable a != A)
-        document.getElementById(divname).innerHTML = results;
-    }
-*/
-    if (http.readyState == 4)
-    {
-        results = http.responseText;
-        //innerHTML es para llenar el div resultado con info, recuerden javascript es casesensitive (una variable a != A)
-        document.getElementById(divname).innerHTML = results;
-
-    }
-}
-
-function nuevoAjax()
-{
-    var xmlhttp = false;
-    try
-    {
-        // No IE
-        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch (e)
-    {
-        try
-        {
-            // IE 
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        catch (E) {
-            xmlhttp = false;
-        }
-    }
-    if (!xmlhttp && typeof XMLHttpRequest != "undefined") {
-        xmlhttp = new XMLHttpRequest();
-    }
-    return xmlhttp;
-}
-
-function getXmlHttpObject()
-{
-    var xmlhttp;
-    /*@cc_on
-     @if (@_jscript_version >= 5)
-     try
-     {
-     xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-     }
-     catch (e)
-     {
-     try
-     {
-     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-     }
-     catch (e)
-     {
-     xmlhttp = false;
-     }
-     }
-     @else
-     xmlhttp = false;
-     @end @*/
-
-    if (!xmlhttp && typeof XMLHttpRequest != 'undefined')
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-        }
-        catch (e)
-        {
-            xmlhttp = false;
-        }
-    }
-    return xmlhttp;
-}
-
-function filtro(valor){ 
-    divname = "ajax";
-    http.open("GET", 'ajax/' + valor, true);
-    //http.open("GET", 'ajax/' + valor + '/' + valor2, true);
-    //http.open("GET", 'ajax/hola/hola2/', true);
-    //http.open("GET", 'Formulario/'+ selectedText, true);
-    http.onreadystatechange = handleHttpResponse;
-    http.send(null);
-
-}
-
-
-function brandSearch(){     
-    divname = "ajax";
-    var valor = document.getElementById('brandSearchInput').value;
-
-    // Asigna un valor si la variable solo tiene espacion en blanco unicamente
-    if(/^\s*$/.test(valor)){
-        valor = "empty";
-    } 
-    //alert(valor.length);
-    http.open("GET", 'brand-search/' + valor, true);    
-    http.onreadystatechange = handleHttpResponse;
-    http.send(null);
+/****Imagenes****/
+function botonCropVisible(valor){
+	
+	id = "btnCrop-" + valor;	
+	var boton =  document.getElementById(id);
+    boton.style.display="inline"; 	
+    boton.style.position="relative";
     
-
+    for (x = 0; x <6;x++){
+    	
+    	if (x != valor){
+    		
+    		botonCropHidden(x)
+    	}
+    }
 }
+
+function botonCropHidden(valor){
+	id = "btnCrop-" + valor;	
+	var boton =  document.getElementById(id);
+    boton.style.display="none"; 	
+    boton.style.position="absolute";
+}
+
+function popupVisible(){
+	document.getElementById('popup').style.visibility="visible"; 
+}
+
+function popupHidden(){
+	document.getElementById('popup').style.visibility="visible"; 
+	var status = document.getElementById('popup').style.visibility="hidden";  
+    botonCropHidden('0');botonCropHidden('1');botonCropHidden('2');
+    botonCropHidden('3');botonCropHidden('4');botonCropHidden('5'); 
+}
+
+// Popup Visible  + Boton Visible
 /*
-function brandSearch(){     
-    divname = "brandSearch";
-    var valor = document.getElementById('brandSearchInput').value;
-
-    // Asigna un valor si la variable solo tiene espacion en blanco unicamente
-    if(/^\s*$/.test(valor)){
-        valor = "empty";
-    } 
-    //alert(valor.length);
-    http.open("GET", 'brand-search/' + valor, true);    
-    http.onreadystatechange = handleHttpResponse;
-    http.send(null);
-    
-
-}
+document.querySelector('.cropped-0').addEventListener("click", function() {	popupVisible(); botonCropVisible('0'); })
+document.querySelector('.cropped-1').addEventListener("click", function() {	popupVisible(); botonCropVisible('1'); })
+document.querySelector('.cropped-2').addEventListener("click", function() {	popupVisible(); botonCropVisible('2'); })
+document.querySelector('.cropped-3').addEventListener("click", function() {	popupVisible(); botonCropVisible('3'); })
+document.querySelector('.cropped-4').addEventListener("click", function() {	popupVisible(); botonCropVisible('4'); })
+document.querySelector('.cropped-5').addEventListener("click", function() {	popupVisible(); botonCropVisible('5'); })
+// Popup Hidden  + Boton Hidden
+document.querySelector('.close').addEventListener("click", function() { popupHidden();})
 */
+/////////////////////////////////////////////////////////////////////////////// 
+
+function ImagenesGaleria() {
+	
+	//alert('editando')
+	
+    var options =
+    {
+        imageBox: '.imageBox',
+        thumbBox: '.thumbBox',
+        spinner: '.spinner',
+        imgSrc: 'avatar1.png'
+    }
+    var cropper = new cropbox(options);
+    
+    function croppedImage(valor){	
+		var clase = ".cropped-" + valor;		
+		var img = cropper.getDataURL();
+		var tagImage = '<img class="img-responsive" src="'+img+'">';
+		//var nameInputHidden = 'blb_img' + valor;
+		var nameInputHidden = 'blb_img';
+		var inputHiddenImage = '<input type="hidden" id="'+ nameInputHidden +'" name="'+ nameInputHidden +'" value="'+img+'">';
+    	document.querySelector(clase).innerHTML = tagImage+inputHiddenImage;
+    	popupHidden(); 
+	}
+
+    document.querySelector('#file').addEventListener('change', function(){
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            options.imgSrc = e.target.result;
+            cropper = new cropbox(options);
+        }
+        reader.readAsDataURL(this.files[0]);
+        this.files = [];
+    })        
+    document.querySelector('#btnCrop-0').addEventListener('click', function(){ croppedImage('0');document.getElementById('file').value = "" })
+    document.querySelector('#btnCrop-1').addEventListener('click', function(){ croppedImage('1');document.getElementById('file').value = "" })
+    document.querySelector('#btnCrop-2').addEventListener('click', function(){ croppedImage('2');document.getElementById('file').value = "" })
+    document.querySelector('#btnCrop-3').addEventListener('click', function(){ croppedImage('3'); })
+    document.querySelector('#btnCrop-4').addEventListener('click', function(){ croppedImage('4'); })
+    document.querySelector('#btnCrop-5').addEventListener('click', function(){ croppedImage('5'); })
+
+    // Maximizar
+    document.querySelector('#btnZoomIn').addEventListener('click', function(){
+        cropper.zoomIn();
+    })
+    // Minimizar
+    document.querySelector('#btnZoomOut').addEventListener('click', function(){
+        cropper.zoomOut();
+    })
+};  
+
