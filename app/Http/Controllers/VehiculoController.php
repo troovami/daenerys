@@ -158,11 +158,11 @@ class VehiculoController extends Controller
         // ARRANQUE
         ->leftjoin('cat_datos_maestros as arranque', 'publicacion.lng_idarranque', '=', 'arranque.id')
         // DIRECCION
-        ->join('cat_datos_maestros as direccion', 'publicacion.lng_iddireccion', '=', 'direccion.id')
+        ->leftjoin('cat_datos_maestros as direccion', 'publicacion.lng_iddireccion', '=', 'direccion.id')
         // ESTEREO
-        ->join('cat_datos_maestros as estereo', 'publicacion.lng_idestereo', '=', 'estereo.id')
+        ->leftjoin('cat_datos_maestros as estereo', 'publicacion.lng_idestereo', '=', 'estereo.id')
         // TRANSMISION
-        ->join('cat_datos_maestros as transmision', 'publicacion.lng_idtransmision', '=', 'transmision.id')
+        ->leftjoin('cat_datos_maestros as transmision', 'publicacion.lng_idtransmision', '=', 'transmision.id')
         // EQUIPO MEDICO
         ->leftjoin('cat_datos_maestros as equipo_medico', 'publicacion.lng_idequipo_medico', '=', 'equipo_medico.id')        
         // FRENADO
@@ -174,17 +174,17 @@ class VehiculoController extends Controller
         // NEGOCIABLE
         ->join('cat_datos_maestros as negociable', 'publicacion.lng_idnegociable', '=', 'negociable.id')
         // TRACCION
-        ->join('cat_datos_maestros as traccion', 'publicacion.lng_idtraccion', '=', 'traccion.id')
+        ->leftjoin('cat_datos_maestros as traccion', 'publicacion.lng_idtraccion', '=', 'traccion.id')
         // TAPIZADO
-        ->join('cat_datos_maestros as tapizado', 'publicacion.lng_idtapizado', '=', 'tapizado.id')
+        ->leftjoin('cat_datos_maestros as tapizado', 'publicacion.lng_idtapizado', '=', 'tapizado.id')
         // MOTOR REPARADO
         ->join('cat_datos_maestros as motor_reparado', 'publicacion.lng_idmotorreparado', '=', 'motor_reparado.id')
         // VIDRIOS
-        ->join('cat_datos_maestros as vidrios', 'publicacion.lng_idvidrios', '=', 'vidrios.id')
+        ->leftjoin('cat_datos_maestros as vidrios', 'publicacion.lng_idvidrios', '=', 'vidrios.id')
         // COLOR
         ->join('cat_datos_maestros as color', 'publicacion.lng_idcolor', '=', 'color.id')
         // COMBUSTIBLE
-        ->join('cat_datos_maestros as combustible', 'publicacion.lng_idcombustible', '=', 'combustible.id')
+        ->leftjoin('cat_datos_maestros as combustible', 'publicacion.lng_idcombustible', '=', 'combustible.id')
         // Unico Dueño
         ->join('cat_datos_maestros as unico_dueno', 'publicacion.lng_idunicodueno', '=', 'unico_dueno.id')
         // Tipo de Motor
@@ -207,11 +207,7 @@ class VehiculoController extends Controller
         ->leftjoin('cat_datos_maestros as bano', 'publicacion.lng_idbano', '=', 'bano.id') 
         // Ventana
         ->leftjoin('cat_datos_maestros as ventana', 'publicacion.lng_idventana', '=', 'ventana.id')
-        /*            
-         
-            
-         */     
-        ///////////////////////////////////////////////////////////////////////////////////////////////////   
+        ///////////////////////////////////////////////////////////////////////////////////////////////////     
         ->select(
             // DATOS PERSONA
             'persona.name',                                 // Nickname de la Persona
