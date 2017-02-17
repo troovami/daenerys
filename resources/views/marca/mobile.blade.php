@@ -8,7 +8,8 @@
 	@endsection
 @section('content')
 <!-- Main content -->
-		
+		    
+       
         <section class="content">
           <div class="row">
             <div class="col-xs-10 col-md-8 col-md-offset-2">             

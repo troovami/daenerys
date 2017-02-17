@@ -105,7 +105,9 @@
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js') !!} 
     {!! Html::script('admin-lte/plugins/daterangepicker/daterangepicker.js') !!}    
     <!-- datepicker -->
-    {!! Html::script('admin-lte/plugins/datepicker/bootstrap-datepicker.js') !!}    
+    {!! Html::script('admin-lte/plugins/datepicker/bootstrap-datepicker.js') !!}  
+    <!-- datepicker languages-->
+    {!! Html::script('admin-lte/plugins/datepicker/locales/bootstrap-datepicker.es.js') !!}  
     <!-- Bootstrap WYSIHTML5 -->
     {!! Html::script('admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}    
     <!-- Slimscroll -->
@@ -118,7 +120,16 @@
     {!! Html::script('admin-lte/dist/js/pages/dashboard.js') !!}    
     <!-- AdminLTE for demo purposes -->
     {!! Html::script('admin-lte/dist/js/demo.js') !!} 
-     
+    <!-- Jquery Mask Plugins -->
+    {!! Html::script('admin-lte/plugins/jquery-mask/data.js') !!}
+    {!! Html::script('admin-lte/plugins/jquery-mask/jquery.mask.js') !!}
+    {!! Html::script('admin-lte/plugins/jquery-mask/jquery.mask.test.js') !!}
+    {!! Html::script('admin-lte/plugins/jquery-mask/qunit.js') !!}
+    {!! Html::script('admin-lte/plugins/jquery-mask/zepto.min.js') !!}
+    <!-- Fin de Jquery Mask Plugins-->
+
+    <!-- JS -->
+    {!! Html::script('js/js.js') !!}
 
   </body>
 </html>

@@ -21,56 +21,9 @@ class MarcaController extends Controller
      */
     public function index()
     {   
-        $marcas = DB::table('cat_marcas')->select('id', 'str_marca','bol_eliminado','blb_img')->orderBy('str_marca')->skip(0)->take(50)->get();
-        foreach ($marcas as $key => $value) {                    
-            // Detectando el Tipo de Formato del la Imagen              
-            $a = base64_decode($value->blb_img);
-            $b = finfo_open();            
-            //Agregando un nuevo atributo al array
-            $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);   
-            //return $value->format;         
-        }
-        //return $marcas;
-        //$allMarcas = Marca::All();        
-        // Inicio Paginador
-        $count = DB::table('cat_marcas')->count(); // Cantidad de Marcas ej: 1000 marcas        
-        $paginado = [
-            'incremento'  => 0,      // inicializado en 0 para el while
-            'numeracion'  => 0,      // Numeros de paginas, inicializado en 0 Ej: pag 1 . pagi 2 . pag n...
-            'filtro'      => 50,     // cantidad por pagina take('filtro') laravel
-            'total'       => $count, // Total de datos en tabla            
-            'recorrido'   => 0       // skip('recorrido') laravel
-            ];
-        $filtro = [];         
-        while ($paginado['incremento'] < $paginado['total']) {
-
-            $paginado['incremento'] = $paginado['incremento'] + $paginado['filtro']; // Ej: incremento = 0 + 50 => 50            
-                
-            if($paginado['incremento'] >= $paginado['total']){                
-                $paginado['recorrido']  = $paginado['incremento'] - $paginado['filtro'];                
-                $paginado['numeracion']++;
-                $filtro[] = 
-                    [ 
-                        'numeracion' => $paginado['numeracion'],
-                        'skip'       => $paginado['recorrido'],
-                        'take'       => $paginado['filtro']
-                    ];                                      
-                    //echo '<'. $paginado['numeracion'] .'>' . 'desde ' . $paginado['recorrido'] . ' hasta ' . $paginado['total'] . '<br>';
-
-            }else {
-                $paginado['recorrido']  = $paginado['incremento'] - $paginado['filtro'];
-                $paginado['numeracion']++;
-                $filtro[] = 
-                    [ 
-                        'numeracion' => $paginado['numeracion'],
-                        'skip'       => $paginado['recorrido'],
-                        'take'       => $paginado['filtro']
-                    ];   
-                    //echo '<'. $paginado['numeracion'] .'>' . 'desde ' . $paginado['recorrido'] . ' hasta ' . $paginado['incremento'] . '<br>';
-            }
-        }        
-        // Fin Paginador       
-        return view('marca.marca',['marcas'=>$marcas,'filtro'=>$filtro, 'total'=>$count])->with('page_title', 'Principal');
+        $marcas = Marca::All();  
+     
+        return view('marca.marca',compact('marcas'))->with('page_title', 'Principal');
     }
 
     /**
@@ -84,8 +37,6 @@ class MarcaController extends Controller
         return view('marca.create',compact('tipo'))->with('page_title', 'Agregar');  
 
     }
-
-
     
     /**
      * Store a newly created resource in storage.
@@ -177,7 +128,6 @@ class MarcaController extends Controller
             'cat_datos_maestros.id'                        
                 )         
         ->get();        
-        //$hola = [['Hola'  => '1000', 'Hola2' => 'Lorem Ipsum'],['Hola'  => '1000','Hola2' => 'Lorem Ipsum'],];   
         // Consulta todos los Tipos
         $tipos = DB::table('cat_datos_maestros')->where('str_tipo','tipos')->orderBy('str_tipo')->select('id','str_descripcion')->get();
         // Asigna un nuevo atributo a los tipos asociados a la Marca
@@ -217,10 +167,12 @@ class MarcaController extends Controller
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         // Actualiza los Datos de una Marca
         $marca = Marca::find($id);        
-        if($request['blb_img']==""){            
+        if($request['blb_img']=="")
+        {            
             $marca->fill($request->all());                
-        }else {
-
+        }
+        else 
+        {
             $marca->fill([
             'str_marca'            => ucfirst(strtolower($request['str_marca'])),  
             'blb_img'              => base64_encode(file_get_contents($request['blb_img'])),          
@@ -255,24 +207,27 @@ class MarcaController extends Controller
         
         //return $id;
         // Delete tipos asociados a la marca            
-        //$delete = DB::table('tbl_tipos_marcas')->where('id','=',882)->delete();
-        $delete = DB::table('tbl_tipos_marcas')->delete(882);
-        return $delete;
+        $delete = DB::table('tbl_tipos_marcas')->where('lng_idmarca','=',$id)->delete();
+        //$delete = DB::table('tbl_tipos_marcas')->delete(882);
+        //return $delete;
         // Guarda los nuevos tipos asociados a la marca y mantiene los datos SEO de algunos tipos ya registrados
             
-            for ($i=0; $i < $countNuevosTiposAsociados; $i++) {  
+            for ($i=0; $i < $countNuevosTiposAsociados; $i++) 
+            {  
                 $NewTipoAsoc = $nuevosTiposAsociados[$i]; // Guarda solo 1 (un) nuevo tipo asociado
                 //echo "<b>" . $NewTipoAsoc . "</b><br>";
                 $str_meta_descripcion = ""; // SEO Descripcion
                 $str_meta_keyword = ""; // SEO Keyword
                 //// **********************
                 // Asigna los valores de los meta ha aquellos con (ids Anteriores) lng_idtipo == id (ids Nuevos)
-                for($k=0; $k < $counTiposAsociados; $k++) { 
+                for($k=0; $k < $counTiposAsociados; $k++) 
+                { 
                     $ActualTipoAsociado = $tiposAsociadosMarca[$k]->lng_idtipo; // Guarda 1 (un) Actual tipo asociado
                     //echo $ActualTipoAsociado[0];
                     //echo $tiposAsociadosMarca[$k]->lng_idtipo . "<br>"; 
                     //echo $ActualTipoAsociado . "<br>";
-                    if($NewTipoAsoc == $ActualTipoAsociado){                        
+                    if($NewTipoAsoc == $ActualTipoAsociado)
+                    {                        
                         $str_meta_descripcion = $tiposAsociadosMarca[$k]->str_meta_descripcion;                      
                         $str_meta_keyword = $tiposAsociadosMarca[$k]->str_meta_keyword;
                     }   
@@ -290,73 +245,8 @@ class MarcaController extends Controller
                 'str_meta_keyword'      => $str_meta_keyword,
                 ]);  
                
-            } // end for
-            //return "stop";
-            
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////      
-
-        //$tipo = DB::table('tbl_tipos_marcas')->where('lng_idmarca',$id)->orderBy('id')->select('id','str_meta_descripcion','str_meta_keyword','lng_idtipo')->get();        
-
-        //$contador = count($tipo);
-
-        ///////////////////////// **************************
-        // toma la información de los meta (descripcion y keywords previamente almacenados en los tipos asociados)
-        // Objetivo: Comparar con los nuevos Tipos asociados a la marca y asignarle los valores meta a los id de tipos iguales.
-        //$seo = $tipo;
-        //$seo_count = count($seo);
-        ///////////////////////// **************************
-/*
-        if($contador==0){
-                       
-            // array con los tipos "id" asociados a la marca           
-            $tipos = $request->lng_idtipo;
-            // Cuenta la cantidad de tipos
-            $contador = count($tipos);
-            // Guarda los nuevos tipos asociados a la marca
-            for ($i=0; $i < $contador; $i++) {             
-            $tipo = $tipos[$i];                       
-            TipoMarca::create([
-                'lng_idmarca'           => $id,
-                'lng_idtipo'            => $tipo,               
-                ]);  
-            } // end for  
-        } else{   
-
-            // Delete tipos asociados a la marca            
-            DB::table('tbl_tipos_marcas')->where('lng_idmarca', '=', $id)->delete();
-            // array con los tipos "id" asociados a la marca           
-            $tipos = $request->lng_idtipo;
-            // Cuenta la cantidad de tipos
-            $contador = count($tipos);
-
-            // Guarda los nuevos tipos asociados a la marca
-            for ($i=0; $i < $contador; $i++) {             
-            $tipo = $tipos[$i];
-            $str_meta_descripcion = "";
-            $str_meta_keyword = "";
-                //// **********************
-                // Asigna los valores de los meta ha aquellos con (ids Anteriores) lng_idtipo == id (ids Nuevos)
-                for($k=0; $k < $seo_count; $k++) {                    
-                    $seo_id = $seo[$k]->lng_idtipo;
-                    if($tipo == $seo_id){                        
-                        $str_meta_descripcion = $seo[$k]->str_meta_descripcion;                         
-                        $str_meta_keyword = $seo[$k]->str_meta_keyword;
-                    }                     
-                } 
-                //// **********************     
-
-            TipoMarca::create([
-                'lng_idmarca'           => $id,
-                'lng_idtipo'            => $tipo,               
-                'str_meta_descripcion'  => $str_meta_descripcion,
-                'str_meta_keyword'      => $str_meta_keyword,
-                ]);   
-
-            } // end for
-
-
-        }   
-        */      
+            } 
+     
          
         Session::flash('message', 'La marca &laquo;'. $request['str_marca'] .'&raquo;, ha sido Actualizada Exitosamente');        
         return Redirect::route('marca.edit',$id);
@@ -416,11 +306,12 @@ class MarcaController extends Controller
     {   
         $filtro= 154; // id Moviles        
         $marcas= DB::table('tbl_tipos_marcas')
-        ->where('lng_idtipo',$filtro)
+        ->where('lng_idtipo',[$filtro])
         ->join('cat_marcas', 'tbl_tipos_marcas.lng_idmarca', '=', 'cat_marcas.id')
         ->select(
             'cat_marcas.*'                         
                 )
+        ->distinct()
         ->get(); 
         
         foreach ($marcas as $key => $value) {                    
@@ -430,7 +321,7 @@ class MarcaController extends Controller
             //Agregando un nuevo atributo al array
             $value->format = finfo_buffer($b, $a, FILEINFO_MIME_TYPE);   
             //return $value->format;         
-        }  
+        }
         
         return view('marca.mobile',compact('marcas'))->with('page_title', 'Principal');
     }

@@ -20,6 +20,7 @@ class Pais extends Model
      */
     protected $fillable = [
                             'str_paises',
+                            'str_abreviatura',
                             'blb_img',
                             'bol_eliminado'
                           ];
