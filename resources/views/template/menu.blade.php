@@ -142,7 +142,7 @@
 				                    		</li>
 				                    	</ul>
 				                    </li>
-				                    <li><a href="{{route('memoria.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Memoria<i class="fa fa-angle-left pull-right"></i></a> 
+				                    <!--<li><a href="{{route('memoria.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Memoria<i class="fa fa-angle-left pull-right"></i></a> 
 				                    	<ul class="treeview-menu">
 				                    		<li><a href="{{route('memoria.unidmed')}}"><i class="fa fa-circle-o text-yellow"></i> Unid. de Medidas<i class="fa fa-angle-left pull-right"></i></a>
 				                    		<ul class="treeview-menu">
@@ -152,9 +152,9 @@
 				                    	</ul>
 				                    </li>
 				                    <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Camara<i class="fa fa-angle-left pull-right"></i></a> 
-				                    	<!--<ul class="treeview-menu">
+				                    	<ul class="treeview-menu">
 				                    		<li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> </a>
-				                    	</ul>-->
+				                    	</ul>
 				                    </li>
 				                    <li><a href="{{route('bateria.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Bateria<i class="fa fa-angle-left pull-right"></i></a> 
 				                    	<ul class="treeview-menu">
@@ -164,11 +164,18 @@
 		                    					<li><a href="{{route('bateria.tipo_bateria')}}"><i class="fa fa-bullseye text-light-blue"></i> All Tipos Baterias</a></li>
 				                    		</ul>
 				                    	</ul>
-				                    </li>
+				                    </li>-->
 				            	</ul>
                   			</li>
 		           		</ul>
                 	</li>
+            <li class="treeview"><a href="#"> <i class="fa fa-newspaper-o"></i> <span>Noticias</span><i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+		                    <li><a href="{{route('noticia.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar +</a></li>
+		                    <li><a href="{{route('noticia.index')}}"><i class="fa fa-bullseye text-light-blue"></i> All Noticias</a></li>
+		                    
+				        </ul>
+            </li>
 			@endif
 			<li class="treeview"><a href="#"> <i class="fa fa-globe"></i> <span>Opciones Globales</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">

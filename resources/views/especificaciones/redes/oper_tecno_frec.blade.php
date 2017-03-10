@@ -56,12 +56,13 @@
 
                   <table class="table table-bordered table-hover">
                     <tr>
-                      <th class="text-center" style="width: 20%">#</th>
+                      <th class="text-center" style="width: 15%">#</th>
                       <th class="text-center" style="width: 15%">Operadora</th>
+                      <th class="text-center" style="width: 15%">País</th>
                       <th class="text-center" style="width: 15%">Tecnología</th>
                       <th class="text-center" style="width: 15%">Frecuencia</th>
-                      <th class="text-center" style="width: 10%">Estatus</th>
-                      <th class="text-center" style="width: 25%">Operaciones</th>
+                      <th class="text-center" style="width: 15%">Estatus</th>
+                      <th class="text-center" style="width: 10%">Operaciones</th>
                     </tr>
                     <!--{{$k = 1}}-->
                     @foreach($oper_tecno_frec as $otf)                      
@@ -69,6 +70,7 @@
                     
                     <td style="padding-top:20px;">{{ $k++ }}</td>
                     <td style="padding-top:20px;">{{$otf->operadora}}</td>
+                    <td style="padding-top:20px;">{{$otf->pais}}</td>
                     <td style="padding-top:20px;">{{$otf->tecnologia_full}}</td>
                     <td style="padding-top:20px;">{{$otf->frecuencia}}</td>                                        
                     @if ($otf->bol_eliminado == 0)

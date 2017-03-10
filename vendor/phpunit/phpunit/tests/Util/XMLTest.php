@@ -147,8 +147,8 @@ class Util_XMLTest extends PHPUnit_Framework_TestCase
         $selector  = '[foo="bar baz"] div[value="foo bar baz"]';
         $converted = PHPUnit_Util_XML::convertSelectToTag($selector);
         $tag       = array('attributes' => array('foo'        => 'bar baz'),
-                          'descendant' => array('tag'        => 'div',
-                                                'attributes' => array('value' => 'foo bar baz')));
+                          'descendant'  => array('tag'        => 'div',
+                                                'attributes'  => array('value' => 'foo bar baz')));
         $this->assertEquals($tag, $converted);
     }
 
@@ -314,5 +314,50 @@ class Util_XMLTest extends PHPUnit_Framework_TestCase
         }
 
         return $data;
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Exception
+     * @expectedExceptionMessage Could not load XML from empty string
+     */
+    public function testLoadEmptyString()
+    {
+        PHPUnit_Util_XML::load('');
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Exception
+     * @expectedExceptionMessage Could not load XML from array
+     */
+    public function testLoadArray()
+    {
+        PHPUnit_Util_XML::load(array(1, 2, 3));
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Exception
+     * @expectedExceptionMessage Could not load XML from boolean
+     */
+    public function testLoadBoolean()
+    {
+        PHPUnit_Util_XML::load(false);
+    }
+
+    public function testNestedXmlToVariable()
+    {
+        $xml = '<array><element key="a"><array><element key="b"><string>foo</string></element></array></element><element key="c"><string>bar</string></element></array>';
+        $dom = new DOMDocument();
+        $dom->loadXML($xml);
+
+        $expected = array(
+            'a' => array(
+                'b' => 'foo',
+            ),
+            'c' => 'bar',
+        );
+
+        $actual = PHPUnit_Util_XML::xmlToVariable($dom->documentElement);
+
+        $this->assertSame($expected, $actual);
     }
 }

@@ -11,15 +11,19 @@
 
 namespace Symfony\Component\Console\Tests\Input;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class InputDefinitionTest extends \PHPUnit_Framework_TestCase
+class InputDefinitionTest extends TestCase
 {
     protected static $fixtures;
 
-    protected $foo, $bar, $foo1, $foo2;
+    protected $foo;
+    protected $bar;
+    protected $foo1;
+    protected $foo2;
 
     public static function setUpBeforeClass()
     {
@@ -376,7 +380,7 @@ class InputDefinitionTest extends \PHPUnit_Framework_TestCase
             array(new InputDefinition(array(new InputOption('foo'), new InputArgument('foo', InputArgument::REQUIRED))), '[--foo] [--] <foo>', 'puts [--] between options and arguments'),
         );
     }
-    
+
     public function testGetShortSynopsis()
     {
         $definition = new InputDefinition(array(new InputOption('foo'), new InputOption('bar'), new InputArgument('cat')));
@@ -388,8 +392,6 @@ class InputDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsText()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $definition = new InputDefinition(array(
             new InputArgument('foo', InputArgument::OPTIONAL, 'The foo argument'),
             new InputArgument('baz', InputArgument::OPTIONAL, 'The baz argument', true),
@@ -400,7 +402,7 @@ class InputDefinitionTest extends \PHPUnit_Framework_TestCase
             new InputOption('qux', '', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The qux option', array('http://foo.com/', 'bar')),
             new InputOption('qux2', '', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The qux2 option', array('foo' => 'bar')),
         ));
-        
+
         $this->assertStringEqualsFile(self::$fixtures.'/definition_astext.txt', $definition->asText(), '->asText() returns a textual representation of the InputDefinition');
     }
 
@@ -409,8 +411,6 @@ class InputDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsXml()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $definition = new InputDefinition(array(
             new InputArgument('foo', InputArgument::OPTIONAL, 'The foo argument'),
             new InputArgument('baz', InputArgument::OPTIONAL, 'The baz argument', true),

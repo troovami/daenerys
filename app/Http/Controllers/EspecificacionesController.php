@@ -443,11 +443,14 @@ class EspecificacionesController extends Controller
     {   
         $oper_tecno_frec = DB::table('tbl_frecuencias_tecnos_operadoras')
         ->join('cat_tecnologias_frecuencias', 'tbl_frecuencias_tecnos_operadoras.lng_idfrecuencia_tecnologia', '=', 'cat_tecnologias_frecuencias.id')
-        ->join('tbl_operadoras', 'tbl_frecuencias_tecnos_operadoras.lng_idoperadora', '=', 'tbl_operadoras.id')
         ->join('cat_frecuencias', 'cat_tecnologias_frecuencias.lng_idfrecuencia', '=', 'cat_frecuencias.id')
         ->join('cat_tecnologias', 'cat_tecnologias_frecuencias.lng_idtecnologia', '=', 'cat_tecnologias.id')
+        ->join('tbl_operadora_pais', 'tbl_frecuencias_tecnos_operadoras.lng_idoperadora_pais', '=', 'tbl_operadora_pais.id')
+        ->join('cat_paises','tbl_operadora_pais.lng_idpais','=','cat_paises.id')
+        ->join('tbl_operadoras','tbl_operadora_pais.lng_idoperadora','=','tbl_operadoras.id')
         ->select(
             'tbl_frecuencias_tecnos_operadoras.id as id',
+            'cat_paises.str_paises as pais',
             'tbl_operadoras.str_operadora as operadora',
             'cat_frecuencias.str_frecuecia as frecuencia',
             DB::raw('CONCAT(cat_tecnologias.str_especificaciones, " ", cat_tecnologias.str_description) AS tecnologia_full'),
@@ -497,14 +500,17 @@ class EspecificacionesController extends Controller
 
     public function create_oper_tecno_frec()
     {
-        $operadora= DB::table('tbl_operadoras')
+        $operadora_pais= DB::table('tbl_operadora_pais')
+        ->join('tbl_operadoras','tbl_operadora_pais.lng_idoperadora', '=', 'tbl_operadoras.id')
+        ->join('cat_paises','tbl_operadora_pais.lng_idpais', '=', 'cat_paises.id')
         ->select(
-            'tbl_operadoras.id as id_operadora',
-            'tbl_operadoras.str_operadora as operadora'
+            DB::raw('CONCAT(tbl_operadoras.str_operadora, " en ", cat_paises.str_paises) AS oper_pais_full'),
+                'tbl_operadora_pais.id as id_oper_pais'
             )
-        ->orderBy('operadora')
-        ->lists('operadora','id_operadora');
+        ->orderBy('oper_pais_full')
+        ->lists('oper_pais_full','id_oper_pais');
 
+       
         $tecno_frec= DB::table('cat_tecnologias_frecuencias')
         ->join('cat_frecuencias', 'cat_tecnologias_frecuencias.lng_idfrecuencia', '=', 'cat_frecuencias.id')
         ->join('cat_tecnologias', 'cat_tecnologias_frecuencias.lng_idtecnologia', '=', 'cat_tecnologias.id')
@@ -517,20 +523,20 @@ class EspecificacionesController extends Controller
 
 
 
-        return view('especificaciones/redes.create_oper_tecno_frec',['operadora'=>$operadora,'tecno_frec'=>$tecno_frec])->with('page_title', 'Agregar');  
+        return view('especificaciones/redes.create_oper_tecno_frec',['operadora_pais'=>$operadora_pais,'tecno_frec'=>$tecno_frec])->with('page_title', 'Agregar');  
     }
 
    
     public function store_oper_tecno_frec(Request $request)
     {
-        $validate= OperadoraTecnologiaFrecuencia::where('lng_idoperadora','=',$request['lng_idoperadora'])
+        $validate= OperadoraTecnologiaFrecuencia::where('lng_idoperadora_pais','=',$request['lng_idoperadora_pais'])
         ->where('lng_idfrecuencia_tecnologia','=',$request['lng_idfrecuencia_tecnologia'])
         ->get();
             
             if(count($validate)==0)
             {
                 $oper_tecno_frec = OperadoraTecnologiaFrecuencia::create([
-                'lng_idoperadora'                => $request['lng_idoperadora'],
+                'lng_idoperadora_pais'           => $request['lng_idoperadora_pais'],
                 'lng_idfrecuencia_tecnologia'    => $request['lng_idfrecuencia_tecnologia'],
                 'bol_eliminado'                  => 0
                 ]);  

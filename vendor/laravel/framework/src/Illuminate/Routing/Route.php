@@ -106,7 +106,7 @@ class Route
         $this->methods = (array) $methods;
         $this->action = $this->parseAction($action);
 
-        if (in_array('GET', $this->methods) && !in_array('HEAD', $this->methods)) {
+        if (in_array('GET', $this->methods) && ! in_array('HEAD', $this->methods)) {
             $this->methods[] = 'HEAD';
         }
 
@@ -126,7 +126,7 @@ class Route
         $this->container = $this->container ?: new Container;
 
         try {
-            if (!is_string($this->action['uses'])) {
+            if (! is_string($this->action['uses'])) {
                 return $this->runCallable($request);
             }
 
@@ -160,6 +160,8 @@ class Route
      *
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function runController(Request $request)
     {
@@ -169,7 +171,7 @@ class Route
             $this->parametersWithoutNulls(), $class, $method
         );
 
-        if (!method_exists($instance = $this->container->make($class), $method)) {
+        if (! method_exists($instance = $this->container->make($class), $method)) {
             throw new NotFoundHttpException;
         }
 
@@ -213,11 +215,11 @@ class Route
         $this->compileRoute();
 
         foreach ($this->getValidators() as $validator) {
-            if (!$includingMethod && $validator instanceof MethodValidator) {
+            if (! $includingMethod && $validator instanceof MethodValidator) {
                 continue;
             }
 
-            if (!$validator->matches($this, $request)) {
+            if (! $validator->matches($this, $request)) {
                 return false;
             }
         }
@@ -256,13 +258,26 @@ class Route
     }
 
     /**
-     * Get the middlewares attached to the route.
+     * Get or set the middlewares attached to the route.
      *
-     * @return array
+     * @param  array|string|null $middleware
+     * @return $this|array
      */
-    public function middleware()
+    public function middleware($middleware = null)
     {
-        return (array) Arr::get($this->action, 'middleware', []);
+        if (is_null($middleware)) {
+            return (array) Arr::get($this->action, 'middleware', []);
+        }
+
+        if (is_string($middleware)) {
+            $middleware = [$middleware];
+        }
+
+        $this->action['middleware'] = array_merge(
+            (array) Arr::get($this->action, 'middleware', []), $middleware
+        );
+
+        return $this;
     }
 
     /**
@@ -274,7 +289,7 @@ class Route
      */
     public function beforeFilters()
     {
-        if (!isset($this->action['before'])) {
+        if (! isset($this->action['before'])) {
             return [];
         }
 
@@ -290,7 +305,7 @@ class Route
      */
     public function afterFilters()
     {
-        if (!isset($this->action['after'])) {
+        if (! isset($this->action['after'])) {
             return [];
         }
 
@@ -354,7 +369,7 @@ class Route
      */
     public static function parseFilter($filter)
     {
-        if (!Str::contains($filter, ':')) {
+        if (! Str::contains($filter, ':')) {
             return [$filter, []];
         }
 
@@ -441,14 +456,13 @@ class Route
      *
      * @return array
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function parameters()
     {
         if (isset($this->parameters)) {
             return array_map(function ($value) {
                 return is_string($value) ? rawurldecode($value) : $value;
-
             }, $this->parameters);
         }
 
@@ -462,7 +476,9 @@ class Route
      */
     public function parametersWithoutNulls()
     {
-        return array_filter($this->parameters(), function ($p) { return !is_null($p); });
+        return array_filter($this->parameters(), function ($p) {
+            return ! is_null($p);
+        });
     }
 
     /**
@@ -488,7 +504,9 @@ class Route
     {
         preg_match_all('/\{(.*?)\}/', $this->domain().$this->uri, $matches);
 
-        return array_map(function ($m) { return trim($m, '?'); }, $matches[1]);
+        return array_map(function ($m) {
+            return trim($m, '?');
+        }, $matches[1]);
     }
 
     /**
@@ -526,7 +544,7 @@ class Route
         // If the route has a regular expression for the host part of the URI, we will
         // compile that and get the parameter matches for this domain. We will then
         // merge them into this parameters array so that this array is completed.
-        if (!is_null($this->compiled->getHostRegex())) {
+        if (! is_null($this->compiled->getHostRegex())) {
             $params = $this->bindHostParameters(
                 $request, $params
             );
@@ -593,6 +611,12 @@ class Route
             $value = isset($value) ? $value : Arr::get($this->defaults, $key);
         }
 
+        foreach ($this->defaults as $key => $value) {
+            if (! isset($parameters[$key])) {
+                $parameters[$key] = $value;
+            }
+        }
+
         return $parameters;
     }
 
@@ -616,7 +640,7 @@ class Route
         // If no "uses" property has been set, we will dig through the array to find a
         // Closure instance within this list. We will set the first Closure we come
         // across into the "uses" property that will get fired off by this route.
-        elseif (!isset($action['uses'])) {
+        elseif (! isset($action['uses'])) {
             $action['uses'] = $this->findCallable($action);
         }
 
@@ -906,6 +930,19 @@ class Route
     }
 
     /**
+     * Add or change the route name.
+     *
+     * @param  string  $name
+     * @return $this
+     */
+    public function name($name)
+    {
+        $this->action['as'] = isset($this->action['as']) ? $this->action['as'].$name : $name;
+
+        return $this;
+    }
+
+    /**
      * Get the action name for the route.
      *
      * @return string
@@ -966,7 +1003,7 @@ class Route
      *
      * @return void
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function prepareForSerialization()
     {

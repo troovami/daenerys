@@ -4,8 +4,8 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use DB;
+use Illuminate\Support\Facades\Lang;
+
 trait AuthenticatesUsers
 {
     use RedirectsUsers;
@@ -32,27 +32,9 @@ trait AuthenticatesUsers
      */
     public function postLogin(Request $request)
     {
-
-        // (Inicio I) Codigo Original de Laravel
         $this->validate($request, [
             $this->loginUsername() => 'required', 'password' => 'required',
         ]);
-        // (Fin I) Codigo Original de Laravel
-    
-    // (Inicio 1) Codigo Propio
-            // Inicio Codigo Propio: Verifica si el Status del Usuario (Activado / Desactivado)
-            $bol_eliminado = DB::table('tbl_admins')->where('email', $request['email'])->value('bol_eliminado');                    
-            // Verifica que el Correo se encuentra en la Base de Datos            
-            if(count($bol_eliminado)==FALSE){                                    
-                    return back()->withErrors(['El Correo: '. $request['email']. ' no existe']);
-            }else{
-                // Para los correos Existentes                
-                if($bol_eliminado==1){
-                    return back()->withErrors(['Su Cuenta ha sido DESACTIVADA.']);
-                }else {
-    // (Fin 2) Codigo Propio
-
-        // (Inicio II) Codigo Original de Laravel                
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -80,14 +62,7 @@ trait AuthenticatesUsers
             ->withInput($request->only($this->loginUsername(), 'remember'))
             ->withErrors([
                 $this->loginUsername() => $this->getFailedLoginMessage(),
-            ]);  
-        // (Fin II) Codigo Original de Laravel
-
-    // (Inicio 2) Codigo Propio  
-                }//else (codigo Propio -)
-            }//else  (Codigo Propio --)          
-    // (Fin 2) Codigo Propio   
-
+            ]);
     }
 
     /**
@@ -128,7 +103,9 @@ trait AuthenticatesUsers
      */
     protected function getFailedLoginMessage()
     {
-        return 'These credentials do not match our records.';
+        return Lang::has('auth.failed')
+                ? Lang::get('auth.failed')
+                : 'These credentials do not match our records.';
     }
 
     /**

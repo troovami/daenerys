@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "laravelcollective/html": "5.1.*",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "ckeditor/ckeditor": "^4.6",
+        "unisharp/laravel-ckeditor": "^4.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -11,10 +11,11 @@
 
 namespace Symfony\Component\Debug\Tests\FatalErrorHandler;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\Debug\FatalErrorHandler\UndefinedMethodFatalErrorHandler;
 
-class UndefinedMethodFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
+class UndefinedMethodFatalErrorHandlerTest extends TestCase
 {
     /**
      * @dataProvider provideUndefinedMethodData
@@ -24,7 +25,7 @@ class UndefinedMethodFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $handler = new UndefinedMethodFatalErrorHandler();
         $exception = $handler->handleError($error, new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
 
-        $this->assertInstanceof('Symfony\Component\Debug\Exception\UndefinedMethodException', $exception);
+        $this->assertInstanceOf('Symfony\Component\Debug\Exception\UndefinedMethodException', $exception);
         $this->assertSame($translatedMessage, $exception->getMessage());
         $this->assertSame($error['type'], $exception->getSeverity());
         $this->assertSame($error['file'], $exception->getFile());
@@ -60,6 +61,15 @@ class UndefinedMethodFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
                     'message' => 'Call to undefined method SplObjectStorage::offsetFet()',
                 ),
                 "Attempted to call an undefined method named \"offsetFet\" of class \"SplObjectStorage\".\nDid you mean to call e.g. \"offsetGet\", \"offsetSet\" or \"offsetUnset\"?",
+            ),
+            array(
+                array(
+                  'type' => 1,
+                  'message' => 'Call to undefined method class@anonymous::test()',
+                  'file' => '/home/possum/work/symfony/test.php',
+                  'line' => 11,
+                ),
+                'Attempted to call an undefined method named "test" of class "class@anonymous".',
             ),
         );
     }

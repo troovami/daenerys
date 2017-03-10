@@ -12,10 +12,12 @@
 namespace Symfony\Component\Console\Helper;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Exception\RuntimeException;
 
 /**
  * The QuestionHelper class provides helpers to interact with the user.
@@ -35,12 +37,16 @@ class QuestionHelper extends Helper
      * @param OutputInterface $output   An OutputInterface instance
      * @param Question        $question The question to ask
      *
-     * @return string The user answer
+     * @return mixed The user answer
      *
      * @throws \RuntimeException If there is no data to read in the input stream
      */
     public function ask(InputInterface $input, OutputInterface $output, Question $question)
     {
+        if ($output instanceof ConsoleOutputInterface) {
+            $output = $output->getErrorOutput();
+        }
+
         if (!$input->isInteractive()) {
             return $question->getDefault();
         }
@@ -77,7 +83,7 @@ class QuestionHelper extends Helper
     }
 
     /**
-     * Returns the helper's input stream
+     * Returns the helper's input stream.
      *
      * @return resource
      */
@@ -129,7 +135,7 @@ class QuestionHelper extends Helper
             if (false === $ret) {
                 $ret = fgets($inputStream, 4096);
                 if (false === $ret) {
-                    throw new \RuntimeException('Aborted');
+                    throw new RuntimeException('Aborted');
                 }
                 $ret = trim($ret);
             }
@@ -150,18 +156,19 @@ class QuestionHelper extends Helper
      * Outputs the question prompt.
      *
      * @param OutputInterface $output
-     * @param Question $question
+     * @param Question        $question
      */
     protected function writePrompt(OutputInterface $output, Question $question)
     {
         $message = $question->getQuestion();
 
         if ($question instanceof ChoiceQuestion) {
-            $width = max(array_map('strlen', array_keys($question->getChoices())));
+            $maxWidth = max(array_map(array($this, 'strlen'), array_keys($question->getChoices())));
 
             $messages = (array) $question->getQuestion();
             foreach ($question->getChoices() as $key => $value) {
-                $messages[] = sprintf("  [<info>%-${width}s</info>] %s", $key, $value);
+                $width = $maxWidth - $this->strlen($key);
+                $messages[] = '  [<info>'.$key.str_repeat(' ', $width).'</info>] '.$value;
             }
 
             $output->writeln($messages);
@@ -194,6 +201,7 @@ class QuestionHelper extends Helper
      *
      * @param OutputInterface $output
      * @param Question        $question
+     * @param resource        $inputStream
      *
      * @return string
      */
@@ -222,7 +230,7 @@ class QuestionHelper extends Helper
             // Backspace Character
             if ("\177" === $c) {
                 if (0 === $numMatches && 0 !== $i) {
-                    $i--;
+                    --$i;
                     // Move cursor backwards
                     $output->write("\033[1D");
                 }
@@ -275,7 +283,7 @@ class QuestionHelper extends Helper
             } else {
                 $output->write($c);
                 $ret .= $c;
-                $i++;
+                ++$i;
 
                 $numMatches = 0;
                 $ofs = 0;
@@ -310,7 +318,8 @@ class QuestionHelper extends Helper
     /**
      * Gets a hidden response from user.
      *
-     * @param OutputInterface $output An Output instance
+     * @param OutputInterface $output      An Output instance
+     * @param resource        $inputStream The handler resource
      *
      * @return string The answer
      *
@@ -346,7 +355,7 @@ class QuestionHelper extends Helper
             shell_exec(sprintf('stty %s', $sttyMode));
 
             if (false === $value) {
-                throw new \RuntimeException('Aborted');
+                throw new RuntimeException('Aborted');
             }
 
             $value = trim($value);
@@ -364,7 +373,7 @@ class QuestionHelper extends Helper
             return $value;
         }
 
-        throw new \RuntimeException('Unable to hide the response.');
+        throw new RuntimeException('Unable to hide the response.');
     }
 
     /**
@@ -374,7 +383,7 @@ class QuestionHelper extends Helper
      * @param OutputInterface $output      An Output instance
      * @param Question        $question    A Question instance
      *
-     * @return string The validated response
+     * @return mixed The validated response
      *
      * @throws \Exception In case the max number of attempts has been reached and no valid response has been given
      */
@@ -389,6 +398,8 @@ class QuestionHelper extends Helper
 
             try {
                 return call_user_func($question->getValidator(), $interviewer());
+            } catch (RuntimeException $e) {
+                throw $e;
             } catch (\Exception $error) {
             }
         }

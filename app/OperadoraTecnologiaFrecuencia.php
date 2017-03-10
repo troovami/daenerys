@@ -20,7 +20,7 @@ class OperadoraTecnologiaFrecuencia extends Model
      */
     protected $fillable = [
                             'id',
-                            'lng_idoperadora',
+                            'lng_idoperadora_pais',
                             'lng_idfrecuencia_tecnologia',
                             'bol_eliminado'                            
                           ];

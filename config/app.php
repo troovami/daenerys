@@ -144,6 +144,7 @@ return [
         Troovami\Providers\EventServiceProvider::class,
         Troovami\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 

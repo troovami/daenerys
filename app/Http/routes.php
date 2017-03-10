@@ -273,6 +273,32 @@ Route::group(['middleware' => 'auth'], function()
  	});
 	// Fin (Routes Telefono)
 
+	// Routes Noticias
+	Route::group(array('prefix' => 'noticia'), function() {
+	// All Noticias 
+	Route::get('/', ['uses' => 'NoticiaController@index','as' => 'noticia.index']);
+	// Agregar Noticia
+	Route::get('add/', ['uses' => 'NoticiaController@create','as' => 'noticia.create']);
+    Route::post('add', 'NoticiaController@store');
+    // Editar Noticia
+ 	Route::get('edit/{id}', ['uses' => 'NoticiaController@edit','as' => 'noticia.edit']);
+ 	Route::put('edit/{id}', ['uses' => 'NoticiaController@update','as' => 'noticia.update']);	
+ 	// Ver Noticia
+    Route::get('show/{id}', ['uses' => 'NoticiaController@show','as' => 'noticia.show']); 
+    // Desactivar/Activar Telefono
+ 	Route::get('status/{id}',array('uses' => 'NoticiaController@status', 'as' => 'noticia.status'));
+ 	Route::put('status/{id}', 'NoticiaController@statusChange');	
+ 	// Delete Noticia 
+ 	Route::get('delete/{id}',array('uses' => 'NoticiaController@delete', 'as' => 'noticia.delete'));
+ 	Route::delete('delete/{id}',array('uses' => 'NoticiaController@destroy', 'as' => 'noticia.destroy')); 
+ 	});
+	// Fin (Routes Noticias)
+
+
+
+
+
+
 	// Routes Especificaciones
 
 	// Redes

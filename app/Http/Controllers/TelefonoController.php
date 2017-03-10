@@ -12,6 +12,7 @@ use Troovami\Modelo;
 use Troovami\TipoMarca;
 use Troovami\Telefono;
 use Troovami\ValoresEspecificaciones;
+use Troovami\VersionesValoresEspecificaciones;
 use Session;
 use Redirect;
 use DB;
@@ -20,7 +21,72 @@ class TelefonoController extends Controller
 {
     public function index()
     {   
-        return view('telefono.index')->with('page_title', 'Principal');
+       $telefonos= DB::table('tbl_versiones_modelos')        
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->select(            
+            'tbl_modelos.str_modelo as modelo',
+            'cat_marcas.str_marca as marca',
+            'tbl_versiones_modelos.str_version as version',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+        return view('telefono.index',compact('telefonos'))->with('page_title', 'Principal');
+    }
+
+    public function mobile()
+    { 
+        $clasificacion=  713;
+        $telefonos= DB::table('tbl_versiones_modelos')  
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->where('tbl_modelos.lng_idclasificacion','=',$clasificacion) 
+        ->select(            
+            'tbl_modelos.str_modelo as modelo',
+            'cat_marcas.str_marca as marca',
+            'tbl_versiones_modelos.str_version as version',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+        return view('telefono.mobile',compact('telefonos'))->with('page_title', 'Principal');
+    }
+
+    public function smartwatch()
+    { 
+        $clasificacion= 715; 
+        $smartwatch= DB::table('tbl_versiones_modelos')  
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->where('tbl_modelos.lng_idclasificacion','=',$clasificacion) 
+        ->select(            
+            'tbl_modelos.str_modelo as modelo',
+            'cat_marcas.str_marca as marca',
+            'tbl_versiones_modelos.str_version as version',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+        return view('telefono.smartwatch',compact('smartwatch'))->with('page_title', 'Principal');
+    }
+
+    public function tablet()
+    { 
+        $clasificacion=  714;
+        $tablet= DB::table('tbl_versiones_modelos')      
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->where('tbl_modelos.lng_idclasificacion','=',$clasificacion) 
+        ->select(            
+            'tbl_modelos.str_modelo as modelo',
+            'cat_marcas.str_marca as marca',
+            'tbl_versiones_modelos.str_version as version',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+        return view('telefono.tablet',compact('tablet'))->with('page_title', 'Principal');
     }
 
     public function create()
@@ -127,10 +193,15 @@ class TelefonoController extends Controller
         )
         ->get();
 
-       /*dd($sensor);
-        exit();*/
-       
-       return view('telefono.create',['marcas'=>$marcas,'modelos'=>$modelos,'gama'=>$gama,'clasificacion'=>$clasificacion,'simcard'=>$simcard,'tipo_pantalla'=>$tipo_pantalla,'color'=>$color,'so'=>$so,'um'=>$um,'resolucion'=>$resolucion,'frecuencias'=>$frecuencias,'sensor'=>$sensor])->with('page_title', 'Agregar');
+         $mensajeria= DB::table('cat_datos_maestros')
+        ->where('cat_datos_maestros.str_tipo', '=' , 'mensajeria')
+        ->select(
+            'cat_datos_maestros.str_descripcion as mensajeria',
+            'cat_datos_maestros.id as id_mensajeria'
+        )
+        ->get();
+
+       return view('telefono.create',['marcas'=>$marcas,'modelos'=>$modelos,'gama'=>$gama,'clasificacion'=>$clasificacion,'simcard'=>$simcard,'tipo_pantalla'=>$tipo_pantalla,'color'=>$color,'so'=>$so,'um'=>$um,'resolucion'=>$resolucion,'frecuencias'=>$frecuencias,'sensor'=>$sensor,'mensajeria'=>$mensajeria])->with('page_title', 'Agregar');
     }
 
     public function store(Request $request)
@@ -140,7 +211,13 @@ class TelefonoController extends Controller
         'str_version'         => 'required|unique:tbl_versiones_modelos',            
         ]);   */
 
-        Telefono::create([
+       
+
+        $interno_full=$request->input('str_descripcion')[20]." ".$request->input('str_descripcion')[21];
+        $ram_full=$request->input('str_descripcion')[22]." ".$request->input('str_descripcion')[23];
+        
+
+        $telefono = Telefono::create([
         'str_version'           => ucfirst(strtolower($request->input('str_version'))),
         'lng_idmodelo'          => $request->input('lng_idmodelo'),
         'lng_idadmin'           => $id_admin,
@@ -148,48 +225,99 @@ class TelefonoController extends Controller
         'bol_eliminado'         => 0,
         ]);
 
-        $j=1;
-        
+        $id_version = $telefono->id;
+
         for($i=0;$i<count($request->input('str_titulo'));$i++)
         {   
-            $colores = count($request->input('str_color'));
-            dd($colores);
-            exit();
-            /*if($j==3)
-            {
-                $colores = count($request->input('str_titulo_color'));
-                dd($colores);
-                exit();
-                for ($i=0; $i < $colores; $i++) 
-                { 
-                  ValoresEspecificaciones::create([
-                'lng_idespecificacion'  => $j,
-                'str_titulo'            => $request->input('str_titulo_color')[$i],
-                'str_descripcion'       => $request->input('str_color')[$i],
+           $especificacion = ValoresEspecificaciones::create([
+                'lng_idespecificacion'  => $request->input('lng_idespecificacion')[$i],
+                'str_titulo'            => $request->input('str_titulo')[$i],
+                'str_descripcion'       => $request->input('str_descripcion')[$i],
                 'int_comparacion'       => 1,
                 'int_valor'             => 1,
                 'bol_eliminado'         => 0,
-                ]);  
-                }
-            }*/
+                ]);
             
 
-        ValoresEspecificaciones::create([
-        'lng_idespecificacion'  => $j,
-        'str_titulo'            => $request->input('str_titulo')[$i],
-        'str_descripcion'       => $request->input('str_descripcion')[$i],
-        'int_comparacion'       => 1,
-        'int_valor'             => 1,
-        'bol_eliminado'         => 0,
-        ]);
-        if($i==2 or $i==4 or $i==11 or $i==16 or $i==19 or$i==24 or $i==29 or $i==32 or $i==39 or $i==44 or $i==48)
-        {
-            $j++;
+            $id_especificacion =$especificacion->id;
+
+            VersionesValoresEspecificaciones::create([
+                'lng_idversion_modelo'              => $id_version,
+                'lng_idvalores_especificaciones'    => $id_especificacion,
+                'bol_eliminado'                     => 0,
+            ]);
+
         }
 
-    }
+        
 
-       
+        $colores = count($request->input('str_color'));
+            
+        for ($j=0; $j < $colores; $j++) 
+        { 
+            $especificacion2 = ValoresEspecificaciones::create([
+            'lng_idespecificacion'  => 3,
+            'str_titulo'            => "Color",
+            'str_descripcion'       => $request->input('str_color')[$j],
+            'int_comparacion'       => 1,
+            'int_valor'             => 1,
+            'bol_eliminado'         => 0,
+            ]);  
+
+            $id_especificacion2 =$especificacion2->id;
+
+            VersionesValoresEspecificaciones::create([
+                'lng_idversion_modelo'              => $id_version,
+                'lng_idvalores_especificaciones'    => $id_especificacion2,
+                'bol_eliminado'                     => 0,
+            ]);
+        }
+
+         $sensor = count($request->input('str_sensores'));
+            
+        for ($k=0; $k < $sensor; $k++) 
+        { 
+            $especificacion3 = ValoresEspecificaciones::create([
+            'lng_idespecificacion'  => 10,
+            'str_titulo'            => "Sensores",
+            'str_descripcion'       => $request->input('str_sensores')[$k],
+            'int_comparacion'       => 1,
+            'int_valor'             => 1,
+            'bol_eliminado'         => 0,
+            ]);  
+
+            $id_especificacion3 =$especificacion3->id;
+
+            VersionesValoresEspecificaciones::create([
+                'lng_idversion_modelo'              => $id_version,
+                'lng_idvalores_especificaciones'    => $id_especificacion3,
+                'bol_eliminado'                     => 0,
+            ]);
+        } 
+
+         $mensajeria = count($request->input('str_mensajeria'));
+            
+        for ($l=0; $l < $mensajeria; $l++) 
+        { 
+            $especificacion4 = ValoresEspecificaciones::create([
+            'lng_idespecificacion'  => 10,
+            'str_titulo'            => "Mensajeria",
+            'str_descripcion'       => $request->input('str_mensajeria')[$l],
+            'int_comparacion'       => 1,
+            'int_valor'             => 1,
+            'bol_eliminado'         => 0,
+            ]);  
+
+            $id_especificacion4 =$especificacion4->id;
+
+            VersionesValoresEspecificaciones::create([
+                'lng_idversion_modelo'              => $id_version,
+                'lng_idvalores_especificaciones'    => $id_especificacion4,
+                'bol_eliminado'                     => 0,
+            ]);
+        }
+
+
         Session::flash('message', 'El Telefono en la versión &laquo;'. $request['str_version'] .'&raquo;, ha sido Registrado Exitosamente');        
         return Redirect::route('telefono.create');
     }
@@ -202,34 +330,64 @@ class TelefonoController extends Controller
        // return response()->json($buscar);
     }
 
-    public function mobile()
-    {   
-        return view('telefono.mobile')->with('page_title', 'Principal');
-    }
-
-    public function smartwatch()
-    {   
-        return view('telefono.smartwatch')->with('page_title', 'Principal');  
-    }
-    
-    public function tablet()
-    {   
-        return view('telefono.tablet')->with('page_title', 'Principal');  
-    }
    
-    public function edit()
-    {   
-        
-    }
+    public function edit($id)
+    {
+       $telefono= DB::table('tbl_versiones_modelos')      
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->where('tbl_versiones_modelos.id','=',$id)
+        ->select( 
+            'tbl_versiones_modelos.str_version as version',
+            'cat_marcas.str_marca as marca',
+            'tbl_modelos.str_modelo as modelo',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+
+
+        return view('telefono.edit',['telefono'=>$telefono])->with('page_title', 'Editar');        
+    }  
     
     public function update()
     {   
         
     }
     
-    public function show()
+    public function show($id)
     {   
-        
+        $telefono= DB::table('tbl_versiones_modelos')      
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->where('tbl_versiones_modelos.id','=',$id)
+        ->select( 
+            'tbl_versiones_modelos.str_version as version',
+            'cat_marcas.str_marca as marca',
+            'tbl_modelos.str_modelo as modelo',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id'                                  
+                )         
+        ->get();
+
+        $version= $telefono[0]->id;
+       
+        $especificacion = DB::table('tbl_versiones_valores_especificaciones')
+        ->join('cat_valores_especificaciones', 'tbl_versiones_valores_especificaciones.lng_idvalores_especificaciones', '=' ,'cat_valores_especificaciones.id')
+        ->join('cat_especificaciones', 'cat_valores_especificaciones.lng_idespecificacion', '=' ,'cat_especificaciones.id')
+        ->join('tbl_versiones_modelos', 'tbl_versiones_valores_especificaciones.lng_idversion_modelo', '=' ,'tbl_versiones_modelos.id')
+        ->where('tbl_versiones_valores_especificaciones.lng_idversion_modelo', '=', $version)
+        ->select(
+                'cat_valores_especificaciones.lng_idespecificacion as posicion',
+                'cat_especificaciones.str_especificacion as titulo',
+                'cat_valores_especificaciones.str_titulo as subtitulo',
+                'cat_valores_especificaciones.str_descripcion as valor'
+                
+                )
+        ->orderBy('cat_valores_especificaciones.lng_idespecificacion')
+        ->get();
+
+        return view('telefono.show',['telefono'=>$telefono,'especificacion'=>$especificacion])->with('page_title', 'Show'); 
     }
     
     public function status()
@@ -237,13 +395,44 @@ class TelefonoController extends Controller
         
     }
 
-    public function delete()
-    {   
+    public function delete($id)
+    {
+        $vve = DB::table('tbl_versiones_valores_especificaciones')
+        ->where('tbl_versiones_valores_especificaciones.lng_idversion_modelo', '=', $id)
+        ->select(
+                'tbl_versiones_valores_especificaciones.*'
+                )
+        ->get();
+
+
+        for ($i=0; $i < count($vve); $i++) 
+        { 
+            $valoresEspecificaciones = $vve[$i]->lng_idvalores_especificaciones; 
+            $delete = DB::table('cat_valores_especificaciones')
+            ->where('id', '=', $valoresEspecificaciones)
+            ->delete();
+
+        }
+
+        for ($j=0; $j < count($vve) ; $j++) 
+        { 
+            $versionValoresEspecificaciones = $vve[$j]->id;
+            $delete2 = DB::table('tbl_versiones_valores_especificaciones')
+            ->where('id', '=', $versionValoresEspecificaciones)
+            ->delete();
+        }
         
+        $delete3 = DB::table('tbl_versiones_modelos')
+        ->where('id', '=', $id)
+        ->delete();
+        
+        Session::flash('message', 'Telefono Eliminado Exitosamente');           
+        return Redirect::route('telefono.index');                    
     }
 
-    public function destroy()
-    {   
+    
+    public function destroy($id)
+    {
         
     }
 

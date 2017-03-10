@@ -128,7 +128,7 @@ class ResourceRegistrar
      */
     public function getResourceUri($resource)
     {
-        if (!Str::contains($resource, '.')) {
+        if (! Str::contains($resource, '.')) {
             return $resource;
         }
 
@@ -155,7 +155,6 @@ class ResourceRegistrar
         // entire string for the resource URI that contains all nested resources.
         return implode('/', array_map(function ($s) {
             return $s.'/{'.$this->getResourceWildcard($s).'}';
-
         }, $segments));
     }
 
@@ -194,7 +193,7 @@ class ResourceRegistrar
         // the resource action. Otherwise we'll just use an empty string for here.
         $prefix = isset($options['as']) ? $options['as'].'.' : '';
 
-        if (!$this->router->hasGroupStack()) {
+        if (! $this->router->hasGroupStack()) {
             return $prefix.$resource.'.'.$method;
         }
 

@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Debug\Tests\FatalErrorHandler;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\ClassLoader\ClassLoader as SymfonyClassLoader;
 use Symfony\Component\ClassLoader\UniversalClassLoader as SymfonyUniversalClassLoader;
 use Symfony\Component\Debug\Exception\FatalErrorException;
@@ -18,7 +19,7 @@ use Symfony\Component\Debug\FatalErrorHandler\ClassNotFoundFatalErrorHandler;
 use Symfony\Component\Debug\DebugClassLoader;
 use Composer\Autoload\ClassLoader as ComposerClassLoader;
 
-class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
+class ClassNotFoundFatalErrorHandlerTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -61,7 +62,7 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
             array_map('spl_autoload_register', $autoloaders);
         }
 
-        $this->assertInstanceof('Symfony\Component\Debug\Exception\ClassNotFoundException', $exception);
+        $this->assertInstanceOf('Symfony\Component\Debug\Exception\ClassNotFoundException', $exception);
         $this->assertSame($translatedMessage, $exception->getMessage());
         $this->assertSame($error['type'], $exception->getSeverity());
         $this->assertSame($error['file'], $exception->getFile());
@@ -73,8 +74,6 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyHandleClassNotFound()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $prefixes = array('Symfony\Component\Debug\Exception\\' => realpath(__DIR__.'/../../Exception'));
         $symfonyUniversalClassLoader = new SymfonyUniversalClassLoader();
         $symfonyUniversalClassLoader->registerPrefixes($prefixes);
@@ -197,6 +196,6 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $handler = new ClassNotFoundFatalErrorHandler();
         $exception = $handler->handleError($error, new FatalErrorException('', 0, $error['type'], $error['file'], $error['line']));
 
-        $this->assertInstanceof('Symfony\Component\Debug\Exception\ClassNotFoundException', $exception);
+        $this->assertInstanceOf('Symfony\Component\Debug\Exception\ClassNotFoundException', $exception);
     }
 }

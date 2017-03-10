@@ -33,8 +33,8 @@
                 {!! Form::open(['route' => 'redes.create_oper_tecno_frec', 'class' => 'form']) !!}
                     <div class="form-group col-md-6">
                     <label>Operadora</label>                            
-                    {!! Form::select('lng_idoperadora', 
-                                        ([null=>'Seleccione una Operadora'] + $operadora), 
+                    {!! Form::select('lng_idoperadora_pais', 
+                                        ([null=>'Seleccione una Operadora'] + $operadora_pais), 
                                         null, 
                                         ['class' => 'form-control select2']
                                     ) 

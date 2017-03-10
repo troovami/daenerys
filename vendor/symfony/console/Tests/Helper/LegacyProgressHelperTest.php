@@ -11,19 +11,16 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * @group legacy
+ * @group time-sensitive
  */
-class LegacyProgressHelperTest extends \PHPUnit_Framework_TestCase
+class LegacyProgressHelperTest extends TestCase
 {
-    protected function setUp()
-    {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-    }
-
     public function testAdvance()
     {
         $progress = new ProgressHelper();
@@ -146,7 +143,7 @@ class LegacyProgressHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testRedrawFrequency()
     {
-        $progress = $this->getMock('Symfony\Component\Console\Helper\ProgressHelper', array('display'));
+        $progress = $this->getMockBuilder('Symfony\Component\Console\Helper\ProgressHelper')->setMethods(array('display'))->getMock();
         $progress->expects($this->exactly(4))
                  ->method('display');
 
@@ -159,12 +156,11 @@ class LegacyProgressHelperTest extends \PHPUnit_Framework_TestCase
         $progress->advance(1);
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testMultiByteSupport()
     {
-        if (!function_exists('mb_strlen') || (false === $encoding = mb_detect_encoding('■'))) {
-            $this->markTestSkipped('The mbstring extension is needed for multi-byte support');
-        }
-
         $progress = new ProgressHelper();
         $progress->start($output = $this->getOutputStream());
         $progress->setBarCharacter('■');

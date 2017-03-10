@@ -4,7 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -16,8 +16,7 @@ trait RegistersUsers
      */
     public function getRegister()
     {
-        $roles = DB::table('cat_roles')->orderBy('str_rol')->lists('str_rol','id');        
-        return view('auth.register', compact('roles'));
+        return view('auth.register');
     }
 
     /**

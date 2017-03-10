@@ -11,9 +11,10 @@
 
 namespace Symfony\Component\Routing\Tests\Annotation;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RouteTest extends \PHPUnit_Framework_TestCase
+class RouteTest extends TestCase
 {
     /**
      * @expectedException \BadMethodCallException
@@ -52,8 +53,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyGetPattern()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $route = new Route(array('value' => '/Blog'));
         $this->assertEquals($route->getPattern(), '/Blog');
     }

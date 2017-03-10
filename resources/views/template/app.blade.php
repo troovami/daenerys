@@ -131,5 +131,10 @@
     <!-- JS -->
     {!! Html::script('js/js.js') !!}
 
+    <!-- CK EDITOR-->
+    {!! Html::script('/vendor/unisharp/laravel-ckeditor/ckeditor.js') !!}
+    {!! Html::script('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js') !!}
+    
+
   </body>
 </html>
