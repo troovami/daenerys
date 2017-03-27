@@ -28,7 +28,7 @@
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                {!! Form::model($noticia,['route'=>['noticia.update',$noticia->id],'method'=>'PUT']) !!}                
+                {!! Form::model($noticia,['route'=>['noticia.update',$noticia->id],'method'=>'PUT', 'class' => 'form','files'=>true,'enctype'=>'multipart/form-data']) !!}                
                    <div class="form-group col-md-12">
                             <label>Titulo</label>
                             {!! Form::input('text', 'str_titulo', null, ['class'=> 'form-control']) !!}
@@ -37,6 +37,32 @@
                             <label>Contenido</label>
                            {!! Form::textarea('str_contenido', $noticia->str_contenido, ['id' => 'str_contenido', 'class'=> 'ckeditor','required','placeholder'=>'']) !!}
                     </div>
+
+                    <div class="form-group col-md-12">
+                        <label>País</label>
+                        {!! Form::select('lng_idpais', 
+                                                ([null=>'Seleccione un País Ej: Venezuela'] + $noticiaPais), 
+                                                null, 
+                                                ['class' => 'form-control select2','id'=>'lng_idpais','onchange'=>'','required'=>'']
+                                            ) 
+                        !!}
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label>Letra</label>
+                        {!! Form::select('lng_idvocabulario', 
+                                                ([null=>'Seleccione una letra del Alfabeto Ej: A'] + $noticiaVoc), 
+                                                null, 
+                                                ['class' => 'form-control select2','id'=>'lng_idvocabulario','onchange'=>'','required'=>'']
+                                            ) 
+                        !!}
+                    </div>
+
+                    <!--<div class="form-group col-md-12">
+                            <label>Imagen</label>
+                            <input type="hidden" name="int_peso" id="int_peso" value=1>
+                           {!! Form::file('blb_img') !!}  
+                    </div>-->      
                     <div class="form-group col-md-12">
                         {!! Form::button('<i class="fa fa-pencil"></i> Editar', array('class'=>'btn btn-warning btn-block', 'type'=>'submit')) !!}
                     </div>                    
@@ -50,6 +76,15 @@
     <!-- .row -->
 </div>
 @section('footer')
+    <!-- Select2 -->
+    {!! Html::script('admin-lte/plugins/select2/select2.full.min.js') !!}
+
+    <script type="text/javascript">
+      $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+      });
+    </script>
     <script>
         $('textarea').ckeditor();
         // $('.textarea').ckeditor(); // if class is prefered.

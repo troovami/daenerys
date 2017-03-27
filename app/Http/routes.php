@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('home', ['uses' => 'HomeController@index']);
 //Route::get('home', ['uses' => 'HomeController@home']);
 
@@ -254,6 +253,14 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/smartwatch', ['uses' => 'TelefonoController@smartwatch','as' => 'telefono.smartwatch']);
 	// All Tablets
 	Route::get('/tablet', ['uses' => 'TelefonoController@tablet','as' => 'telefono.tablet']);
+	// All Operadora
+	Route::get('/operadora', ['uses' => 'TelefonoController@operadora','as' => 'telefono.operadora']);
+	
+	// Asociar Telefono Operadora
+ 	Route::get('operadora/add/{id}', ['uses' => 'TelefonoController@add_operadora','as' => 'telefono.create_operadora']);
+ 	Route::post('operadora/add/{id}', 'TelefonoController@store_operadora');	
+	
+
 	// Agregar Telefono
 	Route::get('add/', ['uses' => 'TelefonoController@create','as' => 'telefono.create']);
     Route::post('add', 'TelefonoController@store');

@@ -65,13 +65,13 @@
 											</div>
 
 											<div>
-												<div class="form-group col-md-4">
+												<div class="form-group col-md-12">
 													<label>Img Normal</label>
-													<input type="hidden" name="lusmi" id="lusmi" value="1">
-													{!! Form::file('blb_img_normal',['id'=>'temporal','class'=> 'form-control','placeholder'=>'']) !!}                              
+													<input type="hidden" name="cont_img" id="cont_img" value="1">
+													<!--{!! Form::file('blb_img[]',['required' => 'required']) !!}-->
+													<input type="file" name="blb_img[]" required></input>                             
 												</div> 
-
-												<div class="form-group col-md-4">
+												<!--<div class="form-group col-md-4">
 													<label>Img Mini</label>
 													{!! Form::file('blb_img_mini',['class'=> 'form-control','placeholder'=>'']) !!}  
 												</div> 
@@ -79,7 +79,7 @@
 												<div class="form-group col-md-4">
 													<label>Img Zoom</label>
 													{!! Form::file('blb_img360',['class'=> 'form-control','placeholder'=>'']) !!} 
-												</div>
+												</div>-->
 												<div class="form-group col-md-12 more_img">Agregar más Imagenes</div>
 											</div> 
 										</div>
@@ -345,32 +345,14 @@
 											<input type="hidden" name="str_titulo[]" value="Interno">
 											{!! Form::input('text', 'str_descripcion[]', '', ['id' => 'str_descripcion[]', 'class'=> 'form-control','required','placeholder'=>'256 MB']) !!}
 										</div>
-										<!--<div class="form-group col-md-6">
-											<label for="sel1">Unidad de Medida</label>
-											
-											<select id="str_descripcion[]" name="str_descripcion[]" class ="form-group select2" style="width: 304px;!important">
-							       				<option>Seleccione una Unidad de Medida</option>
-											    @foreach($um as $u)
-											    <option value="{{$u->um_nombre}}">{{$u->um_nombre}}</option>
-											    @endforeach
-											</select>
-										</div>-->
+										
 										<div class="form-group col-md-6">
 											<label>RAM</label>
 											<input type="hidden" name="lng_idespecificacion[]" value="6">
 											<input type="hidden" name="str_titulo[]" value="RAM">
 											{!! Form::input('text', 'str_descripcion[]', '', ['id' => 'str_descripcion[]', 'class'=> 'form-control','required','placeholder'=>'256 MB']) !!}
 										</div>
-										<!--<div class="form-group col-md-6">
-											<label for="sel1">Unidad de Medida</label>
-											
-											<select id="str_descripcion[]" name="str_descripcion[]" class ="form-group select2" style="width: 304px;!important">
-							       				<option>Seleccione una Unidad de Medida</option>
-											    @foreach($um as $u)
-											    <option value="{{$u->um_nombre}}">{{$u->um_nombre}}</option>
-											    @endforeach
-											</select>
-										</div>-->
+										
 									</div>  
 								</div>
 							</div>
@@ -649,12 +631,12 @@
          $(document).ready(function() {
          	$(".more_img").click(function () 
 	         	{	
-	    			if (($("#lusmi").val())==11111){
+	    			if (($("#cont_img").val())==11111){
 						alert("Maximo de Imagenes Permitido");
 						return;
 	         		} 
-	         		document.getElementById('lusmi').value = ($("#lusmi").val())+1;
-	             $(this).before('<div class="form-group col-md-4"><input type="file" name="blb_img_normal" class="form-control"></div><div class="form-group col-md-4"><input type="file" name="blb_img_mini" class="form-control"></div><div class="form-group col-md-4"><input type="file" name="blb_img360" class="form-control"></div>');
+	         		document.getElementById('cont_img').value = ($("#cont_img").val())+1;
+	             $(this).before('<div class="form-group col-md-12"><input type="file" name="blb_img[]" required></input></div>');
 
 	            });
 

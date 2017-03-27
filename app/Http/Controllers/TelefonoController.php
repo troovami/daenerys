@@ -13,9 +13,14 @@ use Troovami\TipoMarca;
 use Troovami\Telefono;
 use Troovami\ValoresEspecificaciones;
 use Troovami\VersionesValoresEspecificaciones;
+use Troovami\ImagenesTelefonos;
+use Troovami\FrecuenciasTecnosVersiones;
+use Intervention\Image\ImageManager;
 use Session;
 use Redirect;
 use DB;
+use Storage;
+
 
 class TelefonoController extends Controller
 {
@@ -211,12 +216,6 @@ class TelefonoController extends Controller
         'str_version'         => 'required|unique:tbl_versiones_modelos',            
         ]);   */
 
-       
-
-        $interno_full=$request->input('str_descripcion')[20]." ".$request->input('str_descripcion')[21];
-        $ram_full=$request->input('str_descripcion')[22]." ".$request->input('str_descripcion')[23];
-        
-
         $telefono = Telefono::create([
         'str_version'           => ucfirst(strtolower($request->input('str_version'))),
         'lng_idmodelo'          => $request->input('lng_idmodelo'),
@@ -227,96 +226,107 @@ class TelefonoController extends Controller
 
         $id_version = $telefono->id;
 
-        for($i=0;$i<count($request->input('str_titulo'));$i++)
-        {   
-           $especificacion = ValoresEspecificaciones::create([
-                'lng_idespecificacion'  => $request->input('lng_idespecificacion')[$i],
-                'str_titulo'            => $request->input('str_titulo')[$i],
-                'str_descripcion'       => $request->input('str_descripcion')[$i],
-                'int_comparacion'       => 1,
-                'int_valor'             => 1,
-                'bol_eliminado'         => 0,
-                ]);
-            
-
-            $id_especificacion =$especificacion->id;
-
-            VersionesValoresEspecificaciones::create([
-                'lng_idversion_modelo'              => $id_version,
-                'lng_idvalores_especificaciones'    => $id_especificacion,
-                'bol_eliminado'                     => 0,
-            ]);
-
-        }
-
         
 
-        $colores = count($request->input('str_color'));
+        
+                
+        for ($j = 0; $j < count($request->file('blb_img')); $j++)
+        {   
+            $path = "/home/angelo/Imágenes/daenerys/telefonos/";
+
+            //obtenemos el campo file definido en el formulario
+            $file[] = $request->file('blb_img')[$j];
+
+            //obtenemos el nombre del archivo
+            $nombre[] = $file[$j]->getClientOriginalName();
+            $extension[] = $file[$j]->getClientOriginalExtension();
             
-        for ($j=0; $j < $colores; $j++) 
-        { 
-            $especificacion2 = ValoresEspecificaciones::create([
-            'lng_idespecificacion'  => 3,
-            'str_titulo'            => "Color",
-            'str_descripcion'       => $request->input('str_color')[$j],
-            'int_comparacion'       => 1,
-            'int_valor'             => 1,
-            'bol_eliminado'         => 0,
-            ]);  
 
-            $id_especificacion2 =$especificacion2->id;
+            //indicamos que queremos guardar un nuevo archivo en el disco local
 
-            VersionesValoresEspecificaciones::create([
-                'lng_idversion_modelo'              => $id_version,
-                'lng_idvalores_especificaciones'    => $id_especificacion2,
-                'bol_eliminado'                     => 0,
+            $image[] = \Input::file('blb_img')[$j];
+            $filename[]  = $id_version.'_'.$j.'.'.$extension[$j];
+            $ruta[] = $path . $filename[$j];
+
+            
+            \Image::make($image[$j]->getRealPath())->resize(1000, 1500)->save($ruta[$j]);
+
+
+            $imagenes = ImagenesTelefonos::create([
+                'lng_idversion'     =>  $id_version,
+                'blb_img'           =>  $ruta[$j],                  
+                'str_alt'           =>  "",
+                'bol_eliminado'     =>  0,
             ]);
+
+       }
+
+        for($i=0;$i<count($request->input('str_titulo'));$i++)
+        {   
+           
+
+            if($request->input('str_titulo')[$i]=='Color' or $request->input('str_titulo')[$i]=='Sensores' or $request->input('str_titulo')[$i]=='Mensajeria'){
+                if($request->input('str_titulo')[$i]=='Color'){
+                     $contador = count($request->input('str_color'));
+                     $especifi=3;
+                     $posicion=$request->input('str_color');
+
+                }if($request->input('str_titulo')[$i]=='Sensores'){
+
+                    $contador = count($request->input('str_sensores'));
+                    $especifi=10;
+                    $posicion=$request->input('str_sensores');
+
+                }if($request->input('str_titulo')[$i]=='Mensajeria'){
+
+                    $contador = count($request->input('str_mensajeria'));
+                    $especifi=10;
+                    $posicion=$request->input('str_mensajeria');
+                }
+               
+                    for ($j=0; $j < $contador; $j++) 
+                    { 
+                        $especificacion2 = ValoresEspecificaciones::create([
+                        'lng_idespecificacion'  => $especifi,
+                        'str_titulo'            => $request->input('str_titulo')[$i],
+                        'str_descripcion'       => $posicion[$j],
+                        'int_comparacion'       => 1,
+                        'int_valor'             => 1,
+                        'bol_eliminado'         => 0,
+                        ]);  
+
+                        $id_especificacion2 =$especificacion2->id;
+
+                        VersionesValoresEspecificaciones::create([
+                            'lng_idversion_modelo'              => $id_version,
+                            'lng_idvalores_especificaciones'    => $id_especificacion2,
+                            'bol_eliminado'                     => 0,
+                        ]);
+                    }
+
+            }
+
+            else
+            {
+                $especificacion = ValoresEspecificaciones::create([
+                    'lng_idespecificacion'  => $request->input('lng_idespecificacion')[$i],
+                    'str_titulo'            => $request->input('str_titulo')[$i],
+                    'str_descripcion'       => $request->input('str_descripcion')[$i],
+                    'int_comparacion'       => 1,
+                    'int_valor'             => 1,
+                    'bol_eliminado'         => 0,
+                    ]);
+                
+
+                $id_especificacion =$especificacion->id;
+
+                VersionesValoresEspecificaciones::create([
+                    'lng_idversion_modelo'              => $id_version,
+                    'lng_idvalores_especificaciones'    => $id_especificacion,
+                    'bol_eliminado'                     => 0,
+                ]);
+            }
         }
-
-         $sensor = count($request->input('str_sensores'));
-            
-        for ($k=0; $k < $sensor; $k++) 
-        { 
-            $especificacion3 = ValoresEspecificaciones::create([
-            'lng_idespecificacion'  => 10,
-            'str_titulo'            => "Sensores",
-            'str_descripcion'       => $request->input('str_sensores')[$k],
-            'int_comparacion'       => 1,
-            'int_valor'             => 1,
-            'bol_eliminado'         => 0,
-            ]);  
-
-            $id_especificacion3 =$especificacion3->id;
-
-            VersionesValoresEspecificaciones::create([
-                'lng_idversion_modelo'              => $id_version,
-                'lng_idvalores_especificaciones'    => $id_especificacion3,
-                'bol_eliminado'                     => 0,
-            ]);
-        } 
-
-         $mensajeria = count($request->input('str_mensajeria'));
-            
-        for ($l=0; $l < $mensajeria; $l++) 
-        { 
-            $especificacion4 = ValoresEspecificaciones::create([
-            'lng_idespecificacion'  => 10,
-            'str_titulo'            => "Mensajeria",
-            'str_descripcion'       => $request->input('str_mensajeria')[$l],
-            'int_comparacion'       => 1,
-            'int_valor'             => 1,
-            'bol_eliminado'         => 0,
-            ]);  
-
-            $id_especificacion4 =$especificacion4->id;
-
-            VersionesValoresEspecificaciones::create([
-                'lng_idversion_modelo'              => $id_version,
-                'lng_idvalores_especificaciones'    => $id_especificacion4,
-                'bol_eliminado'                     => 0,
-            ]);
-        }
-
 
         Session::flash('message', 'El Telefono en la versión &laquo;'. $request['str_version'] .'&raquo;, ha sido Registrado Exitosamente');        
         return Redirect::route('telefono.create');
@@ -434,6 +444,77 @@ class TelefonoController extends Controller
     public function destroy($id)
     {
         
+    }
+
+    public function operadora()
+    {
+        $telefonos= DB::table('tbl_versiones_modelos')        
+        ->join('tbl_modelos', 'tbl_versiones_modelos.lng_idmodelo', '=', 'tbl_modelos.id')
+        ->join('cat_marcas','tbl_modelos.lng_idmarca','=', 'cat_marcas.id')
+        ->leftJoin('tbl_frecuencias_tecnos_versiones','tbl_versiones_modelos.id', '=', 'tbl_frecuencias_tecnos_versiones.lng_idversion_modelo')
+        ->leftJoin('tbl_frecuencias_tecnos_operadoras','tbl_frecuencias_tecnos_versiones.lng_frec_tecno_oper', '=', 'tbl_frecuencias_tecnos_operadoras.id')
+        ->leftJoin('tbl_operadora_pais','tbl_frecuencias_tecnos_operadoras.lng_idoperadora_pais', '=', 'tbl_operadora_pais.id')
+        ->leftJoin('tbl_operadoras','tbl_operadora_pais.lng_idoperadora', '=', 'tbl_operadoras.id')
+        ->leftJoin('cat_paises','tbl_operadora_pais.lng_idpais', '=', 'cat_paises.id')
+        ->leftJoin('cat_tecnologias_frecuencias', 'tbl_frecuencias_tecnos_operadoras.lng_idfrecuencia_tecnologia', '=', 'cat_tecnologias_frecuencias.id')
+        ->leftJoin('cat_frecuencias', 'cat_tecnologias_frecuencias.lng_idfrecuencia', '=', 'cat_frecuencias.id')
+        ->leftJoin('cat_tecnologias', 'cat_tecnologias_frecuencias.lng_idtecnologia', '=', 'cat_tecnologias.id')
+        ->select(            
+            'tbl_modelos.str_modelo as modelo',
+            'cat_marcas.str_marca as marca',
+            'tbl_versiones_modelos.str_version as version',
+            'tbl_versiones_modelos.bol_eliminado',
+            'tbl_versiones_modelos.id as id',
+            'tbl_operadoras.str_operadora as operadora'                                  
+                )       
+        ->groupby('id')
+        ->distinct('id')
+        ->get();
+
+        return view('telefono.operadora',compact('telefonos'))->with('page_title', 'Principal'); 
+    }
+
+    public function add_operadora($id)
+    {
+        $telefono = Telefono::findOrFail($id);
+        
+        $operadoras = DB::table('tbl_frecuencias_tecnos_operadoras')
+        ->join('cat_tecnologias_frecuencias', 'tbl_frecuencias_tecnos_operadoras.lng_idfrecuencia_tecnologia', '=', 'cat_tecnologias_frecuencias.id')
+        ->join('cat_frecuencias', 'cat_tecnologias_frecuencias.lng_idfrecuencia', '=', 'cat_frecuencias.id')
+        ->join('cat_tecnologias', 'cat_tecnologias_frecuencias.lng_idtecnologia', '=', 'cat_tecnologias.id')
+        ->join('tbl_operadora_pais', 'tbl_frecuencias_tecnos_operadoras.lng_idoperadora_pais', '=', 'tbl_operadora_pais.id')
+        ->join('cat_paises','tbl_operadora_pais.lng_idpais','=','cat_paises.id')
+        ->join('tbl_operadoras','tbl_operadora_pais.lng_idoperadora','=','tbl_operadoras.id')
+        ->select(
+            'tbl_frecuencias_tecnos_operadoras.id as id',
+            'cat_paises.str_paises as pais',
+            'tbl_operadoras.str_operadora as operadora',
+            'cat_frecuencias.str_frecuecia as frecuencia',
+            DB::raw('CONCAT(tbl_operadoras.str_operadora, " ", cat_paises.str_paises, " ", cat_tecnologias.str_especificaciones, " ", cat_tecnologias.str_description, " en la frecuencia ", cat_frecuencias.str_frecuecia) AS tecnologia_full'),
+
+            'tbl_frecuencias_tecnos_operadoras.bol_eliminado'
+            )
+        ->get();
+
+        /*dd($operadoras);
+        exit();*/
+
+       return view('telefono.create_operadora',compact('telefono','operadoras'))->with('page_title', 'Principal'); 
+    }
+
+    public function store_operadora(Request $request)
+    {   
+
+        $operadora = FrecuenciasTecnosVersiones::create([
+        'lng_idversion_modelo'       => $request->input('lng_idversion_modelo'),
+        'lng_frec_tecno_oper'        => $request->input('lng_frec_tecno_oper'),
+        'bol_eliminado'              => 0,
+        ]);
+
+        $id = $operadora->lng_idversion_modelo;
+
+        Session::flash('message', 'Se le ha asociado una Operadora a la &laquo;'. $request['str_version'] .'&raquo; Exitosamente');        
+        return Redirect::route('telefono.create_operadora',$id);
     }
 
 }

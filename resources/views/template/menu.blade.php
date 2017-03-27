@@ -70,6 +70,7 @@
 		                    <li><a href="{{route('telefono.mobile')}}"><i class="fa fa-mobile text-light-blue"></i> Móviles</a></li>
 							<li><a href="{{route('telefono.smartwatch')}}"><i class="fa fa-clock-o text-light-blue"></i> Smartwatch</a></li>
 							<li><a href="{{route('telefono.tablet')}}"><i class="fa fa-tablet text-light-blue"></i> Tablets</a></li>
+							<li><a href="{{route('telefono.operadora')}}"><i class="fa fa-cog text-light-blue"></i> Asociar a una Operadora</a></li>
 							<li><a href="#"><i class="fa fa-cogs text-light-blue"></i> Especificaciones<i class="fa fa-angle-left pull-right"></i></a> 
 								<ul class="treeview-menu">
 				                    <li><a href="{{route('redes.index')}}"><i class="fa fa-circle-o text-light-blue"></i> Redes<i class="fa fa-angle-left pull-right"></i></a> 
@@ -169,6 +170,7 @@
                   			</li>
 		           		</ul>
                 	</li>
+
             <li class="treeview"><a href="#"> <i class="fa fa-newspaper-o"></i> <span>Noticias</span><i class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
 		                    <li><a href="{{route('noticia.create')}}"><i class="fa fa-plus-square text-green"></i> Agregar +</a></li>
@@ -176,6 +178,7 @@
 		                    
 				        </ul>
             </li>
+
 			@endif
 			<li class="treeview"><a href="#"> <i class="fa fa-globe"></i> <span>Opciones Globales</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">

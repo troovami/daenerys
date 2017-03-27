@@ -45,7 +45,18 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => public_path('noticias'),
+            //'root'   => storage_path('app'),
+            'root'   => public_path(''),
+        ],
+
+        'custom' => [
+            'driver' => 'local',
+            'root'   => '/home/angelo/Imágenes/daenerys/noticias',
+        ],
+
+        'custom_2' => [
+            'driver' => 'local',
+            'root'   => '/home/angelo/Imágenes/daenerys/telefonos',
         ],
 
         'ftp' => [

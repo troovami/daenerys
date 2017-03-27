@@ -24,6 +24,14 @@
 		  			<td>{{$contenido}}</td>
 		  			</tr>
 		  			<tr>
+		  			<th class="text-right">País:</th>
+		  			<td>{{$noticiaPais[0]->pais}}</td>
+		  			</tr>
+		  			<tr>
+		  			<th class="text-right">Letra:</th>
+		  			<td>{{$noticiaVoc[0]->vocabulario}}</td>
+		  			</tr>
+		  			<tr>
 		  				<th class="text-right">Estado:</th>
 		  				@if ($noticia->bol_eliminado == 0)
 		  					<td><span class="label label-success"><i class="fa fa-check"></i> ACTIVADO</span></td>

@@ -58,7 +58,7 @@ class PaisController extends Controller
              
         Pais::create([
             'str_paises'         => ucfirst(strtolower($request['str_paises'])),
-            'blb_img'         => base64_encode(file_get_contents($request['blb_img'])),
+            'blb_img'            => base64_encode(file_get_contents($request['blb_img'])),
         ]);     
 		Session::flash('message', 'El Pais(a) &laquo;'. $request['str_paises'] .'&raquo;, ha sido Registrado Exitosamente');        
         return Redirect::route('pais.create');
